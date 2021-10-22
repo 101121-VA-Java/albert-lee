@@ -1,0 +1,48 @@
+// declare a public class of Food
+public class Food {
+
+	// declare instance variables referred to as name and type, which are accessible without getters or setters
+	public String name;
+	public String type;
+
+	// declare a constructor method for the Food class that takes in name and type parameters, both strings
+	public Food(String name, String type) {
+
+		// set the instance variables declared earlier 
+		// (name and type) to the values of the parameters given by the parameters in the constructor call
+		this.name = name;
+		this.type = type;
+	}
+	
+	// declare an instance method named cook which does not return anything
+	public void cook() {
+
+		// if the name does not contain the string "cooked"
+		if (!name.contains("cooked")) {
+
+			// set the instance variable name to be "cooked [name]"
+			// so basically, this method would cook by calling foodObject.cook() which changes the name from "[name]" to "cooked [name]";
+			name = "cooked " + name;
+
+		}
+	}
+}
+
+// declare a main class
+public class Main {
+
+	// declare a main class method
+	public static void main(String[] args) {
+
+		// declare a reference variable myFood which points to a new food object 
+		// with instance variable name set to "potato" and instance variable type set to "vegetable"
+		Food myFood = new Food("potato", "vegetable");
+
+		// calls the instance method cook on the instantiated myFood object, which is effectively a potato with type vegetable
+		// after the cook method is called, the instance variable name is changed from "Potato" to "cooked Potato"
+		myFood.cook();
+
+		// prints "cooked Potato"
+		System.out.println(myFood.name);
+	}
+}
