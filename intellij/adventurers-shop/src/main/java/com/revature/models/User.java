@@ -1,23 +1,34 @@
 package com.revature.models;
 
 public class User {
-    protected String name;
-    protected static int numberOfUsers;
+    protected static int numberOfUsers=1;
+    private int id;
+    private String username;
+    private String password;
+    private Role role;
 
     public User(){
-        this.name = "default";
+        super();
+    }
+
+    public User(String username, String password, Role role){
+        this.id = numberOfUsers;
+        this.username = username;
+        this.password = password;
+        this.role = role;
         User.numberOfUsers += 1;
     }
 
-    public void setName(String name){
-        this.name = name;
+    public void setName(String newName){
+        this.username = newName;
     }
 
     public String getName(){
-        return this.name;
+        return this.username;
     }
 
     public void printName(){
-        System.out.println(this.name);
+        System.out.println(this.username);
     }
+
 }

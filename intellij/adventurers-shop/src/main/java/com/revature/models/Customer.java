@@ -4,9 +4,9 @@ import com.revature.exceptions.BuyException;
 
 public class Customer extends User {
     private int cash;
-    public Customer(String name, int cash){
+    public Customer(String username, int cash){
         super();
-        this.name = name;
+        super.setName(username);
         this.cash = cash;
     }
 
