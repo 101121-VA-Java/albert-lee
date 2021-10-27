@@ -16,7 +16,7 @@ public class EmployeeController {
         System.out.println("Please enter your password");
         String password = scan.nextLine();
         try {
-            Employee e = us.getEmployeeById(0);
+            Employee e = us.login(username, password);
             System.out.println("Logged in as " + e.getName());
         } catch (UserNotFoundException e) {
             System.out.println("User doesn't exist.");
