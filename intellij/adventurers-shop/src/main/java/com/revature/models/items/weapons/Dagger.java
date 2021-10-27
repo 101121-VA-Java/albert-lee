@@ -1,5 +1,7 @@
 package com.revature.models.items.weapons;
 
+import com.revature.models.items.Sellable;
+
 public class Dagger implements Sellable {
     private final int price;
     private final String name;

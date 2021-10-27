@@ -12,16 +12,10 @@ public class FrontController {
     }
 
     public void run() {
-        boolean run = true;
-        while(run) {
-            System.out.println("Welcome to the Adventurer's Shop!");
-            System.out.println("Enter the appropriate number to get started.");
-            System.out.println("1: Login");
-            System.out.println("2: Register");
-            System.out.println("3: Exit");
-
+        String status = "loggedOut";
+        while(status.equals("loggedOut")) {
+            printLoggedOutOptions();
             String choice = sc.nextLine();
-
             switch(choice) {
                 case "1":
                     // TODO: try to login
@@ -33,10 +27,11 @@ public class FrontController {
                     //TODO: try to register
                     ec.registerEmployee(sc);
                     //TODO: if registration fails, handle error message or input validations
+
                     break;
                 case "3":
                     System.out.println("You've chosen to exit. Now exiting.");
-                    run = false;
+                    status = "exit";
                     break;
                 default:
                     System.out.println("Invalid input.");
@@ -44,5 +39,13 @@ public class FrontController {
         }
 
         sc.close();
+    }
+
+    private void printLoggedOutOptions() {
+        System.out.println("Welcome to the Adventurer's Shop!");
+        System.out.println("Enter the appropriate number to get started.");
+        System.out.println("1: Login");
+        System.out.println("2: Register");
+        System.out.println("3: Exit");
     }
 }

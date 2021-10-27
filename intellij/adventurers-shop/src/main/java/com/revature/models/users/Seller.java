@@ -1,6 +1,6 @@
 package com.revature.models.users;
 
-import com.revature.models.items.weapons.Sellable;
+import com.revature.models.items.Sellable;
 
 public class Seller extends User {
     private Sellable[] itemsForSale;
