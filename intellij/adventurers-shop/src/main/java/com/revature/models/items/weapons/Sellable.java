@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.models.items.weapons;
 
 public interface Sellable {
     abstract void sellNotification();

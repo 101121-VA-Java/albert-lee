@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.models.users;
 
 public class User {
     protected static int numberOfUsers=1;

@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import com.revature.models.items.weapons.Dagger;
+
 public class Shop {
     private int numberOfItemsForSale;
 

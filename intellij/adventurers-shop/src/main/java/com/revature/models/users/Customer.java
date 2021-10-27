@@ -1,6 +1,7 @@
-package com.revature.models;
+package com.revature.models.users;
 
 import com.revature.exceptions.BuyException;
+import com.revature.models.items.weapons.Dagger;
 
 public class Customer extends User {
     private int cash;
