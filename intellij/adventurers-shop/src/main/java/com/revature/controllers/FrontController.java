@@ -48,7 +48,7 @@ public class FrontController {
                 String choice = sc.nextLine();
                 switch (choice) {
                     case "1":
-                        // view all items for sale
+                        ic.printAllItemsForSale();
                         break;
                     case "2":
                         // view items for sale that belong to current user
