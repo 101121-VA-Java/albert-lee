@@ -11,24 +11,30 @@ public class User {
         super();
     }
 
-    public User(String username, String password, Role role){
+    public User(String username, String password){
         this.id = numberOfUsers;
+        User.numberOfUsers += 1;
         this.username = username;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Role getRole(){
+        return role;
+    }
+
+    public void setRole(Role role) {
         this.role = role;
-        User.numberOfUsers += 1;
     }
-
-    public void setName(String newName){
-        this.username = newName;
-    }
-
-    public String getName(){
-        return this.username;
-    }
-
-    public void printName(){
-        System.out.println(this.username);
-    }
-
 }

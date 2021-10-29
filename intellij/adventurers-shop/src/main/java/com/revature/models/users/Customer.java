@@ -5,9 +5,8 @@ import com.revature.models.items.weapons.Dagger;
 
 public class Customer extends User {
     private int cash;
-    public Customer(String username, int cash){
-        super();
-        super.setName(username);
+
+    public Customer(int cash){
         this.cash = cash;
     }
 

@@ -7,9 +7,7 @@ public class Seller extends User {
     private int timeLeft;
 
     public Seller(String username) {
-        super();
-        super.setName(username);
-        this.timeLeft = 600;
+        timeLeft = 600;
     }
 
     public Sellable[] getItemsForSale(){

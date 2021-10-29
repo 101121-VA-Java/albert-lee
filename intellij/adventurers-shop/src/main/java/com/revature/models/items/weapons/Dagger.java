@@ -1,22 +1,18 @@
 package com.revature.models.items.weapons;
 
+import com.revature.models.items.Item;
 import com.revature.models.items.Sellable;
 
-public class Dagger implements Sellable {
-    private final int price;
+public class Dagger extends Item implements Sellable {
     private final String name;
 
     public Dagger(int price, String name){
-        this.price = price;
+        this.setPrice(price);
         this.name = name;
     }
 
     public String getName(){
         return this.name;
-    }
-
-    public int getPrice(){
-        return this.price;
     }
 
     public void sellNotification(){

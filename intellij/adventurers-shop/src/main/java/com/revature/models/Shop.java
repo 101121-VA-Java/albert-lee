@@ -1,20 +1,17 @@
 package com.revature.models;
-
-import com.revature.models.items.Sellable;
-import com.revature.models.items.weapons.Dagger;
-
+import com.revature.models.items.Item;
 import java.util.ArrayList;
 
-
 public class Shop {
-    private ArrayList itemsForSale = new ArrayList();
-
+    private ArrayList<Item> itemsForSale = new ArrayList<Item>();
     public int getNumberOfItemsForSale(){
         return itemsForSale.size();
     }
-
-    public void setOneItemForSale(Dagger daggerToSell){
-        itemsForSale.add(daggerToSell);
-        System.out.println("Now selling " + daggerToSell.getName());
+    public void addItemForSale(Item itemToSell){
+        itemsForSale.add(itemToSell);
+        System.out.println("Now selling new item");
+    }
+    public ArrayList<Item> getItemsForSale() {
+        return this.itemsForSale;
     }
 }
