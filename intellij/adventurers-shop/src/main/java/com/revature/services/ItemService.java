@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import com.revature.models.items.Item;
+import com.revature.models.users.User;
 import com.revature.repositories.ItemArray;
 
 public class ItemService {
@@ -28,6 +29,13 @@ public class ItemService {
     public void printAllItemsForSale(){
         System.out.println("The items for sale are: ");
         for (Item item : ia.getAll()) {
+            System.out.println("$" + item.getPrice() + " " + item.getName());
+        }
+    }
+
+    public void printPlayerInventory(User user) {
+        System.out.println("You have " + user.getPlayerInventory().getAll().size() + " items in your inventory.");
+        for (Item item : user.getPlayerInventory().getAll()) {
             System.out.println("$" + item.getPrice() + " " + item.getName());
         }
     }

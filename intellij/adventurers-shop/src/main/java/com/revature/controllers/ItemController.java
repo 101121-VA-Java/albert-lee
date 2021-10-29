@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 import com.revature.models.items.Item;
+import com.revature.models.users.User;
 import com.revature.services.ItemService;
 
 import java.util.Scanner;
@@ -27,5 +28,9 @@ public class ItemController {
 
     public void printAllItemsForSale(){
         is.printAllItemsForSale();
+    }
+
+    public void printPlayerInventory(User user){
+        is.printPlayerInventory(user);
     }
 }

@@ -51,8 +51,7 @@ public class FrontController {
                         ic.printAllItemsForSale();
                         break;
                     case "2":
-                        // view items for sale that belong to current user
-                        // prob need to use foreign key w/ db
+                        ic.printPlayerInventory(uc.getCurrentUser());
                         break;
                     case "3":
                         // make an offer for an item
