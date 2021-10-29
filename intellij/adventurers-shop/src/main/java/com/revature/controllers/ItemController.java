@@ -11,7 +11,7 @@ public class ItemController {
         System.out.println("What item would you like to sell?");
         String itemName = scan.nextLine();
         System.out.println("Please enter the price you would like for your item.");
-        int price = scan.nextInt();
+        String price = scan.nextLine();
         Item itemToSell = new Item(itemName, price);
         is.add(itemToSell);
         System.out.println(itemName + " was successfully listed.");
@@ -23,6 +23,9 @@ public class ItemController {
         String itemName = scan.nextLine();
         is.remove(itemName);
         System.out.println(itemName + " was successfully listed.");
+    }
 
+    public void printAllItemsForSale(){
+        is.printAllItemsForSale();
     }
 }

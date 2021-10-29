@@ -24,4 +24,11 @@ public class ItemService {
         }
         return 0;
     }
+
+    public void printAllItemsForSale(){
+        System.out.println("The items for sale are: ");
+        for (Item item : ia.getAll()) {
+            System.out.println("$" + item.getPrice() + " " + item.getName());
+        }
+    }
 }

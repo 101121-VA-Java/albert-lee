@@ -18,7 +18,7 @@ public class ItemArray implements GenericDao<Item> {
     }
 
     @Override
-    public ArrayList<Item> getAll(int id) {
+    public ArrayList<Item> getAll() {
         return items;
     }
 

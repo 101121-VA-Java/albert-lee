@@ -1,8 +1,5 @@
 package com.revature.models.items;
 
-import java.sql.Array;
-import java.util.ArrayList;
-
 public class Item {
     public static int numberOfItems;
     private int id;
@@ -10,19 +7,13 @@ public class Item {
     private String name;
     private int pendingOffer;
 
-    public Item(){
+    public Item(String itemName, String price){
+        this.name = itemName;
+        setPrice(Integer.parseInt(price));
         this.id = Item.numberOfItems;
         Item.numberOfItems++;
     }
-
-    public Item(String name, int price){
-        this.name = name;
-        this.price = price;
-        this.id = Item.numberOfItems;
-        Item.numberOfItems++;
-
-    }
-
+    
     public int getId() {
         return id;
     }

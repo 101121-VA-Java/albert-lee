@@ -6,8 +6,9 @@ import com.revature.models.items.Sellable;
 public class Dagger extends Item implements Sellable {
     private final String name;
 
-    public Dagger(int price, String name){
-        this.setPrice(price);
+    public Dagger(String price, String name){
+        super(name, price);
+        this.setPrice(Integer.parseInt(price));
         this.name = name;
     }
 
