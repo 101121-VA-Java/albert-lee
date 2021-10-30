@@ -39,4 +39,13 @@ public class ItemService {
             System.out.println("$" + item.getPrice() + " " + item.getName());
         }
     }
+
+    public Item getItemByName(String name){
+        for (Item item : ia.getAll()) {
+            if (name.equals(item.getName())) {
+                return item;
+            }
+        }
+        return null;
+    }
 }

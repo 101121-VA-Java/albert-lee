@@ -33,4 +33,23 @@ public class ItemController {
     public void printPlayerInventory(User user){
         is.printPlayerInventory(user);
     }
+
+    public void makeOffer(User user, Scanner scan){
+        System.out.println("What is the name of the item you would like to bid on?");
+        String itemName = scan.nextLine();
+        Item result = is.getItemByName(itemName);
+        System.out.println(result.getName());
+        if(result != null){
+            String newOfferPrice = "";
+            if(result.getHighestOffer() == null){
+                System.out.println("There are no bids yet. How much would you like to offer?");
+                newOfferPrice = scan.nextLine();
+            } else if(result.getHighestOffer() != null){
+                System.out.println("The current highest bid is: $" + result.getHighestOffer().getPrice());
+                System.out.println("How much would you like to bid? Bids lower than or equal to the current highest offer will be ignored.");
+                newOfferPrice = scan.nextLine();
+            }
+            user.makeOffer(result, Integer.parseInt(newOfferPrice), user.getId());
+        }
+    }
 }

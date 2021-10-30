@@ -54,7 +54,7 @@ public class FrontController {
                         ic.printPlayerInventory(uc.getCurrentUser());
                         break;
                     case "3":
-                        // make an offer for an item
+                        ic.makeOffer(uc.getCurrentUser(), sc);
                         break;
                     case "4":
                         //view remaining payments for an item

@@ -1,11 +1,13 @@
 package com.revature.models.items;
 
+import com.revature.models.Offer;
+
 public class Item {
     public static int numberOfItems;
     private int id;
     private int price;
     private String name;
-    private int pendingOffer;
+    private Offer highestOffer;
 
     public Item(String itemName, String price){
         this.name = itemName;
@@ -34,11 +36,11 @@ public class Item {
         this.name = name;
     }
 
-    public int getPendingOffer() {
-        return pendingOffer;
+    public Offer getHighestOffer() {
+        return highestOffer;
     }
 
-    public void setPendingOffer(int pendingOffer) {
-        this.pendingOffer = pendingOffer;
+    public void setHighestOffer(Offer highestOffer) {
+        this.highestOffer= highestOffer;
     }
 }
