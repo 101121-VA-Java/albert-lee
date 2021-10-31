@@ -921,12 +921,240 @@ Week 2
         5.	What defines Maven project coordinates?
 Week 3
     Day 11, October 25, 2021
+    
     Day 12, October 26, 2021
-    Day 13, October 27, 2021
-    Day 14, October 28, 2021
-    Day 15, October 29, 2021
-    Week 3 Questions
+    Java Memory Management
+	- Automatic memory management
+	- Stack
+		- Datastructure that follows a LastInFirstOut pattern (LIFO) 
+		- stores primitives and reference variables
+		- each thread gets its own stack
+		- variables "pop off" the stack once the scope the method is over 
+	- Heap
+		- Object storage
+			- almost anything that's not a primitive is an object
+		- String pool
+			- special place in the heap to store String literals for reusability
+		- shared by all the threads
+			- can lead to concurrency issues if not managed properly
+		- managed by the garbage collector
 
+	- Pass By Value 
+		- means that passing a variable into a method uses the value itself rather than the variable passed in
+			- passing a reference variable in a method passes the reference value of the location in the heap and as such changes made to the object are persisted
+	- Garbage collection
+		- frees up memory/resources once they are no longer referenced
+		- Garbage Collector is a daemon thread
+			- thread that runs in the background
+			- removes objects without references in the heap
+				- finalize() 
+					- last method called upon an object before it is garbage collected
+					- people don't really use this anymore
+			- garbage collection cannot be forced, but it can be suggested
+				- System.gc();
+
+    Casting
+        - converting a datatype to another (int to a long)
+            - implicit: if the original datatype has a smaller size than the target datatype (ie: int to long)
+            - explicit: if the original datatype has a larger size than the target datatype (ie: long to int)
+                - int i = (int) [long];
+    Wrapper classes
+        - way to treat primitive datatypes as objects
+            - Autoboxing: Automatic conversion of a primitive to its wrapper class
+            - AutoUnboxing: Automatic conversion of a wrapper class into its primitive
+            
+    Day 13, October 27, 2021
+            .gitignore
+            - notice that it starts with "." so it's a hidden file
+                - to create can do > touch .gitignore
+            - defines files and file extensions to not be tracked by git
+                - NOTE: if the file already exists, it will not get deleted but won't updated anymore
+                    - have to delete from the repository manually
+            - generating .gitignore files:
+                - https://www.toptal.com/developers/gitignore/
+                - As of now:
+                    - Eclipse
+                    - Mac
+                    - Java
+                    - Maven
+                    - VsCode
+                    - IntelliJ
+
+        Datastructures
+            - solutions to interact/work with data in our applications
+                - answers to problems such as
+                    - dynamic lists
+                    - unique values only
+                    - ordering
+
+        Collection (I)
+            - is an interface that can be considered the "super" interface, or the parent interface of all collections
+                - while it extends iterable, Collection declares methods availables in all collections
+                    - add();
+                    - remove();
+                    - contains();
+                    - size();
+            - collections only work with objects
+                - need to work with wrapper classes for primitives
+            - Collection interface should not be confused with the Collections class
+                - Collections WITH AN S is a class that provides utility methods to work with collections 
+            - Extends iterable, what allows collectiosn to be iterated over/ use an iterator
+
+        List (I)
+            - is an interface that extends Collection, that can hold duplicate values
+            - Concrete implementations of List
+                - ArrayList (C)
+                    - Dynamically sized array in which elements can be added and removed
+                    - ArrayLists leverage indexes which make them more efficient for retrieval operations
+                - LinkedList (C)
+                    - Consists of a series of nodes which store data and a reference to the next node
+                    - LinkedList are better for insertion and deletion operations
+        Set (I)
+            - is an interface that extends Collection, does not hold duplicate values
+            - Concrete implementations
+                - HashSet
+                    - that cannot promise order (leverages hashcode)
+                    - leverages a HashMap in the background
+                - TreeSet
+                    - ordered
+                        - by default follows "natural ordering"
+                            - can specify custom order using Comparator/Comparable
+        Queue (I)
+            - is an interface that extends Collection, generally it follows a FIFO order (First In First Out)
+            - Concrete implementations
+                - Priority Queues
+                    - Ordered by priority
+                - Linked List
+                    - implements both List and Queue
+            - Come in with special methods unique to queues
+                - peek
+                - poll
+
+        Map (I)
+            - is an interface that does NOT extend Collection, leverage a key value pair system
+                - it does not extend iterable and there cannot be iterated the traditional way 
+                - comes with its own set of methods
+            - Concrete implementations
+                - HashMap
+                    - hashcode: 
+                        - method that provides a hash value based on the fields of an object
+                            - objects that are equals should return the same hashcode
+                            - objects that are not equals may return the same hashcode
+                                - a good hashcode implementation should try to produce distinct integers for unequal objects
+                        - this value is stored internally to store data in a Map and to improve access operation
+                - TreeMap
+                    - A map that is ordered 
+
+        Comparable
+            - functional interface
+                - compareTo method
+            - implement in the model class itself
+                - should return an integer that will be used to define an order
+                    - if integer is negative, is of lesser value
+                    - if integer is positive, is of greater value
+                    - if integer is 0, objects are of equal value
+            - used to define a natural order
+        Comparator
+            - functional interface
+                - compare method
+            - implement in a different class
+                - Comparator for an object
+            - used to define a custom order
+    Day 14, October 28, 2021
+    Multithreading
+	- refers to dealing with applications with concurrent processes
+		- these sub-processes/ path of executions are referred to as threads
+	- priority
+		- defines the order in which threads can access a synchronized resource
+			- resource that can only be accessed by one thread at a time
+		- threads with higher priority get first dibs over other threads
+			- can lead to concurrency issues
+	- types of threads
+		- User-defined threads
+			- JVM ensures their execution to completion
+				- ie: main method - main thread
+		- Daemon threads
+			- "optional"
+			- lower in priority
+			- run in the background
+				- ie: gc
+		- each thread gets their own stack but all threads share the same heap
+
+    Creating and running threads in Java
+        - extends the Thread class
+        - implements the Runnable interface
+            - preferred way
+        - override the run() method
+            - to specify the behavior for a thread
+        - instantiate a thread object and invoke the start() method on that thread
+            - start() method creates a new thread and invoke the run() on it
+            - otherwise if run() is called without start, it will just be executed on the main thread
+
+    States of a thread
+        - New
+            - created a thread object, run() hasn't been called yet
+        - Runnable
+            - run() has been called and is executing
+        - Blocked
+            - waiting for another thread to be done accessing a resource on which a lock has been placed (synchronized keyword)
+                - synchronized prevents more than one thread at a time to access a resource
+        - Waiting
+            - wait()
+                - waiting for notify/notifyAll()
+            - join()
+                - stops the execution of a thread until another thread is done executing
+        - Timed-waiting
+            - sleep()
+                - wait a certain amount of time
+        - Terminated
+            - everything has been executed
+
+    Concurrency issues
+        - starvation
+            - lower priority threads not being able to access a resource because higher priority threads keep taking them
+        - deadlock
+            - occurs when the waiting process is still holding on to another resource that the first needs before it can finish.
+
+    Lambda expressions
+        - allows for a compact expression of instances of single method class
+            - implements a functional interface without require a whole new class to do so
+                - ie: Runnable, run method
+        - syntax
+            - [interfaceName] [objectName] = ()->[return value];
+            - [interfaceName] [objectName] = ([params])->[return value];
+            - [interfaceName] [objectName] = ([params])->{
+                // code goes here
+              };
+
+    Day 15, October 29, 2021
+    Log4J2
+	- Java Logging Framework, successor of Log4J
+	- Logging consists in capturing and persisting information regarding the state of an application
+		- making it available at a later time for analysis
+	- Main components
+		- Loggers
+			- responsible for recording log events and forwarding them to the appropriate appender(s)
+			- a root logger is provided by default - getRootLogger()
+				- usually class specific loggers are preferred
+		- Appenders
+			- responsible for delivering log events to their destination targets
+			- formatting of the event is delegated to a layout
+		- Layouts
+			- responsible for returning a byte array to be turned into a String using the appropriate layout
+	- Logging levels
+		- Trace
+			- debug message, used to capture the flow through out the application
+				- identify a specific part for debugging
+		- Debug
+			- debug message for a general debug event/ some information that might be helpful to debug
+		- Info
+			- identify general event
+		- Warning
+			- identify an event that might lead to an error
+		- Error
+			- identify error occuring during app, potentially recoverable
+		- Fatal
+			- identify a server error that prevents an app from continuing its execution
 
 
 
