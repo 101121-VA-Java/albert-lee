@@ -4,6 +4,7 @@ import com.revature.exceptions.InvalidRole;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.users.Role;
 import com.revature.models.users.User;
+import com.revature.repositories.ItemArray;
 import com.revature.repositories.UserArray;
 
 public class UserService {
@@ -30,4 +31,11 @@ public class UserService {
     }
 
 
+    public ItemArray getPlayerInventory(int id) {
+        for (User user : ua.getUsers()) {
+            if(user.getId() == id){
+                return user.getPlayerInventory();
+            }
+        } return null;
+    }
 }

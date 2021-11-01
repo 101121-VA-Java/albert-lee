@@ -1,6 +1,6 @@
 package com.revature.repositories;
 
-import com.revature.models.items.Item;
+import com.revature.models.Item;
 
 import java.util.ArrayList;
 
@@ -9,5 +9,5 @@ public interface GenericDao<T> {
     ArrayList<Item> getAll();
     T getById(int id);
     T update(T t);
-    int delete(int id);
+    void delete(int id);
 }

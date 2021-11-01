@@ -1,17 +1,23 @@
 package com.revature.models;
-import com.revature.models.items.Item;
-import java.util.ArrayList;
+import com.revature.repositories.ItemArray;
 
 public class Shop {
-    private ArrayList<Item> itemsForSale = new ArrayList<Item>();
-    public int getNumberOfItemsForSale(){
-        return itemsForSale.size();
+    private ItemArray itemsForSale;
+
+    public Shop() {
+        this.itemsForSale = new ItemArray();
     }
-    public void addItemForSale(Item itemToSell){
+
+    public void add(Item itemToSell){
         itemsForSale.add(itemToSell);
         System.out.println("Now selling new item");
     }
-    public ArrayList<Item> getItemsForSale() {
+
+    public void remove(int index){
+        itemsForSale.getItems().remove(index);
+    }
+
+    public ItemArray getItemsForSale() {
         return this.itemsForSale;
     }
 }

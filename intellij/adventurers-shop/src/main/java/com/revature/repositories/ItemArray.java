@@ -1,6 +1,6 @@
 package com.revature.repositories;
 
-import com.revature.models.items.Item;
+import com.revature.models.Item;
 
 import java.util.ArrayList;
 
@@ -44,8 +44,7 @@ public class ItemArray implements GenericDao<Item> {
     }
 
     @Override
-    public int delete(int id) {
-        // TODO: implement once primary keys from postgresql are available instead of hard coded id numbers
-        return 0;
+    public void delete(int index) {
+        items.remove(index);
     }
 }

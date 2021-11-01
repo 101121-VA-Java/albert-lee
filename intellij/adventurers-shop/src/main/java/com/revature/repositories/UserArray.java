@@ -1,6 +1,6 @@
 package com.revature.repositories;
 
-import com.revature.models.items.Item;
+import com.revature.models.Item;
 import com.revature.models.users.User;
 
 import java.util.ArrayList;
@@ -45,8 +45,7 @@ public class UserArray implements GenericDao<User> {
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         // TODO: implement once primary keys from postgresql are available instead of hard coded id numbers
-        return 0;
     }
 }
