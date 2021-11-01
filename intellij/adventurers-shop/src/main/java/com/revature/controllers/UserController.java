@@ -38,6 +38,24 @@ public class UserController {
         return currentUser == null;
     }
 
+    public void logout() {
+        this.currentUser = null;
+    }
+
+    public boolean isValidOffer(int newOfferPrice, int prevOfferPrice, int buyPrice) {
+        if(newOfferPrice >= buyPrice){
+            System.out.println("Please just buy the item for $" + buyPrice + " instead of bidding.");
+            return false;
+        } else if (currentUser.getCashOnHand() < newOfferPrice) {
+            System.out.println("Sorry, you can't afford that offer at the moment.");
+            return false;
+        } else if (newOfferPrice <= prevOfferPrice) {
+            System.out.println(("Sorry, your offer must be greater than the previous one."));
+            return false;
+        }
+        return true;
+    }
+
     public void attemptLogin(Scanner scan) {
         System.out.println("Please enter your username");
         String username = scan.nextLine();
@@ -84,7 +102,7 @@ public class UserController {
         if (result == null) System.out.println("Item not found");
         else {
             int newOfferPrice = getNewOfferPrice(result);
-            if (isValidOffer(newOfferPrice, result.getHighestOfferPrice())) {
+            if (isValidOffer(newOfferPrice, result.getHighestOfferPrice(), result.getPrice())) {
                 result.setHighestOffer(new Offer(newOfferPrice, currentUser.getId()));
                 System.out.println("Congratulations. You now have the highest bid of $" + result.getHighestOfferPrice() + " for " + result.getName());
             }
@@ -106,19 +124,7 @@ public class UserController {
         return Integer.parseInt(sc.nextLine());
     }
 
-    public boolean isValidOffer(int newOfferPrice, int prevOfferPrice) {
-        if (currentUser.getCashOnHand() < newOfferPrice) {
-            System.out.println("Sorry, you can't afford that offer at the moment.");
-            return false;
-        }
-        if (newOfferPrice <= prevOfferPrice) {
-            System.out.println(("Sorry, your offer must be greater than the previous one."));
-            return false;
-        }
-        return true;
-    }
-
-    public void logout() {
-        this.currentUser = null;
+    public void acceptOffer(Item item){
+        us.addItemToInventory(item, currentUser.getId());
     }
 }

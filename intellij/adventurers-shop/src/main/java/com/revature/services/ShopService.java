@@ -14,12 +14,16 @@ public class ShopService {
         sh.add(i);
     }
 
-    public void remove(String itemName) {
+    public Item remove(String itemName) {
+        Item result = null;
         for(int i = 0; i < sh.getItemsForSale().getItems().size(); i++){
             if(sh.getItemsForSale().getItems().get(i).getName().equals(itemName)){
+                result = sh.getItemsForSale().getItems().get(i);
                 sh.remove(i);
+                System.out.println(itemName + " was successfully removed.");
             }
         }
+        return result;
     }
 
     public void printAllItemsForSale(){

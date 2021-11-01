@@ -76,10 +76,12 @@ public class FrontController {
                 shc.add(uc.sc);
                 break;
             case "2":
-                shc.remove(uc.sc);
+                System.out.println("What item would you like to remove?");
+                shc.remove(uc.sc.nextLine());
                 break;
             case "3":
                 // checkOffer. which item. if item exists, print offer price. accept y/n.
+                acceptOffer();
                 break;
             case "4":
                 //view payments for all items
@@ -123,9 +125,13 @@ public class FrontController {
         System.out.println("6: Log out");
     }
 
-    private void makeOffer() throws RuntimeException{
-        if(uc.getCurrentUser() == null) throw new RuntimeException();
+    private void makeOffer() {
         System.out.println("What is the name of the item you would like to bid on?");
         uc.makeOffer(shc.getItemByName(uc.sc.nextLine()));
+    }
+
+    private void acceptOffer() {
+        System.out.println("What is the name of the item you want to sell for its highest current bid price?");
+        uc.acceptOffer(shc.remove(uc.sc.nextLine()));
     }
 }
