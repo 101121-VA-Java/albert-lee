@@ -106,7 +106,7 @@ public class FrontController {
     private void printCustomerOptions(){
         System.out.println("Enter the appropriate number to get started.");
         System.out.println("1: View items for sale");
-        System.out.println("2: View items on sale that are mine");
+        System.out.println("2: View my inventory");
         System.out.println("3: Make an offer for an item");
         System.out.println("4: View remaining payments for an item");
         System.out.println("5: Exit");

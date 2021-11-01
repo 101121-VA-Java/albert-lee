@@ -71,6 +71,10 @@ public class UserController {
     }
 
     public void printPlayerInventory() {
+        if(us.getPlayerInventory((currentUser.getId())).getItems().isEmpty()){
+            System.out.println("You don't have any items at the moment!");
+            return;
+        }
         for (Item item : us.getPlayerInventory(currentUser.getId()).getItems()) {
             System.out.println(item.getName());
         }
