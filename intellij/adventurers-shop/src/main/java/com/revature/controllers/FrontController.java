@@ -80,7 +80,6 @@ public class FrontController {
                 shc.remove(uc.sc.nextLine());
                 break;
             case "3":
-                // checkOffer. which item. if item exists, print offer price. accept y/n.
                 acceptOffer();
                 break;
             case "4":
