@@ -1,28 +1,22 @@
 package com.revature.models.users;
-
-import com.revature.models.Item;
-import com.revature.repositories.ItemArray;
-
 public class User {
-    protected static int numberOfUsers=1;
-    private int id;
-    private String username;
-    private String password;
-    private Role role;
-    private ItemArray playerInventory;
+    private int id=0;
+    private final String username;
+    private final String password;
+    private String role;
     private int cashOnHand;
 
-    public User(){
-        super();
-    }
-
     public User(String username, String password){
-        this.id = numberOfUsers;
-        User.numberOfUsers += 1;
         this.username = username;
         this.password = password;
-        this.playerInventory = new ItemArray();
-        this.cashOnHand = 100;
+    }
+
+    public User(int id, String username, String password, String role, int cashOnHand){
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.cashOnHand = cashOnHand;
     }
 
     public int getId() {
@@ -37,23 +31,23 @@ public class User {
         return password;
     }
 
-    public Role getRole(){
-        return role;
+    public String getRole(){
+        return this.role;
     }
 
     public int getCashOnHand() { return cashOnHand; }
 
     public void setCashOnHand(int newAmount) { this.cashOnHand = newAmount; }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
-    public void addItemToInventory(Item item){
-        this.playerInventory.add(item);
-    }
+//    public void addItemToInventory(Item item){
+//        this.playerInventory.add(item);
+//    }
 
-    public ItemArray getPlayerInventory(){
-        return playerInventory;
-    }
+//    public ItemArray getPlayerInventory(){
+//        return playerInventory;
+//    }
 }

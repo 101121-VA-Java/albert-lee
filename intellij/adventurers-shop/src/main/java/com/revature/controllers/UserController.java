@@ -4,7 +4,6 @@ import com.revature.exceptions.InvalidRole;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.Offer;
 import com.revature.models.Item;
-import com.revature.models.users.Role;
 import com.revature.models.users.User;
 import com.revature.services.UserService;
 
@@ -20,18 +19,14 @@ public class UserController {
         this.us = new UserService();
     }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
     public boolean isCustomer() {
         if (currentUser == null) return false;
-        return currentUser.getRole() == Role.CUSTOMER;
+        return currentUser.getRole().equals("CUSTOMER");
     }
 
     public boolean isEmployee() {
         if (currentUser == null) return false;
-        return currentUser.getRole() == Role.EMPLOYEE;
+        return currentUser.getRole().equals("EMPLOYEE");
     }
 
     public boolean isLoggedOut() {

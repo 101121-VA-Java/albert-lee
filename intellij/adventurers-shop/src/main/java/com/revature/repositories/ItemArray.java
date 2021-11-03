@@ -1,8 +1,10 @@
 package com.revature.repositories;
 
 import com.revature.models.Item;
+import com.revature.models.users.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemArray implements GenericDao<Item> {
     private final ArrayList<Item> items = new ArrayList<>();
@@ -12,13 +14,13 @@ public class ItemArray implements GenericDao<Item> {
     }
 
     @Override
-    public Item add(Item item) {
+    public int add(Item item) {
         items.add(item);
         return item;
     }
 
     @Override
-    public ArrayList<Item> getAll() {
+    public List<User> getAll() {
         return items;
     }
 
