@@ -25,7 +25,6 @@ public class UserService {
     }
 
     public User login(String username, String password) throws UserNotFoundException{
-//        for (User user : ua.getUsers()) {
           for (User user : up.getAll()) {
             if(user.getUsername().equals(username) && user.getPassword().equals(password)){
                 return user;
