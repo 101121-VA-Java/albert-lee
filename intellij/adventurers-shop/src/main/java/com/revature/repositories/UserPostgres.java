@@ -37,7 +37,7 @@ public class UserPostgres implements GenericDao<User>{
 
     @Override
     public List<User> getAll() {
-        String sql = "select * from employees;";
+        String sql = "select * from users;";
         List<User> users = new ArrayList<>();
 
         try (Connection con = ConnectionUtil.getConnectionFromFile()){
@@ -45,13 +45,13 @@ public class UserPostgres implements GenericDao<User>{
             ResultSet rs = s.executeQuery(sql);
 
             while(rs.next()) {
-                int id = rs.getInt("e_id");
-                String e_username = rs.getString("e_username");
-                String e_password = rs.getString("e_password");
-                String e_role = rs.getString("e_role");
-                int e_cashOnHand = rs.getInt("e_cash_on_hand");
-                User newEmp = new User(id, e_username, e_password, e_role, e_cashOnHand);
-                users.add(newEmp);
+                int id = rs.getInt("user_id");
+                String e_username = rs.getString("user_name");
+                String e_password = rs.getString("user_password");
+                String e_role = rs.getString("user_role");
+                int e_cashOnHand = rs.getInt("cash_on_hand");
+                User usr = new User(id, e_username, e_password, e_role, e_cashOnHand);
+                users.add(usr);
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class UserPostgres implements GenericDao<User>{
 
     @Override
     public User getById(int id) {
-        String sql = "select * from users where e_id = ? ";
+        String sql = "select * from users where user_id = ? ";
         User usr = null;
 
         try (Connection con = ConnectionUtil.getConnectionFromFile()){
@@ -72,12 +72,12 @@ public class UserPostgres implements GenericDao<User>{
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
-                int e_id = rs.getInt("e_id");
-                String e_username = rs.getString("e_username");
-                String e_password = rs.getString("e_password");
-                String role = rs.getString("e_role");
-                int cashOnHand = rs.getInt("e_cash_on_hand");
-                usr = new User(e_id, e_username, e_password, role, cashOnHand);
+                int userId = rs.getInt("user_id");
+                String username = rs.getString("user_name");
+                String password = rs.getString("user_password");
+                String role = rs.getString("user_role");
+                int cashOnHand = rs.getInt("cash_on_hand");
+                usr = new User(userId, username, password, role, cashOnHand);
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();

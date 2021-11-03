@@ -21,16 +21,16 @@ public class UserService {
         if(!roleChoice.equals("1") && !roleChoice.equals("2")) throw new InvalidRole();
         else if(roleChoice.equals("1")) user.setRole("CUSTOMER");
         else user.setRole("EMPLOYEE");
-//        ua.add(user);
         up.add(user);
     }
 
     public User login(String username, String password) throws UserNotFoundException{
-        for (User user : ua.getUsers()) {
+//        for (User user : ua.getUsers()) {
+          for (User user : up.getAll()) {
             if(user.getUsername().equals(username) && user.getPassword().equals(password)){
                 return user;
             }
-        }
+          }
         throw new UserNotFoundException();
     }
 
