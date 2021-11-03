@@ -12,8 +12,8 @@ public class UserPostgres implements GenericDao<User>{
     @Override
     public int add(User user) {
         int resultId = -1;
-        String sql = "insert into employees (e_username, e_password, e_role, e_cash_on_hand) "
-                + "values (?, ?, ?, ?) returning e_id;";
+        String sql = "insert into users (user_name, user_password, user_role, cash_on_hand) "
+                + "values (?, ?, ?, ?) returning user_id;";
 
         try(Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
@@ -25,7 +25,7 @@ public class UserPostgres implements GenericDao<User>{
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
-                resultId = rs.getInt("e_id");
+                resultId = rs.getInt("user_id");
             }
 
         } catch (SQLException | IOException e) {
@@ -86,7 +86,7 @@ public class UserPostgres implements GenericDao<User>{
     }
 
     @Override
-    public User update(User user) {
+    public int update(User user) {
         String sql = "update users " +
                 "set cash_on_hand = ? " +
                 "where e_id = ? ";
@@ -97,15 +97,15 @@ public class UserPostgres implements GenericDao<User>{
             ps.setInt(1, user.getCashOnHand());
             ps.setInt(2, user.getId());
 
-            ResultSet rs = ps.executeUpdate();
+            ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
-
+                return 1;
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
-        return usr;
+        return 0;
     }
 
     @Override

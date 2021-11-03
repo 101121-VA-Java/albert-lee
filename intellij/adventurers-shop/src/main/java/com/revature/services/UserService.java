@@ -21,7 +21,8 @@ public class UserService {
         if(!roleChoice.equals("1") && !roleChoice.equals("2")) throw new InvalidRole();
         else if(roleChoice.equals("1")) user.setRole("CUSTOMER");
         else user.setRole("EMPLOYEE");
-        ua.add(user);
+//        ua.add(user);
+        up.add(user);
     }
 
     public User login(String username, String password) throws UserNotFoundException{

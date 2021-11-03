@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface GenericDao<T> {
     int add(T t);
-    List<User> getAll();
+    List<T> getAll();
     T getById(int id);
-    T update(T t);
+    int update(T t);
     void delete(int id);
 }

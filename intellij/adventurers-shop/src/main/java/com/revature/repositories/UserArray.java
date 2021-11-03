@@ -34,14 +34,15 @@ public class UserArray implements GenericDao<User> {
     }
 
     @Override
-    public User update(User updatedUser) {
+    public int update(User updatedUser) {
         for (User user1 : users) {
             if(user1.getId() == updatedUser.getId()){
                 users.set(user1.getId(), updatedUser);
-                return users.get(user1.getId());
+//                return users.get(user1.getId());
+                return 0;
             }
         }
-        return null;
+        return 0;
     }
 
     @Override
