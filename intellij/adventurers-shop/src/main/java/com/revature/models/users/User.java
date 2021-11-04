@@ -1,6 +1,6 @@
 package com.revature.models.users;
 public class User {
-    private int id=0;
+    private int id;
     private final String username;
     private final String password;
     private String role;

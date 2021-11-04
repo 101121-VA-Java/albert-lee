@@ -1,13 +1,13 @@
 package com.revature.controllers;
 
 public class FrontController {
+    private final ItemController ic;
     private final UserController uc;
-    private final ShopController shc;
     private String status = "run";
 
     public FrontController() {
+        ic = new ItemController();
         uc = new UserController();
-        shc = new ShopController();
     }
 
     public void run() {
@@ -46,16 +46,19 @@ public class FrontController {
         String choice = uc.sc.nextLine();
         switch (choice) {
             case "1":
-                shc.printAllItemsForSale();
+                ic.printAllUnownedItemsForSale();
                 break;
             case "2":
-                uc.printPlayerInventory();
+                //uc.printPlayerInventory();
+                ic.printItemsByOwnerId(uc.getCurrentUser().getId());
                 break;
             case "3":
-                makeOffer();
+                //makeOffer();
+                //oc.makeOffer(uc.sc);
                 break;
             case "4":
                 //view remaining payments for an item
+                //pc.getPaymentsById(int id)
                 break;
             case "5":
                 status = "exit";
@@ -73,17 +76,20 @@ public class FrontController {
         String choice = uc.sc.nextLine();
         switch (choice) {
             case "1":
-                shc.add(uc.sc);
+                //shc.add(uc.sc);
+                //ic.addItem(uc.sc);
                 break;
             case "2":
-                System.out.println("What item would you like to remove?");
-                shc.remove(uc.sc.nextLine());
+                //System.out.println("What item would you like to remove?");
+                //shc.remove(uc.sc.nextLine());
+                //ic.removeItem(uc.sc);
                 break;
             case "3":
-                acceptOffer();
+                //acceptOffer();
+                //oc.acceptOffer(uc.sc);
                 break;
             case "4":
-                //view payments for all items
+                //view payments for all items (both paid and unpaid)
                 break;
             case "5":
                 status = "exit";
@@ -126,11 +132,11 @@ public class FrontController {
 
     private void makeOffer() {
         System.out.println("What is the name of the item you would like to bid on?");
-        uc.makeOffer(shc.getItemByName(uc.sc.nextLine()));
+        //uc.makeOffer(shc.getItemByName(uc.sc.nextLine()));
     }
 
     private void acceptOffer() {
         System.out.println("What is the name of the item you want to sell for its highest current bid price?");
-        uc.acceptOffer(shc.remove(uc.sc.nextLine()));
+        //uc.acceptOffer(shc.remove(uc.sc.nextLine()));
     }
 }

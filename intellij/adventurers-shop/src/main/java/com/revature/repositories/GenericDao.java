@@ -1,6 +1,6 @@
 package com.revature.repositories;
 
-import com.revature.models.users.User;
+import com.revature.models.Item;
 
 import java.util.List;
 

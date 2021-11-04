@@ -1,5 +1,6 @@
 package com.revature.repositories;
 
+import com.revature.models.Item;
 import com.revature.models.users.User;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class UserArray implements GenericDao<User> {
     public User getById(int id) {
         for (User user : users) {
             if(id == user.getId()){
-                return user;
+//                return user;
             }
         }
         return null;

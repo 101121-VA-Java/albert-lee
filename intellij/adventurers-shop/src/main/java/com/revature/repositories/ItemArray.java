@@ -26,7 +26,7 @@ public class ItemArray implements GenericDao<Item> {
     public Item getById(int id) {
         for (Item item : items) {
             if(id == item.getId()){
-                return item;
+//                return item;
             }
         }
         return null;

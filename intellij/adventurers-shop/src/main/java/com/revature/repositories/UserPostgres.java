@@ -1,5 +1,6 @@
 package com.revature.repositories;
 
+import com.revature.models.Item;
 import com.revature.models.users.User;
 import com.revature.utils.ConnectionUtil;
 
@@ -46,11 +47,11 @@ public class UserPostgres implements GenericDao<User>{
 
             while(rs.next()) {
                 int id = rs.getInt("user_id");
-                String e_username = rs.getString("user_name");
-                String e_password = rs.getString("user_password");
-                String e_role = rs.getString("user_role");
-                int e_cashOnHand = rs.getInt("cash_on_hand");
-                User usr = new User(id, e_username, e_password, e_role, e_cashOnHand);
+                String username = rs.getString("user_name");
+                String password = rs.getString("user_password");
+                String role = rs.getString("user_role");
+                int cashOnHand = rs.getInt("cash_on_hand");
+                User usr = new User(id, username, password, role, cashOnHand);
                 users.add(usr);
             }
         } catch (SQLException | IOException e) {

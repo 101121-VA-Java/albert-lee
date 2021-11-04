@@ -33,6 +33,10 @@ public class UserController {
         return currentUser == null;
     }
 
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
+
     public void logout() {
         this.currentUser = null;
     }
@@ -84,28 +88,29 @@ public class UserController {
     }
 
     public void printPlayerInventory() {
-        if(us.getPlayerInventory((currentUser.getId())).getItems().isEmpty()){
-            System.out.println("You don't have any items at the moment!");
-            return;
-        }
-        for (Item item : us.getPlayerInventory(currentUser.getId()).getItems()) {
-            System.out.println(item.getName());
-        }
+        //if(us.getPlayerInventory((currentUser.getId())).getItems().isEmpty()){
+            //System.out.println("You don't have any items at the moment!");
+            //return;
+        //}
+        //for (Item item : us.getPlayerInventory(currentUser.getId()).getItems()) {
+            //System.out.println(item.getName());
+        //}
     }
 
     public void makeOffer(Item result) {
-        if (result == null) System.out.println("Item not found");
-        else {
-            int newOfferPrice = getNewOfferPrice(result);
-            if (isValidOffer(newOfferPrice, result.getHighestOfferPrice(), result.getPrice())) {
-                result.setHighestOffer(new Offer(newOfferPrice, currentUser.getId()));
-                System.out.println("Congratulations. You now have the highest bid of $" + result.getHighestOfferPrice() + " for " + result.getName());
-            }
-        }
+//        if (result == null) System.out.println("Item not found");
+//        else {
+//            int newOfferPrice = getNewOfferPrice(result);
+//            if (isValidOffer(newOfferPrice, result.getHighestOfferPrice(), result.getPrice())) {
+//                result.setHighestOffer(new Offer(newOfferPrice, currentUser.getId(), result.getId()));
+//                System.out.println("Congratulations. You now have the highest bid of $" + result.getHighestOfferPrice() + " for " + result.getName());
+//            }
+//        }
     }
 
     private int getNewOfferPrice(Item result) {
-        return result.hasOffer() ? takeInFirstBid() : takeInCompetingBid(result);
+//        return result.hasOffer() ? takeInFirstBid() : takeInCompetingBid(result);
+        return 0;
     }
 
     private int takeInFirstBid() {
@@ -114,12 +119,13 @@ public class UserController {
     }
 
     private int takeInCompetingBid(Item result) {
-        System.out.println("The current highest bid is: $" + result.getHighestOfferPrice());
-        System.out.println("How much would you like to bid? Bids lower than or equal to the current highest offer will be ignored.");
-        return Integer.parseInt(sc.nextLine());
+//        System.out.println("The current highest bid is: $" + result.getHighestOfferPrice());
+//        System.out.println("How much would you like to bid? Bids lower than or equal to the current highest offer will be ignored.");
+//        return Integer.parseInt(sc.nextLine());
+        return 0;
     }
 
-    public void acceptOffer(Item item){
-        us.addItemToInventory(item, currentUser.getId());
-    }
+//    public void acceptOffer(Item item){
+//        us.addItemToInventory(item, currentUser.getId());
+//    }
 }
