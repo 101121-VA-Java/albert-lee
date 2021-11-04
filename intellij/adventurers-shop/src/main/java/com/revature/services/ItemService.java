@@ -26,6 +26,14 @@ public class ItemService {
         ip.add(item);
     }
 
+    public void removeItemByName(String name){
+        for (Item item : ip.getAll()) {
+            if(name.equals(item.getName())){
+                ip.delete(item.getId());
+            }
+        }
+    }
+
     public void addItemToInventory(Item item, int id){
 //        for (User user : ua.getUsers()) {
 ////            if(user.getId() == id) user.addItemToInventory(item);

@@ -21,6 +21,12 @@ public class ItemController {
         is.addUnownedItemForSale(newItemToSell);
     }
 
+    public void removeItem(Scanner sc){
+        System.out.println("What item would you like to remove?");
+        String nameOfItemToRemove = sc.nextLine();
+        is.removeItemByName(nameOfItemToRemove);
+    }
+
     public void printAllUnownedItemsForSale() {
         if (is.getAll().isEmpty()) {
             System.out.println("Everything is sold out; please check later.");

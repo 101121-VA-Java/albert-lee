@@ -110,6 +110,14 @@ public class ItemPostgres implements GenericDao<Item> {
 
     @Override
     public void delete(int id) {
+        String sql = "delete from items where item_id = ?";
 
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

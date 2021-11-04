@@ -77,9 +77,7 @@ public class FrontController {
                 ic.addUnownedItemForSale(uc.sc);
                 break;
             case "2":
-                //System.out.println("What item would you like to remove?");
-                //shc.remove(uc.sc.nextLine());
-                //ic.removeItem(uc.sc);
+                ic.removeItem(uc.sc);
                 break;
             case "3":
                 //acceptOffer();
