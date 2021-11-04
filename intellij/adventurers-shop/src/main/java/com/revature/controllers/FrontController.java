@@ -2,11 +2,13 @@ package com.revature.controllers;
 
 public class FrontController {
     private final ItemController ic;
+    private final OfferController oc;
     private final UserController uc;
     private String status = "run";
 
     public FrontController() {
         ic = new ItemController();
+        oc = new OfferController();
         uc = new UserController();
     }
 
@@ -52,7 +54,7 @@ public class FrontController {
                 ic.printItemsByOwnerId(uc.getCurrentUser().getId());
                 break;
             case "3":
-                //oc.makeOffer(uc.sc);
+                oc.attemptOffer(uc, ic);
                 break;
             case "4":
                 //view remaining payments for an item
@@ -80,7 +82,6 @@ public class FrontController {
                 ic.removeItem(uc.sc);
                 break;
             case "3":
-                //acceptOffer();
                 //oc.acceptOffer(uc.sc);
                 break;
             case "4":

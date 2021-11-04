@@ -42,16 +42,16 @@ public class UserController {
     }
 
     public boolean isValidOffer(int newOfferPrice, int prevOfferPrice, int buyPrice) {
-        if(newOfferPrice >= buyPrice){
-            System.out.println("Please just buy the item for $" + buyPrice + " instead of bidding.");
-            return false;
-        } else if (currentUser.getCashOnHand() < newOfferPrice) {
-            System.out.println("Sorry, you can't afford that offer at the moment.");
-            return false;
-        } else if (newOfferPrice <= prevOfferPrice) {
-            System.out.println(("Sorry, your offer must be greater than the previous one."));
-            return false;
-        }
+//        if(newOfferPrice >= buyPrice){
+//            System.out.println("Please just buy the item for $" + buyPrice + " instead of bidding.");
+//            return false;
+//        } else if (currentUser.getCashOnHand() < newOfferPrice) {
+//            System.out.println("Sorry, you can't afford that offer at the moment.");
+//            return false;
+//        } else if (newOfferPrice <= prevOfferPrice) {
+//            System.out.println(("Sorry, your offer must be greater than the previous one."));
+//            return false;
+//        }
         return true;
     }
 
@@ -78,10 +78,11 @@ public class UserController {
         System.out.println("Please choose a role. 1 for customer, 2 for employee.");
         String roleChoice = scan.nextLine();
         try {
-            us.register(newUser, roleChoice);
+            int newUserId = us.register(newUser, roleChoice);
             System.out.println("Registration successful.");
             System.out.println("Logged in as " + newUser.getUsername() + ".");
             this.currentUser = newUser;
+            this.currentUser.setId(newUserId);
         } catch (InvalidRole e) {
             System.out.println("Please choose a valid role next time. 1 for customer, 2 for employee.");
         }

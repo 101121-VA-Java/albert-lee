@@ -12,11 +12,11 @@ public class UserService {
         up = new UserPostgres();
     }
 
-    public void register(User user, String roleChoice) throws InvalidRole {
+    public int register(User user, String roleChoice) throws InvalidRole {
         if(!roleChoice.equals("1") && !roleChoice.equals("2")) throw new InvalidRole();
         else if(roleChoice.equals("1")) user.setRole("CUSTOMER");
         else user.setRole("EMPLOYEE");
-        up.add(user);
+        return up.add(user);
     }
 
     public User login(String username, String password) throws UserNotFoundException{

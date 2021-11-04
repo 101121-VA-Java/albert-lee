@@ -11,17 +11,18 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String username, String password, String role, int cashOnHand){
+    public User(int id, String username, String password, String role){
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
-        this.cashOnHand = cashOnHand;
     }
 
     public int getId() {
         return id;
     }
+
+    public void setId(int id) { this.id = id; }
 
     public String getUsername() {
         return username;
@@ -35,19 +36,7 @@ public class User {
         return this.role;
     }
 
-    public int getCashOnHand() { return cashOnHand; }
-
-    public void setCashOnHand(int newAmount) { this.cashOnHand = newAmount; }
-
     public void setRole(String role) {
         this.role = role;
     }
-
-//    public void addItemToInventory(Item item){
-//        this.playerInventory.add(item);
-//    }
-
-//    public ItemArray getPlayerInventory(){
-//        return playerInventory;
-//    }
 }

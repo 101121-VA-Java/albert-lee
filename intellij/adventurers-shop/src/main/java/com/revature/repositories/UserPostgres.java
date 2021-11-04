@@ -1,6 +1,5 @@
 package com.revature.repositories;
 
-import com.revature.models.Item;
 import com.revature.models.users.User;
 import com.revature.utils.ConnectionUtil;
 
@@ -13,8 +12,8 @@ public class UserPostgres implements GenericDao<User>{
     @Override
     public int add(User user) {
         int resultId = -1;
-        String sql = "insert into users (user_name, user_password, user_role, cash_on_hand) "
-                + "values (?, ?, ?, ?) returning user_id;";
+        String sql = "insert into users (user_name, user_password, user_role) "
+                + "values (?, ?, ?) returning user_id;";
 
         try(Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
@@ -22,7 +21,6 @@ public class UserPostgres implements GenericDao<User>{
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getRole());
-            ps.setInt(4, 100);
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
@@ -50,8 +48,7 @@ public class UserPostgres implements GenericDao<User>{
                 String username = rs.getString("user_name");
                 String password = rs.getString("user_password");
                 String role = rs.getString("user_role");
-                int cashOnHand = rs.getInt("cash_on_hand");
-                User usr = new User(id, username, password, role, cashOnHand);
+                User usr = new User(id, username, password, role);
                 users.add(usr);
             }
         } catch (SQLException | IOException e) {
@@ -77,8 +74,7 @@ public class UserPostgres implements GenericDao<User>{
                 String username = rs.getString("user_name");
                 String password = rs.getString("user_password");
                 String role = rs.getString("user_role");
-                int cashOnHand = rs.getInt("cash_on_hand");
-                usr = new User(userId, username, password, role, cashOnHand);
+                usr = new User(userId, username, password, role);
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -89,13 +85,13 @@ public class UserPostgres implements GenericDao<User>{
     @Override
     public int update(User user) {
         String sql = "update users " +
-                "set cash_on_hand = ? " +
-                "where e_id = ? ";
+                "set user_password = ? " +
+                "where user_id = ? ";
 
         try (Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setInt(1, user.getCashOnHand());
+            ps.setString(1, user.getPassword());
             ps.setInt(2, user.getId());
 
             ResultSet rs = ps.executeQuery();

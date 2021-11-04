@@ -6,7 +6,7 @@ import com.revature.services.ItemService;
 import java.util.Scanner;
 
 public class ItemController {
-    private final ItemService is;
+    public final ItemService is;
 
     public ItemController() {
         is = new ItemService();
@@ -25,6 +25,10 @@ public class ItemController {
         System.out.println("What item would you like to remove?");
         String nameOfItemToRemove = sc.nextLine();
         is.removeItemByName(nameOfItemToRemove);
+    }
+
+    public void removeItemByName(String name) {
+        is.removeItemByName(name);
     }
 
     public void printAllUnownedItemsForSale() {
