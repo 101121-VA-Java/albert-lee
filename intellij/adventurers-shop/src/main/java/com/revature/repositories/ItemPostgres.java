@@ -12,18 +12,17 @@ public class ItemPostgres implements GenericDao<Item> {
     public int add(Item item) {
         int resultId = -1;
         String sql = "insert into items (item_name, item_price, owner_id) "
-                + "values (?, ?, ?) returning item_id;";
+                + "values (?, ?, null) returning item_id;";
 
         try(Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, item.getName());
             ps.setInt(2, item.getPrice());
-            ps.setInt(3, item.getOwnerId());
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
-                resultId = rs.getInt("user_id");
+                resultId = rs.getInt("item_id");
             }
 
         } catch (SQLException | IOException e) {

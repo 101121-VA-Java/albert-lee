@@ -12,20 +12,13 @@ public class ItemController {
         is = new ItemService();
     }
 
-    private void makeOffer(Scanner sc) {
-        System.out.println("What is the name of the item you would like to bid on?");
-        String itemName = sc.nextLine();
-        for (Item item : is.getAll()) {
-            if (item.getName().equals(itemName)) {
-                // get new bid price. if valid, replace with new highest bid.
-            }
-        }
-        System.out.println("Item not found");
-    }
-
-    private void acceptOffer(Scanner sc) {
-        System.out.println("What is the name of the item you want to sell for its highest current bid price?");
-        //uc.acceptOffer(shc.remove(sc.nextLine()));
+    public void addUnownedItemForSale(Scanner sc) {
+        System.out.println("What is the name of the item you would like to sell?");
+        String name = sc.nextLine();
+        System.out.println("How much would you like to sell the item for?");
+        String price = sc.nextLine();
+        Item newItemToSell = new Item(name, price);
+        is.addUnownedItemForSale(newItemToSell);
     }
 
     public void printAllUnownedItemsForSale() {

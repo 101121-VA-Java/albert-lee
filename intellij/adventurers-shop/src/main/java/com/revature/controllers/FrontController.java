@@ -49,11 +49,9 @@ public class FrontController {
                 ic.printAllUnownedItemsForSale();
                 break;
             case "2":
-                //uc.printPlayerInventory();
                 ic.printItemsByOwnerId(uc.getCurrentUser().getId());
                 break;
             case "3":
-                //makeOffer();
                 //oc.makeOffer(uc.sc);
                 break;
             case "4":
@@ -76,8 +74,7 @@ public class FrontController {
         String choice = uc.sc.nextLine();
         switch (choice) {
             case "1":
-                //shc.add(uc.sc);
-                //ic.addItem(uc.sc);
+                ic.addUnownedItemForSale(uc.sc);
                 break;
             case "2":
                 //System.out.println("What item would you like to remove?");

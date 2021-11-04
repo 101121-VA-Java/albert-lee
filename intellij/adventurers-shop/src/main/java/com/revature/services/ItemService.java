@@ -22,6 +22,10 @@ public class ItemService {
         return ip.getByOwnerId(id);
     }
 
+    public void addUnownedItemForSale(Item item){
+        ip.add(item);
+    }
+
     public void addItemToInventory(Item item, int id){
 //        for (User user : ua.getUsers()) {
 ////            if(user.getId() == id) user.addItemToInventory(item);
