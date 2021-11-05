@@ -59,7 +59,7 @@ public class FrontController {
                 oc.attemptOffer(uc, ic);
                 break;
             case "4":
-                //pc.makePayment();
+                pc.makePayment(uc.sc);
                 break;
             case "5":
                 status = "exit";

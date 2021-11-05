@@ -3,6 +3,8 @@ package com.revature.controllers;
 import com.revature.models.Payment;
 import com.revature.services.PaymentService;
 
+import java.util.Scanner;
+
 public class PaymentController {
     public final PaymentService ps;
 
@@ -18,5 +20,11 @@ public class PaymentController {
                 System.out.println("Customer " + payment.getPayeeId() + " owes " + payment.getAmount());
             }
         }
+    }
+
+    public void makePayment(Scanner sc) {
+        System.out.println("What is the name of the item you would like to make a payment towards?");
+        String itemName = sc.nextLine();
+        ps.makePayment(itemName);
     }
 }

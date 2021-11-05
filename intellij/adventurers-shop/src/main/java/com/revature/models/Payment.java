@@ -1,16 +1,23 @@
 package com.revature.models;
 
 public class Payment {
-    private final int id;
-    private final int payee_id;
-    private final int item_id;
-    private final int amount;
+    private int id=0;
+    private int payee_id=0;
+    private int item_id=0;
+    private int amount=0;
+
+    public Payment(){
+    }
 
     public Payment(int id, int payee_id, int item_id, int amount){
         this.id = id;
         this.payee_id = payee_id;
         this.item_id = item_id;
         this.amount = amount;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getPayeeId() {

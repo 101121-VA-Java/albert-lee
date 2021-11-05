@@ -74,4 +74,36 @@ public class PaymentPostgres implements GenericDao<Payment>{
             e.printStackTrace();
         }
     }
+
+    public void deleteById(int paymentId) {
+        String sql = "delete from payments where payment_id = ?";
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, paymentId);
+            ps.executeUpdate();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Payment getFirstPayment(String itemName) {
+        String sql = "select payment_id, payee_id, items.item_id, amount from payments join items on items.item_id = payments.item_id where item_name = ? limit 1";
+        Payment result = new Payment();
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, itemName);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                int paymentId = rs.getInt("payment_id");
+                int payeeId = rs.getInt("payee_id");
+                int itemId = rs.getInt("item_id");
+                int amount = rs.getInt("amount");
+                result = new Payment(paymentId, payeeId, itemId, amount);
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
