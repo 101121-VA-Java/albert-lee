@@ -1,9 +1,127 @@
 package com.revature;
-import com.revature.controllers.FrontController;
+
+import com.revature.controllers.*;
 
 public class Driver {
     public static void main(String[] args) {
-        FrontController fc = new FrontController();
-        fc.run();
+        ItemController ic = new ItemController();
+        OfferController oc = new OfferController();
+        PaymentController pc = new PaymentController();
+        UserController uc = new UserController();
+        String status = "run";
+
+        while (status.equals("run")) {
+            if (uc.isLoggedOut()) status = loggedOutOptions(uc);
+            if (uc.isCustomer()) status = customerOptions(ic, uc, oc, pc);
+            if (uc.isEmployee()) status = employeeOptions(ic, uc, oc, pc);
+        }
+
+        uc.sc.close();
+    }
+
+    private static String loggedOutOptions(UserController uc) {
+        printLoggedOutOptions();
+        String result = "run";
+        String choice = uc.sc.nextLine();
+        switch (choice) {
+            case "1":
+                uc.attemptLogin(uc.sc);
+                break;
+            case "2":
+                uc.attemptRegistration(uc.sc);
+                break;
+            case "3":
+                result = "exit";
+                break;
+            default:
+                System.out.println("Invalid input.");
+        }
+        return result;
+    }
+
+    private static String customerOptions(ItemController ic, UserController uc, OfferController oc, PaymentController pc) {
+        printCustomerOptions();
+        String result = "run";
+        String choice = uc.sc.nextLine();
+        switch (choice) {
+            case "1":
+                ic.printAllUnownedItemsForSale();
+                break;
+            case "2":
+                ic.printItemsByOwnerId(uc.getCurrentUser().getId());
+                break;
+            case "3":
+                oc.attemptOffer(uc, ic);
+                break;
+            case "4":
+                pc.makePayment(uc.sc);
+                break;
+            case "5":
+                result = "exit";
+                break;
+            case "6":
+                uc.logout();
+                break;
+            default:
+                System.out.println("Invalid input.");
+        }
+        return result;
+    }
+
+    private static String employeeOptions(ItemController ic, UserController uc, OfferController oc, PaymentController pc) {
+        printEmployeeOptions();
+        String result = "run";
+        String choice = uc.sc.nextLine();
+        switch (choice) {
+            case "1":
+                ic.addUnownedItemForSale(uc.sc);
+                break;
+            case "2":
+                ic.removeItem(uc.sc);
+                break;
+            case "3":
+                oc.acceptOffer(uc, ic);
+                break;
+            case "4":
+                pc.printAllPaymentsOutstanding();
+                break;
+            case "5":
+                result = "exit";
+                break;
+            case "6":
+                uc.logout();
+                break;
+            default:
+                System.out.println("Invalid input.");
+        }
+        return result;
+    }
+
+    private static void printLoggedOutOptions(){
+        System.out.println("Welcome to the Adventurer's Shop!");
+        System.out.println("Enter the appropriate number to get started.");
+        System.out.println("1: Login");
+        System.out.println("2: Register");
+        System.out.println("3: Exit");
+    }
+
+    private static void printCustomerOptions(){
+        System.out.println("Enter the appropriate number to get started.");
+        System.out.println("1: View items for sale");
+        System.out.println("2: View my inventory");
+        System.out.println("3: Make an offer for an item");
+        System.out.println("4: Make a payment");
+        System.out.println("5: Exit");
+        System.out.println("6: Log out");
+    }
+
+    private static void printEmployeeOptions() {
+        System.out.println("Enter the appropriate number to get started.");
+        System.out.println("1: List item for sale");
+        System.out.println("2: Remove listing");
+        System.out.println("3: Accept or reject the current highest offer for an item");
+        System.out.println("4: View all outstanding payments");
+        System.out.println("5: Exit");
+        System.out.println("6: Log out");
     }
 }
