@@ -22,8 +22,7 @@ public class Driver {
     private static String loggedOutOptions(UserController uc) {
         printLoggedOutOptions();
         String result = "run";
-        String choice = uc.sc.nextLine();
-        switch (choice) {
+        switch (uc.sc.nextLine()) {
             case "1":
                 uc.attemptLogin(uc.sc);
                 break;
@@ -42,8 +41,7 @@ public class Driver {
     private static String customerOptions(ItemController ic, UserController uc, OfferController oc, PaymentController pc) {
         printCustomerOptions();
         String result = "run";
-        String choice = uc.sc.nextLine();
-        switch (choice) {
+        switch (uc.sc.nextLine()) {
             case "1":
                 ic.printAllUnownedItemsForSale();
                 break;
@@ -71,8 +69,7 @@ public class Driver {
     private static String employeeOptions(ItemController ic, UserController uc, OfferController oc, PaymentController pc) {
         printEmployeeOptions();
         String result = "run";
-        String choice = uc.sc.nextLine();
-        switch (choice) {
+        switch (uc.sc.nextLine()) {
             case "1":
                 ic.addUnownedItemForSale(uc.sc);
                 break;
@@ -106,6 +103,7 @@ public class Driver {
     }
 
     private static void printCustomerOptions(){
+        System.out.println("This is the customer dashboard.");
         System.out.println("Enter the appropriate number to get started.");
         System.out.println("1: View items for sale");
         System.out.println("2: View my inventory");
@@ -116,6 +114,7 @@ public class Driver {
     }
 
     private static void printEmployeeOptions() {
+        System.out.println("This is the employee dashboard.");
         System.out.println("Enter the appropriate number to get started.");
         System.out.println("1: List item for sale");
         System.out.println("2: Remove listing");
