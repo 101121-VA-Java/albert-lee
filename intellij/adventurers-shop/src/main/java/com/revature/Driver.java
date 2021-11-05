@@ -12,8 +12,8 @@ public class Driver {
 
         while (status.equals("run")) {
             if (uc.isLoggedOut()) status = loggedOutOptions(uc);
-            if (uc.isCustomer()) status = customerOptions(ic, uc, oc, pc);
-            if (uc.isEmployee()) status = employeeOptions(ic, uc, oc, pc);
+            else if (uc.isCustomer()) status = customerOptions(ic, uc, oc, pc);
+            else if (uc.isEmployee()) status = employeeOptions(ic, uc, oc, pc);
         }
 
         uc.sc.close();
