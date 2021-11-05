@@ -1,6 +1,6 @@
 package com.revature.repositories;
 
-import com.revature.models.users.User;
+import com.revature.models.User;
 import com.revature.utils.ConnectionUtil;
 
 import java.io.IOException;

@@ -2,9 +2,8 @@ package com.revature.controllers;
 
 import com.revature.exceptions.InvalidRole;
 import com.revature.exceptions.UserNotFoundException;
-import com.revature.models.Offer;
 import com.revature.models.Item;
-import com.revature.models.users.User;
+import com.revature.models.User;
 import com.revature.services.UserService;
 
 import java.util.Scanner;

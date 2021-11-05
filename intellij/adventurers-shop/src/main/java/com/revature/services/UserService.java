@@ -2,7 +2,7 @@ package com.revature.services;
 
 import com.revature.exceptions.InvalidRole;
 import com.revature.exceptions.UserNotFoundException;
-import com.revature.models.users.User;
+import com.revature.models.User;
 import com.revature.repositories.UserPostgres;
 
 public class UserService {

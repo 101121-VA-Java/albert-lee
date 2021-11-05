@@ -3,12 +3,14 @@ package com.revature.controllers;
 public class FrontController {
     private final ItemController ic;
     private final OfferController oc;
+    private final PaymentController pc;
     private final UserController uc;
     private String status = "run";
 
     public FrontController() {
         ic = new ItemController();
         oc = new OfferController();
+        pc = new PaymentController();
         uc = new UserController();
     }
 
@@ -57,8 +59,7 @@ public class FrontController {
                 oc.attemptOffer(uc, ic);
                 break;
             case "4":
-                //view remaining payments for an item
-                //pc.getPaymentsById(int id)
+                //pc.makePayment();
                 break;
             case "5":
                 status = "exit";
@@ -85,7 +86,7 @@ public class FrontController {
                 oc.acceptOffer(uc, ic);
                 break;
             case "4":
-                //view payments for all items (both paid and unpaid)
+                pc.printAllPaymentsOutstanding();
                 break;
             case "5":
                 status = "exit";
@@ -111,7 +112,7 @@ public class FrontController {
         System.out.println("1: View items for sale");
         System.out.println("2: View my inventory");
         System.out.println("3: Make an offer for an item");
-        System.out.println("4: View remaining payments for an item");
+        System.out.println("4: Make a payment");
         System.out.println("5: Exit");
         System.out.println("6: Log out");
     }
@@ -121,7 +122,7 @@ public class FrontController {
         System.out.println("1: List item for sale");
         System.out.println("2: Remove listing");
         System.out.println("3: Accept or reject the current highest offer for an item");
-        System.out.println("4: View all payments");
+        System.out.println("4: View all outstanding payments");
         System.out.println("5: Exit");
         System.out.println("6: Log out");
     }
