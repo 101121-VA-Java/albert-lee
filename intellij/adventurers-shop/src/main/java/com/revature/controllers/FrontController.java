@@ -82,7 +82,7 @@ public class FrontController {
                 ic.removeItem(uc.sc);
                 break;
             case "3":
-                //oc.acceptOffer(uc.sc);
+                oc.acceptOffer(uc, ic);
                 break;
             case "4":
                 //view payments for all items (both paid and unpaid)
@@ -124,15 +124,5 @@ public class FrontController {
         System.out.println("4: View all payments");
         System.out.println("5: Exit");
         System.out.println("6: Log out");
-    }
-
-    private void makeOffer() {
-        System.out.println("What is the name of the item you would like to bid on?");
-        //uc.makeOffer(shc.getItemByName(uc.sc.nextLine()));
-    }
-
-    private void acceptOffer() {
-        System.out.println("What is the name of the item you want to sell for its highest current bid price?");
-        //uc.acceptOffer(shc.remove(uc.sc.nextLine()));
     }
 }

@@ -6,6 +6,9 @@ public class Item {
     private int ownerId;
     private String name;
 
+    public Item(){
+    }
+
     public Item(String itemName, String price) {
         this.name = itemName;
         this.price = Integer.parseInt(price);
@@ -30,6 +33,10 @@ public class Item {
 
     public String getName() {
         return name;
+    }
+
+    public void setOwnerId(int id) {
+        this.ownerId = id;
     }
 }
 

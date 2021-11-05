@@ -1,13 +1,11 @@
 package com.revature.repositories;
 
+import com.revature.models.Item;
 import com.revature.models.Offer;
 import com.revature.utils.ConnectionUtil;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +40,20 @@ public class OfferPostgres implements GenericDao<Offer>{
         String sql = "select * from offers;";
         List<Offer> offers = new ArrayList<>();
 
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+
+            while(rs.next()) {
+                int bidPrice = rs.getInt("bid_price");
+                int bidderId = rs.getInt("bidder_id");
+                int itemId = rs.getInt("item_id");
+                Offer newOffer = new Offer(bidPrice, bidderId, itemId);
+                offers.add(newOffer);
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
         return offers;
     }
 
@@ -80,7 +92,30 @@ public class OfferPostgres implements GenericDao<Offer>{
         return currentBid;
     }
 
-    public void deleteLowerOffers(int itemId) {
+    public List<Offer> getOffersByItemName(String name){
+        String sql = "select bid_price, bidder_id, item_id from offers join items on item_id = item_id where item_name = ?;";
+        List<Offer> offers = new ArrayList<>();
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                int bidPrice = rs.getInt("bid_price");
+                int bidderId = rs.getInt("bidder_id");
+                int itemId = rs.getInt("item_id");
+                Offer newOffer = new Offer(bidPrice, bidderId, itemId);
+                offers.add(newOffer);
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return offers;
+    }
+
+    public void deleteOffers(int itemId) {
         String sql = "delete from offers where item_id = ?";
         try (Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
@@ -89,5 +124,25 @@ public class OfferPostgres implements GenericDao<Offer>{
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getHighestBidderId(String itemName) {
+        String sql = "select bidder_id from offers join items on offers.item_id = items.item_id where item_name = ?;";
+        int bidderId = -1;
+        try(Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, itemName);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                bidderId = rs.getInt("bidder_id");
+            }
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return bidderId;
     }
 }

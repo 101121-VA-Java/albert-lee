@@ -1,10 +1,7 @@
 package com.revature.controllers;
 
-import com.revature.models.Item;
-import com.revature.models.Offer;
 import com.revature.services.OfferService;
-
-import java.util.Scanner;
+import java.util.Locale;
 
 public class OfferController {
     private final OfferService os;
@@ -17,16 +14,11 @@ public class OfferController {
         System.out.println("What is the name of the item you would like to bid for?");
         String nameOfItemToBidOn = uc.sc.nextLine();
         os.addOffer(nameOfItemToBidOn, ic, uc);
-        //get highest offer
-        //the current highest bid is _
-        //please bid higher or ignore
-        //if new bid is valid
-            //add new bid
-            //delete old bid
     }
 
-    public void acceptOffer(Scanner sc, ItemController ic) {
-        //which item would you like to accept a bid for?
-        //get string name to search for.
+    public void acceptOffer(UserController uc, ItemController ic) {
+        System.out.println("What is the name of the item you want to sell?");
+        String itemName = uc.sc.nextLine();
+        os.acceptOffer(itemName, uc, ic);
     }
 }

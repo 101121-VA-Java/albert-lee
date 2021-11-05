@@ -57,7 +57,53 @@ public class ItemPostgres implements GenericDao<Item> {
 
     @Override
     public Item getById(int id) {
-        return null;
+
+        String sql = "select * from items where item_id = ? ";
+        Item result = new Item();
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                int itemId = rs.getInt("item_id");
+                String name = rs.getString("item_name");
+                int price = rs.getInt("item_price");
+                int ownerId = rs.getInt("owner_id");
+                result = new Item(itemId, name, price, ownerId);
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Item getByName(String name){
+
+        String sql = "select * from items where item_name = ? ";
+        Item result = new Item();
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, name);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                int itemId = rs.getInt("item_id");
+                String item_name = rs.getString("item_name");
+                int price = rs.getInt("item_price");
+                int ownerId = rs.getInt("owner_id");
+                result = new Item(itemId, item_name, price, ownerId);
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public List<Item> getByOwnerId(int id) {
@@ -108,6 +154,7 @@ public class ItemPostgres implements GenericDao<Item> {
 
     @Override
     public int update(Item item) {
+        int itemId = 0;
         String sql = "update items " +
                 "set owner_id = ? " +
                 "where item_id = ? ";
@@ -121,12 +168,12 @@ public class ItemPostgres implements GenericDao<Item> {
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
-                return 1;
+                itemId = rs.getInt("item_id");
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
-        return 0;
+        return itemId;
     }
 
     @Override
@@ -136,6 +183,19 @@ public class ItemPostgres implements GenericDao<Item> {
         try (Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void purchaseItem(int highestBidderId, int itemId) {
+        String sql = "update items set owner_id = ? where item_id = ?";
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, highestBidderId);
+            ps.setInt(2, itemId);
             ps.executeUpdate();
         } catch (SQLException | IOException e) {
             e.printStackTrace();

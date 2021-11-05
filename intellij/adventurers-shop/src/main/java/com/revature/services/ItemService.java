@@ -6,7 +6,7 @@ import com.revature.repositories.ItemPostgres;
 import java.util.List;
 
 public class ItemService {
-    private final ItemPostgres ip;
+    public final ItemPostgres ip;
 
     public ItemService() {
         ip = new ItemPostgres();

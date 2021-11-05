@@ -3,12 +3,14 @@ package com.revature.services;
 import com.revature.controllers.ItemController;
 import com.revature.controllers.UserController;
 import com.revature.exceptions.BidTooLowException;
+import com.revature.models.Item;
 import com.revature.models.Offer;
 import com.revature.repositories.OfferPostgres;
 import java.util.List;
+import java.util.Locale;
 
 public class OfferService {
-    private final OfferPostgres op;
+    public final OfferPostgres op;
 
     public OfferService() {
         op = new OfferPostgres();
@@ -36,11 +38,24 @@ public class OfferService {
         int currentUserId = uc.getCurrentUser().getId();
         newOffer.setOwnerId(currentUserId);
         newOffer.setItemId(itemId);
-        removeLowerOffers(itemId);
         op.add(newOffer);
     }
 
-    public void removeLowerOffers(int itemId){
-        op.deleteLowerOffers(itemId);
+    public void acceptOffer(String itemName, UserController uc, ItemController ic){
+        Item item = ic.is.ip.getByName(itemName);
+        int highestOffer = op.getOfferPriceByItemName(itemName);
+        int highestBidderId = op.getHighestBidderId(itemName);
+        System.out.println("Sell for " + highestOffer + "? Y / N");
+        String choice = uc.sc.nextLine();
+        if(choice.toUpperCase(Locale.ROOT).equals("Y")){
+            ic.is.ip.purchaseItem(highestBidderId, item.getId());
+            removeOffers(ic.is.getIdByName(itemName));
+        } else {
+            System.out.println("Returning to main menu.");
+        }
+    }
+
+    public void removeOffers(int itemId){
+        op.deleteOffers(itemId);
     }
 }
