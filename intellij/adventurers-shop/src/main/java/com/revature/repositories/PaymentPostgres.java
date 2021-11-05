@@ -1,7 +1,6 @@
 package com.revature.repositories;
 
 import com.revature.models.Payment;
-import com.revature.models.Payment;
 import com.revature.utils.ConnectionUtil;
 
 import java.io.IOException;
