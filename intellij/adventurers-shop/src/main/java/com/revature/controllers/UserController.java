@@ -2,7 +2,6 @@ package com.revature.controllers;
 
 import com.revature.exceptions.InvalidRole;
 import com.revature.exceptions.UserNotFoundException;
-import com.revature.models.Item;
 import com.revature.models.User;
 import com.revature.services.UserService;
 
@@ -40,20 +39,6 @@ public class UserController {
         this.currentUser = null;
     }
 
-    public boolean isValidOffer(int newOfferPrice, int prevOfferPrice, int buyPrice) {
-//        if(newOfferPrice >= buyPrice){
-//            System.out.println("Please just buy the item for $" + buyPrice + " instead of bidding.");
-//            return false;
-//        } else if (currentUser.getCashOnHand() < newOfferPrice) {
-//            System.out.println("Sorry, you can't afford that offer at the moment.");
-//            return false;
-//        } else if (newOfferPrice <= prevOfferPrice) {
-//            System.out.println(("Sorry, your offer must be greater than the previous one."));
-//            return false;
-//        }
-        return true;
-    }
-
     public void attemptLogin(Scanner scan) {
         System.out.println("Please enter your username");
         String username = scan.nextLine();
@@ -87,45 +72,4 @@ public class UserController {
         }
     }
 
-    public void printPlayerInventory() {
-        //if(us.getPlayerInventory((currentUser.getId())).getItems().isEmpty()){
-            //System.out.println("You don't have any items at the moment!");
-            //return;
-        //}
-        //for (Item item : us.getPlayerInventory(currentUser.getId()).getItems()) {
-            //System.out.println(item.getName());
-        //}
-    }
-
-    public void makeOffer(Item result) {
-//        if (result == null) System.out.println("Item not found");
-//        else {
-//            int newOfferPrice = getNewOfferPrice(result);
-//            if (isValidOffer(newOfferPrice, result.getHighestOfferPrice(), result.getPrice())) {
-//                result.setHighestOffer(new Offer(newOfferPrice, currentUser.getId(), result.getId()));
-//                System.out.println("Congratulations. You now have the highest bid of $" + result.getHighestOfferPrice() + " for " + result.getName());
-//            }
-//        }
-    }
-
-    private int getNewOfferPrice(Item result) {
-//        return result.hasOffer() ? takeInFirstBid() : takeInCompetingBid(result);
-        return 0;
-    }
-
-    private int takeInFirstBid() {
-        System.out.println("There are no bids yet. How much would you like to offer?");
-        return Integer.parseInt(sc.nextLine());
-    }
-
-    private int takeInCompetingBid(Item result) {
-//        System.out.println("The current highest bid is: $" + result.getHighestOfferPrice());
-//        System.out.println("How much would you like to bid? Bids lower than or equal to the current highest offer will be ignored.");
-//        return Integer.parseInt(sc.nextLine());
-        return 0;
-    }
-
-//    public void acceptOffer(Item item){
-//        us.addItemToInventory(item, currentUser.getId());
-//    }
 }

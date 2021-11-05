@@ -1,7 +1,6 @@
 package com.revature.models;
 
 public class Offer {
-    private int offer_id;
     private int bidPrice;
     private int ownerId;
     private int itemId;

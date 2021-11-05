@@ -1,7 +1,5 @@
 package com.revature.repositories;
 
-import com.revature.models.Item;
-
 import java.util.List;
 
 public interface GenericDao<T> {

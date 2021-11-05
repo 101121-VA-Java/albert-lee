@@ -27,10 +27,6 @@ public class ItemController {
         is.removeItemByName(nameOfItemToRemove);
     }
 
-    public void removeItemByName(String name) {
-        is.removeItemByName(name);
-    }
-
     public void printAllUnownedItemsForSale() {
         if (is.getAll().isEmpty()) {
             System.out.println("Everything is sold out; please check later.");

@@ -4,7 +4,6 @@ public class User {
     private final String username;
     private final String password;
     private String role;
-    private int cashOnHand;
 
     public User(String username, String password){
         this.username = username;

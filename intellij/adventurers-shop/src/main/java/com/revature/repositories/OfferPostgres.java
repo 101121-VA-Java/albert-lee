@@ -1,6 +1,5 @@
 package com.revature.repositories;
 
-import com.revature.models.Item;
 import com.revature.models.Offer;
 import com.revature.utils.ConnectionUtil;
 
@@ -90,29 +89,6 @@ public class OfferPostgres implements GenericDao<Offer>{
         }
 
         return currentBid;
-    }
-
-    public List<Offer> getOffersByItemName(String name){
-        String sql = "select bid_price, bidder_id, item_id from offers join items on item_id = item_id where item_name = ?;";
-        List<Offer> offers = new ArrayList<>();
-
-        try (Connection con = ConnectionUtil.getConnectionFromFile()){
-            PreparedStatement ps = con.prepareStatement(sql);
-
-            ps.setString(1, name);
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()) {
-                int bidPrice = rs.getInt("bid_price");
-                int bidderId = rs.getInt("bidder_id");
-                int itemId = rs.getInt("item_id");
-                Offer newOffer = new Offer(bidPrice, bidderId, itemId);
-                offers.add(newOffer);
-            }
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
-        return offers;
     }
 
     public void deleteOffers(int itemId) {
