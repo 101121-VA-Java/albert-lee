@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemPostgres implements GenericDao<Item> {
+    @Override
     public int add(Item item) {
         int resultId = -1;
         String sql = "insert into items (item_name, item_price, owner_id) "
@@ -81,6 +82,44 @@ public class ItemPostgres implements GenericDao<Item> {
         return result;
     }
 
+    @Override
+    public int update(Item item) {
+        int itemId = 0;
+        String sql = "update items " +
+                "set owner_id = ? " +
+                "where item_id = ? ";
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, item.getOwnerId());
+            ps.setInt(2, item.getId());
+
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                itemId = rs.getInt("item_id");
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return itemId;
+    }
+
+    @Override
+    public void delete(int id) {
+        String sql = "delete from items where item_id = ?";
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public Item getByName(String name){
 
         String sql = "select * from items where item_name = ? ";
@@ -152,42 +191,6 @@ public class ItemPostgres implements GenericDao<Item> {
         return resultId;
     }
 
-    @Override
-    public int update(Item item) {
-        int itemId = 0;
-        String sql = "update items " +
-                "set owner_id = ? " +
-                "where item_id = ? ";
-
-        try (Connection con = ConnectionUtil.getConnectionFromFile()){
-            PreparedStatement ps = con.prepareStatement(sql);
-
-            ps.setInt(1, item.getOwnerId());
-            ps.setInt(2, item.getId());
-
-            ResultSet rs = ps.executeQuery();
-
-            if(rs.next()) {
-                itemId = rs.getInt("item_id");
-            }
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
-        return itemId;
-    }
-
-    @Override
-    public void delete(int id) {
-        String sql = "delete from items where item_id = ?";
-
-        try (Connection con = ConnectionUtil.getConnectionFromFile()){
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void purchaseItem(int highestBidderId, int itemId) {
         String sql = "update items set owner_id = ? where item_id = ?";
