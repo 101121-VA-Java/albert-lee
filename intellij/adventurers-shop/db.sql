@@ -1,21 +1,3 @@
--- This is a single line comment.
-
---create database revacompany;
-/*
-	This 
-	is
-	a
-	multiline
-	comment
-	
-	naming convention is snake_case, due to the lack of case sensitivity
-*/
-
--- Creating a schema
---create schema company;
---drop schema company;
-
-
 drop table if exists users;
 create table if not exists users(
 	user_id serial primary key,
@@ -38,7 +20,6 @@ create table if not exists items(
 
 insert into items (item_name, item_price, owner_id) values ('apple', '5', null);
 insert into items (item_name, item_price, owner_id) values ('orange', '3', 1);
-select * from items where owner_id = 1;
 
 create table if not exists offers(
 	offer_id serial primary key,
@@ -49,22 +30,17 @@ create table if not exists offers(
 
 insert into offers (offer_price, bidder_id, item_id) values ('3', 1, 1);
 
---alter table employees 
---	alter column e_name set data type varchar(75);
+insert into offers (offer_price, bidder_id, item_id) values ('3', 1, 1);
+select offer_price from offers join items on offers.item_id = items.item_id where item_name = 'apple';
+select * from offers join items on offers.item_id = items.item_id where item_name = 'apple';
 
+drop table if exists payments;
+create table if not exists payments(
+    payment_id serial primary key,
+    payee_id integer references users(user_id),
+    item_id integer references items(item_id),
+    amount integer
+);
 
-select e.e_name "Employee name", m.e_name "Manager name"
-	from employees e
-	join employees m on e.man_e_id = m.e_id 
-	where e.e_id = 1;
-
-select t.t_name "task name", t.t_description "task description", t.t_completion_status, e.e_name 
-	from tasks t
-	join employees e 
-	on t.t_assigned_emp =e.e_id 
-	where t.id = 1;
-
--- retrieving all of the tasks for employee of id 1
-select * from tasks where t_assigned_emp = 1;
-
---delete from employees where e_id = 11; -- instead of 11 it might be anything
+insert into payments (payee_id, item_id, amount) values (1, 1, 2);
+insert into payments (payee_id, item_id, amount) values (1, 1, 3);
