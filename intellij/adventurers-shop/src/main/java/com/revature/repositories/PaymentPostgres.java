@@ -57,6 +57,29 @@ public class PaymentPostgres implements GenericDao<Payment>{
         return null;
     }
 
+    public List<Payment> getPaymentsForItemName(String name) {
+        String sql = "select * from payments join items on payments.item_id = items.item_id where item_name = ?;";
+        List<Payment> payments = new ArrayList<>();
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile()){
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                int paymentId = rs.getInt("payment_id");
+                int payeeId = rs.getInt("payee_id");
+                int itemId = rs.getInt("item_id");
+                int amount = rs.getInt("amount");
+                Payment newPayment = new Payment(paymentId, payeeId, itemId, amount);
+                payments.add(newPayment);
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return payments;
+    }
+
     @Override
     public int update(Payment payment) {
         return 0;
