@@ -9,12 +9,6 @@ public class Payment {
     public Payment(){
     }
 
-    public Payment(int payee_id, int item_id, int amount){
-        this.payee_id = payee_id;
-        this.item_id = item_id;
-        this.amount = amount;
-    }
-
     public Payment(int id, int payee_id, int item_id, int amount){
         this.id = id;
         this.payee_id = payee_id;
