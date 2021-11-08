@@ -43,7 +43,7 @@ class ItemServiceTest {
 
     @Test
     void getItemsBelongingToUserId() {
-        int expected = 1;
+        int expected = ip.getByOwnerId(1).size();
         int actual = is.getItemsBelongingToUserId(1).size();
         assertEquals(expected, actual);
     }

@@ -61,14 +61,17 @@ public class UserController {
         User newUser = new User(username, password);
         System.out.println("Please choose a role. 1 for customer, 2 for employee.");
         String roleChoice = scan.nextLine();
+        int newUserId = -1;
         try {
-            int newUserId = us.register(newUser, roleChoice);
+            newUserId = us.register(newUser, roleChoice);
+        } catch (InvalidRole e) {
+            System.out.println("Please choose a valid role next time. 1 for customer, 2 for employee.");
+        }
+        if(newUserId != -1){
             System.out.println("Registration successful.");
             System.out.println("Logged in as " + newUser.getUsername() + ".");
             this.currentUser = newUser;
             this.currentUser.setId(newUserId);
-        } catch (InvalidRole e) {
-            System.out.println("Please choose a valid role next time. 1 for customer, 2 for employee.");
         }
     }
 

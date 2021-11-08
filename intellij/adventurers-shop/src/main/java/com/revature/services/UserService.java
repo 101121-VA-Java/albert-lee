@@ -17,7 +17,14 @@ public class UserService {
         if(!roleChoice.equals("1") && !roleChoice.equals("2")) throw new InvalidRole();
         else if(roleChoice.equals("1")) user.setRole("CUSTOMER");
         else user.setRole("EMPLOYEE");
-        return up.add(user);
+        int newUserId = -1;
+        try{
+            newUserId = up.add(user);
+            if(newUserId == -1) throw new Exception();
+        } catch(Exception e){
+            LogUtil.descriptiveError("Registration failed. User already exists or an input was bad.");
+        }
+        return newUserId;
     }
 
     public User login(String username, String password) throws UserNotFoundException{
@@ -27,9 +34,9 @@ public class UserService {
                     return user;
                 }
             }
-            throw new UserNotFoundException();
-        } catch (UserNotFoundException e) {
-            LogUtil.descriptiveError("User Not Found");
+            throw new Exception();
+        } catch (Exception e) {
+            LogUtil.descriptiveError("Bad username/password");
         }
         return null;
     }

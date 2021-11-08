@@ -52,7 +52,7 @@ public class Driver {
                 oc.attemptOffer(uc, ic);
                 break;
             case "4":
-                pc.makePayment(uc.sc);
+                pc.makePayment(uc.sc, uc.getCurrentUser().getId());
                 break;
             case "5":
                 result = "exit";
@@ -77,7 +77,7 @@ public class Driver {
                 ic.removeItem(uc.sc);
                 break;
             case "3":
-                oc.acceptOffer(uc, ic);
+                oc.acceptOffer(uc, ic, pc);
                 break;
             case "4":
                 pc.printAllPaymentsOutstanding();

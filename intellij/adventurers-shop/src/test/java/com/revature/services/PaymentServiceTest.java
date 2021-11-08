@@ -35,11 +35,21 @@ class PaymentServiceTest {
                 () -> assertEquals(3, actual.get(1).getAmount())
                 );
     }
+
     @Test
     void makePayment() {
         int actual = pp.getPaymentsForItemName("apple").size();
         ps.makePayment("apple");
         int expected = pp.getPaymentsForItemName("apple").size();
         assertNotEquals(actual, expected);
+    }
+
+    @Test
+    void add(){
+        Payment payment1 = new Payment(1, 1, 1, 2);
+        int expected = pp.getAll().size();
+        pp.add(payment1);
+        int actual = pp.getAll().size();
+        assertNotEquals(expected, actual);
     }
 }

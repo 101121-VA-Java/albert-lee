@@ -19,4 +19,8 @@ public class PaymentService {
     public void makePayment(String itemName) {
         pp.deleteById(pp.getFirstPayment(itemName).getId());
     }
+
+    public int add(Payment payment) {
+        return pp.add(payment);
+    }
 }
