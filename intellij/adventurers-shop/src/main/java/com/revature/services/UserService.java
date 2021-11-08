@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import com.revature.utils.LogUtil;
 import com.revature.exceptions.InvalidRole;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.User;
@@ -20,11 +21,16 @@ public class UserService {
     }
 
     public User login(String username, String password) throws UserNotFoundException{
-          for (User user : up.getAll()) {
-            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
-                return user;
+        try {
+            for (User user : up.getAll()) {
+                if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                    return user;
+                }
             }
-          }
-        throw new UserNotFoundException();
+            throw new UserNotFoundException();
+        } catch (UserNotFoundException e) {
+            LogUtil.descriptiveError("User Not Found");
+        }
+        return null;
     }
 }
