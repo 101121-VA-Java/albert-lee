@@ -52,7 +52,7 @@ public class Driver {
                 oc.attemptOffer(uc, ic);
                 break;
             case "4":
-                pc.makePayment(uc.sc, uc.getCurrentUser().getId());
+                pc.makePayment(uc);
                 break;
             case "5":
                 result = "exit";
