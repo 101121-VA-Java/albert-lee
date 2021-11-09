@@ -4,6 +4,7 @@ import com.revature.exceptions.InvalidRole;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.User;
 import com.revature.services.UserService;
+import com.revature.utils.PasswordUtil;
 
 import java.util.Scanner;
 
@@ -58,7 +59,8 @@ public class UserController {
         String username = scan.nextLine();
         System.out.println("Please enter a password:");
         String password = scan.nextLine();
-        User newUser = new User(username, password);
+        String hashedPassword = PasswordUtil.hashPassword(password);
+        User newUser = new User(username, hashedPassword);
         System.out.println("Please choose a role. 1 for customer, 2 for employee.");
         String roleChoice = scan.nextLine();
         int newUserId = -1;

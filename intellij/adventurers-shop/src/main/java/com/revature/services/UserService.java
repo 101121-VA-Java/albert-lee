@@ -5,6 +5,7 @@ import com.revature.exceptions.InvalidRole;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.User;
 import com.revature.repositories.UserPostgres;
+import com.revature.utils.PasswordUtil;
 
 public class UserService {
     private final UserPostgres up;
@@ -30,7 +31,7 @@ public class UserService {
     public User login(String username, String password) throws UserNotFoundException{
         try {
             for (User user : up.getAll()) {
-                if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                if(user.getUsername().equals(username) && PasswordUtil.isCorrectPassword(password, user.getPassword())){
                     return user;
                 }
             }
