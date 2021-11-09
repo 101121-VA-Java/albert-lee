@@ -34,7 +34,6 @@ public class ItemService {
         } catch(Exception e) {
             LogUtil.descriptiveError("Item failed to be added. Please try again.");
         }
-        System.out.println(item.getName() + " listed for $" + item.getPrice());
     }
 
     public void removeItemByName(String name){
@@ -48,7 +47,6 @@ public class ItemService {
                 } catch(Exception e){
                     LogUtil.descriptiveError("Failed to remove item. Please try again.");
                 }
-                System.out.println(item.getName() + " was removed from the shop.");
             }
         }
     }

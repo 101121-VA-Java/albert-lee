@@ -19,12 +19,15 @@ public class ItemController {
         String price = sc.nextLine();
         Item newItemToSell = new Item(name, price);
         is.addUnownedItemForSale(newItemToSell);
+        System.out.println(name + " listed for $" + price);
     }
 
     public void removeItem(Scanner sc){
         System.out.println("What item would you like to remove?");
-        String nameOfItemToRemove = sc.nextLine();
-        is.removeItemByName(nameOfItemToRemove);
+        String name = sc.nextLine();
+        is.removeItemByName(name);
+        System.out.println(name + " was removed from the shop.");
+
     }
 
     public void printAllUnownedItemsForSale() {
