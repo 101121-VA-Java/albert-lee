@@ -52,8 +52,9 @@ class ItemServiceTest {
     @Test
     void removeItemByName() {
         int expected = is.getAll().size();
-        is.addUnownedItemForSale(new Item("test", "10"));
-        is.removeItemByName("test");
+        String name = String.valueOf(Math.random());
+        is.addUnownedItemForSale(new Item(name, "10"));
+        is.removeItemByName(name);
         int actual = is.getAll().size();
         assertEquals(expected, actual);
     }

@@ -57,7 +57,7 @@ public class PaymentPostgres implements GenericDao<Payment>{
         return null;
     }
 
-    public List<Payment> getPaymentsForItemName(String name) {
+    public List<Payment> getByName(String name) {
         String sql = "select * from payments join items on payments.item_id = items.item_id where item_name = ?;";
         List<Payment> payments = new ArrayList<>();
 

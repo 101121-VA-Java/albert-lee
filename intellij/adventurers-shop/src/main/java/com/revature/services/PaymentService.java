@@ -23,4 +23,9 @@ public class PaymentService {
     public int add(Payment payment) {
         return pp.add(payment);
     }
+
+    public List<Payment> getByName(String itemName) {
+        List<Payment> payments = pp.getByName(itemName);
+        return payments;
+    }
 }
