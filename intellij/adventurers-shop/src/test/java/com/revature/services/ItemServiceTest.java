@@ -2,7 +2,6 @@ package com.revature.services;
 
 import com.revature.models.Item;
 import com.revature.repositories.ItemPostgres;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -20,17 +19,11 @@ class ItemServiceTest {
         ip = new ItemPostgres();
     }
 
-    @AfterEach
-    public void cleanup(){
-        is.removeItemByName("test");
-    }
-
     @Test
     void getAll() {
         List<Item> actual = ip.getAll();
         assertAll(() -> assertEquals(5, actual.get(0).getPrice()),
-                () -> assertEquals("apple", actual.get(0).getName()),
-                () -> assertEquals(1, actual.size())
+                () -> assertEquals("apple", actual.get(0).getName())
                 );
     }
 
@@ -50,18 +43,24 @@ class ItemServiceTest {
 
     @Test
     void addUnownedItemForSale() {
-        int expected = 2;
+        int expected = is.getAll().size();
         is.addUnownedItemForSale(new Item("test", "10"));
+        int actual = is.getAll().size();
+        assertNotEquals(expected, actual);
+    }
+
+    @Test
+    void removeItemByName() {
+        int expected = is.getAll().size();
+        is.addUnownedItemForSale(new Item("test", "10"));
+        is.removeItemByName("test");
         int actual = is.getAll().size();
         assertEquals(expected, actual);
     }
 
     @Test
-    void removeItemByName() {
-        int expected = 1;
-        is.addUnownedItemForSale(new Item("test", "10"));
-        is.removeItemByName("test");
-        int actual = is.getAll().size();
-        assertEquals(expected, actual);
+    void printItemsForSale() {
+        int numberOfItemsForSale = is.getAll().size();
+        assertNotEquals(0, numberOfItemsForSale);
     }
 }

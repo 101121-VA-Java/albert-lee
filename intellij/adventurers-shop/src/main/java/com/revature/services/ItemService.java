@@ -25,29 +25,47 @@ public class ItemService {
         return ip.getByOwnerId(id);
     }
 
-    public void addUnownedItemForSale(Item item){
+    public int addUnownedItemForSale(Item item){
+        int status = -1;
         try{
             int beforeSize = ip.getAll().size();
-            ip.add(item);
+            status = ip.add(item);
             int afterSize = ip.getAll().size();
             if(beforeSize == afterSize) throw new Exception();
         } catch(Exception e) {
             LogUtil.descriptiveError("Item failed to be added. Please try again.");
         }
+        return status;
     }
 
-    public void removeItemByName(String name){
-        for (Item item : ip.getAll()) {
-            if(name.equals(item.getName())){
-                try{
-                    int beforeSize = ip.getAll().size();
+    public int removeItemByName(String name){
+        int status = -1;
+        try{
+            int beforeSize = ip.getAll().size();
+            for (Item item : ip.getAll()) {
+                if(name.equals(item.getName())) {
                     ip.delete(item.getId());
-                    int afterSize = ip.getAll().size();
-                    if(beforeSize == afterSize) throw new Exception();
-                } catch(Exception e){
-                    LogUtil.descriptiveError("Failed to remove item. Please try again.");
                 }
             }
+            int afterSize = ip.getAll().size();
+            if (beforeSize == afterSize) throw new Exception();
+            status = 1;
+        } catch(Exception e) {
+            LogUtil.descriptiveError("Item was not found. Please try again.");
         }
+        return status;
+    }
+
+    public List<Item> printItemsForSale() {
+        List<Item> itemsForSale = ip.getAll();
+        if (itemsForSale.isEmpty()) {
+            System.out.println("Everything is sold out; please check later.");
+        } else {
+            System.out.println(itemsForSale.size() + " item(s) for sale.");
+            for (Item item : itemsForSale) {
+                System.out.println("$" + item.getPrice() + " " + item.getName());
+            }
+        }
+        return itemsForSale;
     }
 }
