@@ -1,8 +1,8 @@
 package com.revature.services;
 
 import com.revature.models.Offer;
-import com.revature.repositories.OfferPostgres;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,12 +11,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OfferServiceTest {
     private static OfferService os;
-    private static OfferPostgres op;
 
-    @BeforeAll
-    public static void setup() {
+    @BeforeEach
+    public void setup() {
         os = new OfferService();
-        op = new OfferPostgres();
+        os.removeOffers(1);
+        os.addOffer(new Offer(3, 1, 1));
+    }
+
+    @AfterAll
+    public static void cleanUp() {
         os.removeOffers(1);
         os.addOffer(new Offer(3, 1, 1));
     }
@@ -36,6 +40,7 @@ class OfferServiceTest {
         os.addOffer(newOffer);
         int expected = 1;
         int actual = os.getAll().size();
+        os.removeOffers(1);
         assertNotEquals(expected, actual);
     }
 

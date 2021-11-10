@@ -15,7 +15,6 @@ class UserServiceTest {
     public static void setup(){
         us = new UserService();
         up = new UserPostgres();
-        up.delete(2);
     }
 
     @Test
@@ -24,6 +23,7 @@ class UserServiceTest {
         int actual = 0;
         try {
             actual = us.register(newUser, "1");
+            up.delete(actual);
         } catch (InvalidRole e) {
             e.printStackTrace();
         }

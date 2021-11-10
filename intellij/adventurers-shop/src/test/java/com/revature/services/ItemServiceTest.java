@@ -1,6 +1,6 @@
 package com.revature.services;
 
-import com.revature.models.Item;
+import com.revature.models.items.Item;
 import com.revature.repositories.ItemPostgres;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -44,8 +44,9 @@ class ItemServiceTest {
     @Test
     void addUnownedItemForSale() {
         int expected = is.getAll().size();
-        is.addUnownedItemForSale(new Item("test", "10"));
+        is.addUnownedItemForSale(new Item("test", "10", "BORING"));
         int actual = is.getAll().size();
+        is.removeItemByName("test");
         assertNotEquals(expected, actual);
     }
 
@@ -53,7 +54,7 @@ class ItemServiceTest {
     void removeItemByName() {
         int expected = is.getAll().size();
         String name = String.valueOf(Math.random());
-        is.addUnownedItemForSale(new Item(name, "10"));
+        is.addUnownedItemForSale(new Item(name, "10", "BORING"));
         is.removeItemByName(name);
         int actual = is.getAll().size();
         assertEquals(expected, actual);
