@@ -4,12 +4,12 @@ import com.revature.exceptions.InvalidRole;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.User;
 import com.revature.repositories.UserPostgres;
+import com.revature.utils.PasswordUtil;
 import org.junit.jupiter.api.*;
 
 class UserServiceTest {
     private static UserService us;
     private static UserPostgres up;
-
 
     @BeforeAll
     public static void setup(){
@@ -20,7 +20,7 @@ class UserServiceTest {
 
     @Test
     void register() {
-        User newUser = new User("username", "password");
+        User newUser = new User("username", PasswordUtil.hashPassword("password"));
         int actual = 0;
         try {
             actual = us.register(newUser, "1");
