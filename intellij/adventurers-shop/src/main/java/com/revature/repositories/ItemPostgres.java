@@ -1,6 +1,7 @@
 package com.revature.repositories;
 
-import com.revature.models.Item;
+import com.revature.models.items.Item;
+import com.revature.models.items.RiskyItem;
 import com.revature.utils.ConnectionUtil;
 
 import java.io.IOException;
@@ -12,14 +13,15 @@ public class ItemPostgres implements GenericDao<Item> {
     @Override
     public int add(Item item) {
         int resultId = -1;
-        String sql = "insert into items (item_name, item_price, owner_id) "
-                + "values (?, ?, null) returning item_id;";
+        String sql = "insert into items (item_name, item_price, item_type, owner_id) "
+                + "values (?, ?, ?, null) returning item_id;";
 
         try(Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, item.getName());
             ps.setInt(2, item.getPrice());
+            ps.setString(3, item.getType());
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
@@ -47,8 +49,9 @@ public class ItemPostgres implements GenericDao<Item> {
                 String name = rs.getString("item_name");
                 int price = rs.getInt("item_price");
                 int ownerId = rs.getInt("owner_id");
-                Item usr = new Item(id, name, price, ownerId);
-                items.add(usr);
+                String type = rs.getString("item_type");
+                if(type.equals("BORING")) items.add(new Item(id, name, price, ownerId, type));
+                else if(type.equals("RISKY")) items.add(new RiskyItem(id, name, price, ownerId, type));
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -74,7 +77,8 @@ public class ItemPostgres implements GenericDao<Item> {
                 String name = rs.getString("item_name");
                 int price = rs.getInt("item_price");
                 int ownerId = rs.getInt("owner_id");
-                result = new Item(itemId, name, price, ownerId);
+                String itemType = rs.getString("item_type");
+                result = new Item(itemId, name, price, ownerId, itemType);
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -137,7 +141,8 @@ public class ItemPostgres implements GenericDao<Item> {
                 String item_name = rs.getString("item_name");
                 int price = rs.getInt("item_price");
                 int ownerId = rs.getInt("owner_id");
-                result = new Item(itemId, item_name, price, ownerId);
+                String itemType = rs.getString("item_type");
+                result = new Item(itemId, item_name, price, ownerId, itemType);
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -161,7 +166,8 @@ public class ItemPostgres implements GenericDao<Item> {
                 String name = rs.getString("item_name");
                 int price = rs.getInt("item_price");
                 int ownerId = rs.getInt("owner_id");
-                Item result = new Item(itemId, name, price, ownerId);
+                String itemType = rs.getString(("item_type"));
+                Item result = new Item(itemId, name, price, ownerId, itemType);
                 items.add(result);
             }
         } catch (SQLException | IOException e) {

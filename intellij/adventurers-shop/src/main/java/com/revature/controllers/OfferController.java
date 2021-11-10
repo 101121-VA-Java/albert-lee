@@ -1,6 +1,6 @@
 package com.revature.controllers;
 
-import com.revature.models.Item;
+import com.revature.models.items.Item;
 import com.revature.models.Offer;
 import com.revature.models.Payment;
 import com.revature.services.OfferService;

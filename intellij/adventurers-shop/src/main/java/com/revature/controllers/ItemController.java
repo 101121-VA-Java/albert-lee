@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
-import com.revature.models.Item;
+import com.revature.models.items.Item;
+import com.revature.models.items.RiskyItem;
 import com.revature.services.ItemService;
 
 import java.util.Scanner;
@@ -25,8 +26,10 @@ public class ItemController {
         String name = sc.nextLine();
         System.out.println("How much would you like to sell the item for?");
         String price = sc.nextLine();
-        Item newItemToSell = new Item(name, price);
-        int status = is.addUnownedItemForSale(newItemToSell);
+        System.out.println("Is this item risky (1) or boring (2)?" );
+        int choice = Integer.parseInt(sc.nextLine());
+        Item newItem = itemFactory(name, price, choice);
+        int status = is.addUnownedItemForSale(newItem);
         if(status != -1) System.out.println(name + " listed for $" + price);
     }
 
@@ -54,5 +57,9 @@ public class ItemController {
 
     public ItemService getItemService() {
         return is;
+    }
+
+    public Item itemFactory(String name, String price, int type){
+        return (type == 1) ? new RiskyItem(name, price, "RISKY") : new Item(name, price, "BORING");
     }
 }

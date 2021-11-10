@@ -1,6 +1,6 @@
 package com.revature.services;
 
-import com.revature.models.Item;
+import com.revature.models.items.Item;
 import com.revature.repositories.ItemPostgres;
 import com.revature.utils.LogUtil;
 
@@ -33,7 +33,7 @@ public class ItemService {
             int afterSize = ip.getAll().size();
             if(beforeSize == afterSize) throw new Exception();
         } catch(Exception e) {
-            LogUtil.descriptiveError("Item failed to be added. Please try again.");
+            LogUtil.descriptiveError("Item failed to be added. Check item type and try again.");
         }
         return status;
     }
@@ -43,7 +43,7 @@ public class ItemService {
         try{
             int beforeSize = ip.getAll().size();
             for (Item item : ip.getAll()) {
-                if(name.equals(item.getName())) {
+                if(name.equals(item.getName()) | ("risky " + name).equals(item.getName()) ) {
                     ip.delete(item.getId());
                 }
             }

@@ -108,7 +108,7 @@ public class UserPostgres implements GenericDao<User>{
     @Override
     public void delete(int id) {
         String sql = "delete from users " +
-                "where user_id > ?";
+                "where user_id  = ?";
 
         try (Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
