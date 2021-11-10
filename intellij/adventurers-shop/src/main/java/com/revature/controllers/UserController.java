@@ -69,8 +69,7 @@ public class UserController {
         String username = scan.nextLine();
         System.out.println("Please enter a password:");
         String password = scan.nextLine();
-        String hashedPassword = PasswordUtil.hashPassword(password);
-        User newUser = new User(username, hashedPassword);
+        User newUser = new User(username, password);
         System.out.println("Please choose a role. 1 for customer, 2 for employee.");
         String roleChoice = scan.nextLine();
         int newUserId = -1;
