@@ -4,12 +4,11 @@ import com.revature.exceptions.InvalidRole;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.User;
 import com.revature.services.UserService;
-import com.revature.utils.PasswordUtil;
 
 import java.util.Scanner;
 
 public class UserController {
-    private Scanner sc;
+    private final Scanner sc;
     private final UserService us;
     private User currentUser;
     private static UserController firstInstance = null;

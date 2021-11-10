@@ -10,18 +10,15 @@ public class ConnectionUtil {
     private static Connection con;
 
     public static Connection getConnectionFromFile() throws IOException, SQLException {
-        Properties prop = new Properties();
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        prop.load(loader.getResourceAsStream("prop.properties"));
-
-        String url = prop.getProperty("url");
-        String username = prop.getProperty("username");
-        String password = prop.getProperty("password");
-
-        if (con == null || con.isClosed()) {
+        if(con == null || con.isClosed()) {
+            Properties prop = new Properties();
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            prop.load(loader.getResourceAsStream("prop.properties"));
+            String url = prop.getProperty("url");
+            String username = prop.getProperty("username");
+            String password = prop.getProperty("password");
             con = DriverManager.getConnection(url, username, password);
         }
-
         return con;
     }
 }

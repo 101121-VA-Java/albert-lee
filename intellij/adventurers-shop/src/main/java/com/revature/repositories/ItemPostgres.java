@@ -18,8 +18,7 @@ public class ItemPostgres implements GenericDao<Item> {
 
         try(Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
-
-            ps.setString(1, item.getName());
+            ps.setString(1, item.getName().replace("risky ", ""));
             ps.setInt(2, item.getPrice());
             ps.setString(3, item.getType());
             ResultSet rs = ps.executeQuery();

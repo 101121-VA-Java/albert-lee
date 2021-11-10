@@ -103,12 +103,12 @@ public class OfferPostgres implements GenericDao<Offer>{
     }
 
     public int getHighestBidderId(String itemName) {
-        String sql = "select bidder_id from offers join items on offers.item_id = items.item_id where item_name = ?;";
+        String sql = "select bidder_id from offers join items on offers.item_id = items.item_id where item_name like ?;";
         int bidderId = -1;
         try(Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setString(1, itemName);
+            ps.setString(1, itemName + "%");
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {

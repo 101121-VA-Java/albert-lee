@@ -21,7 +21,7 @@ public class UserPostgres implements GenericDao<User>{
 
             ps.setString(1, user.getUsername());
             ps.setString(2, PasswordUtil.hashPassword(user.getPassword()));
-            ps.setString(3, user.getRole());
+            ps.setString(3, user.getRole());;
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
