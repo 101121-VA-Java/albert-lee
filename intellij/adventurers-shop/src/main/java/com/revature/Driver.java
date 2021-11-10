@@ -4,10 +4,10 @@ import com.revature.controllers.*;
 
 public class Driver {
     public static void main(String[] args) {
-        ItemController ic = new ItemController();
-        OfferController oc = new OfferController();
-        PaymentController pc = new PaymentController();
-        UserController uc = new UserController();
+        ItemController ic = ItemController.getInstance();
+        OfferController oc = OfferController.getInstance();
+        PaymentController pc = PaymentController.getInstance();
+        UserController uc = UserController.getInstance();
         String status = "run";
 
         while (status.equals("run")) {
@@ -16,18 +16,18 @@ public class Driver {
             else if (uc.isEmployee()) status = employeeOptions(ic, uc, oc, pc);
         }
 
-        uc.sc.close();
+        uc.getScanner().close();
     }
 
     private static String loggedOutOptions(UserController uc) {
         printLoggedOutOptions();
         String result = "run";
-        switch (uc.sc.nextLine()) {
+        switch (uc.getScanner().nextLine()) {
             case "1":
-                uc.attemptLogin(uc.sc);
+                uc.attemptLogin(uc.getScanner());
                 break;
             case "2":
-                uc.attemptRegistration(uc.sc);
+                uc.attemptRegistration(uc.getScanner());
                 break;
             case "3":
                 result = "exit";
@@ -41,7 +41,7 @@ public class Driver {
     private static String customerOptions(ItemController ic, UserController uc, OfferController oc, PaymentController pc) {
         printCustomerOptions();
         String result = "run";
-        switch (uc.sc.nextLine()) {
+        switch (uc.getScanner().nextLine()) {
             case "1":
                 ic.printAllUnownedItemsForSale();
                 break;
@@ -69,12 +69,12 @@ public class Driver {
     private static String employeeOptions(ItemController ic, UserController uc, OfferController oc, PaymentController pc) {
         printEmployeeOptions();
         String result = "run";
-        switch (uc.sc.nextLine()) {
+        switch (uc.getScanner().nextLine()) {
             case "1":
-                ic.addUnownedItemForSale(uc.sc);
+                ic.addUnownedItemForSale(uc.getScanner());
                 break;
             case "2":
-                ic.removeItem(uc.sc);
+                ic.removeItem(uc.getScanner());
                 break;
             case "3":
                 oc.acceptOffer(uc, ic, pc);

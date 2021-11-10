@@ -9,13 +9,23 @@ import com.revature.utils.PasswordUtil;
 import java.util.Scanner;
 
 public class UserController {
-    public Scanner sc;
+    private Scanner sc;
     private final UserService us;
     private User currentUser;
+    private static UserController firstInstance = null;
 
-    public UserController() {
+    private UserController() {
         sc = new Scanner(System.in);
         this.us = new UserService();
+    }
+
+    public static UserController getInstance() {
+        if(firstInstance == null) firstInstance = new UserController();
+        return firstInstance;
+    }
+
+    public Scanner getScanner() {
+        return sc;
     }
 
     public boolean isCustomer() {

@@ -6,10 +6,18 @@ import com.revature.services.PaymentService;
 import java.util.List;
 
 public class PaymentController {
-    public final PaymentService ps;
+    private final PaymentService ps;
+    private static PaymentController firstInstance = null;
 
-    public PaymentController() {
+    private PaymentController() {
         ps = new PaymentService();
+    }
+
+    public static PaymentController getInstance() {
+        if(firstInstance == null){
+            firstInstance = new PaymentController();
+        }
+        return firstInstance;
     }
 
     public void printAllPaymentsOutstanding() {
@@ -24,7 +32,7 @@ public class PaymentController {
 
     public void makePayment(UserController uc) {
         System.out.println("What is the name of the item you would like to make a payment towards?");
-        String itemName = uc.sc.nextLine();
+        String itemName = uc.getScanner().nextLine();
         int payeeId = uc.getCurrentUser().getId();
         List<Payment> payments = ps.getByName(itemName);
         if(payments.isEmpty()) {
@@ -46,7 +54,7 @@ public class PaymentController {
 
     public void continueWithPaymentChoice(UserController uc, String itemName) {
         System.out.println("Would you like to continue making a payment? Y / N");
-        String choice = uc.sc.nextLine();
+        String choice = uc.getScanner().nextLine();
         if(choice.equals("Y") | choice.equals("y")) {
             ps.makePayment(itemName);
             System.out.println("Payment towards " + itemName + " completed.");

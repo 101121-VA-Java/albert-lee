@@ -6,10 +6,18 @@ import com.revature.services.ItemService;
 import java.util.Scanner;
 
 public class ItemController {
-    public final ItemService is;
+    private final ItemService is;
+    private static ItemController firstInstance = null;
 
-    public ItemController() {
+    private ItemController() {
         is = new ItemService();
+    }
+
+    public static ItemController getInstance() {
+        if(firstInstance == null){
+            firstInstance = new ItemController();
+        }
+        return firstInstance;
     }
 
     public void addUnownedItemForSale(Scanner sc) {
@@ -42,5 +50,9 @@ public class ItemController {
                 System.out.println(item.getName());
             }
         }
+    }
+
+    public ItemService getItemService() {
+        return is;
     }
 }
