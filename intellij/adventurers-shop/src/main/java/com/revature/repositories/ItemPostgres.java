@@ -126,13 +126,13 @@ public class ItemPostgres implements GenericDao<Item> {
 
     public Item getByName(String name){
 
-        String sql = "select * from items where item_name = ? ";
+        String sql = "select * from items where item_name like ? ";
         Item result = new Item();
 
         try (Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setString(1, name);
+            ps.setString(1, name + "%");
 
             ResultSet rs = ps.executeQuery();
 
@@ -178,12 +178,12 @@ public class ItemPostgres implements GenericDao<Item> {
 
     public int getIdByName(String name){
         int resultId = -1;
-        String sql = "select * from items where item_name = ? limit 1;";
+        String sql = "select * from items where item_name like ? limit 1;";
 
         try(Connection con = ConnectionUtil.getConnectionFromFile()){
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setString(1, name);
+            ps.setString(1, name + "%");
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
