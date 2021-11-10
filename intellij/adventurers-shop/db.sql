@@ -1,3 +1,5 @@
+-- WARNING: gcreate username 1 and 2 in console after creating tables but before seeding data, because BCrypt generates the stored password
+
 drop table if exists payments;
 drop table if exists offers;
 drop table if exists items;
