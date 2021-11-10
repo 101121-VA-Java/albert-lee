@@ -2,6 +2,7 @@ package com.revature.repositories;
 
 import com.revature.models.User;
 import com.revature.utils.ConnectionUtil;
+import com.revature.utils.PasswordUtil;
 
 import java.io.IOException;
 import java.sql.*;
@@ -19,7 +20,7 @@ public class UserPostgres implements GenericDao<User>{
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword());
+            ps.setString(2, PasswordUtil.hashPassword(user.getPassword()));
             ps.setString(3, user.getRole());
             ResultSet rs = ps.executeQuery();
 
