@@ -9,6 +9,7 @@ public class App
     {
         System.out.println( "Hello World!" );
         Javalin app = Javalin.create(config -> {
+			config.enableCorsForAllOrigins();
             config.addStaticFiles("/site", Location.CLASSPATH);
 		});
 		
