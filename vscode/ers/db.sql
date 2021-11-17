@@ -19,6 +19,7 @@ create table if not exists ers_users (
     user_last_name    varchar(100),
     user_email        varchar(150),
     user_role_id      integer references ers_user_roles(ers_user_role_id)
+    ers_manager_id    integer references ers_users(ers_users_id)
 );
 
 create table if not exists ers_reimburseent_type (
