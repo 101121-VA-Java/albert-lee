@@ -246,7 +246,7 @@ Temporary Items
 .apdisk
 
 ### Maven ###
-target/classes/
+target/classes/com
 target/test-classes/
 pom.xml.tag
 pom.xml.releaseBackup
