@@ -1,0 +1,91 @@
+// create a main method that takes in an arg of strings
+public static void main(String[] args) {
+
+    // first run the getFoodTypes class method.
+    // then assign the return value to the reference variable foodTypes
+    // after this line is evaluated, foodTypes looks like [breakfast, lunch, dinnner, dessert, snack]
+	String[] foodTypes = getFoodTypes();
+
+    //first evaluate the item at index 2 in the foodTypes array.
+    //then create a reference variable myType and point it to the original result
+    //after this line is evaluated, myType is a reference variable pointing to the string "dinner"
+    //myType will point to the string "dinner"
+    //myType = "dinner";
+	String myType = foodTypes[2];
+
+    //first evaluate the right side of the equals, which calls the class method getFoodsByType with the parameter myType
+    //then store the return value of said method call in the reference variable foodsOfMyType
+    //creates a char array that looks like [curry, stir fry, burger]
+	String[] foodsOfMyType = getFoodsByType(myType);
+	
+    //enhanced for loop to iterate over the foodsOfMyType char array
+	for (String food : foodsOfMyType) {
+
+        //print each food item in the array to the console
+	//prints the strings curry, stir fry, and burger on individual lines to the console.
+		System.out.println(food);
+	}
+}
+
+
+//define a class method called getFoodTypes which does not accept any parameters
+public static String[] getFoodTypes() {
+
+    // create a char array with the input on the right side of the equals
+    // then assign the created array to the reference variable called foodTypes
+	String[] foodTypes = {"breakfast","lunch","dinner","dessert","snack"};
+
+    //return the instantiated foodTypes char array as a return value
+    //that way the return value is usable outside the scope of this method
+	return foodTypes;
+}
+
+
+// define a class method called getFoodsByType which takes in a string called type
+public static String[] getFoodsByType(String type) {
+
+    // instantiates a string object of length 3 with null as the default values in each index of the string
+    // the reference variable foods will point to a char array object not to be confused with a regular string with null in all 3 indices like [null, null, null]
+	String[] foods = new String[3];
+
+    //define a switch statement which will check the locally scoped type refernce variable against each case
+	switch(type) {
+
+    //even though strings are immutable, we have a char array here, so we can change references inside the array.
+    //change the value at index 0 of the string array to a different value
+    //similar idea for all cases
+	case "breakfast":
+		foods[0] = "pancakes";
+		foods[1] = "cereal";
+		foods[2] = "omelette";
+		break;
+	case "lunch":
+		foods[0] = "sandwich";
+		foods[1] = "salad";
+		foods[2] = "soup";
+		break;
+	case "dinner":
+		foods[0] = "curry";
+		foods[1] = "stir fry";
+		foods[2] = "burger";
+		break;
+	case "dessert":
+		foods[0] = "cake";
+		foods[1] = "ice cream";
+		foods[2] = "candy";
+		break;
+	case "snack":
+		foods[0] = "chips";
+		foods[1] = "apple";
+		foods[2] = "samosa";
+		break;
+    // default case will set the foods array to foods that you choose if no switch cases are triggered
+	default:
+		foods[0] = "halal guys platter";
+        foods[1] = "baklava";
+        foods[2] = "popeyes spicy chicken sandwich";
+		break;
+	}
+
+	return foods;
+}

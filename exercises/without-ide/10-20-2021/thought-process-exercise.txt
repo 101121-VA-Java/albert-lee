@@ -1,0 +1,27 @@
+Go line by line, and explain what's happening in each line.
+
+int score = 80; // A variable of type int and of name score is declared and is assigned a value of 80;
+
+String result; // Variable declaration, not to be confused with initialization or assignment.
+
+// execute block of code if the variable referenced by score is equal to 80.
+if (score == 80) { 
+
+// set the result string to ... if score is equal to 80
+	result = "You passed!"; 
+
+// if first condition is not met, run block if second condition is met
+} else if (score > 80) { 
+
+// set result if second condition is met
+	result = "You did great!";
+
+// if neither first nor second condition are met, run this block of code
+} else {
+
+// set result if else block is triggered
+	result = "You did not pass. Try again!";
+}
+
+// print result string to the console
+System.out.println(result);
