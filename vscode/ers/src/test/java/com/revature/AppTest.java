@@ -1,4 +1,4 @@
-package com.revature.ers;
+package com.revature;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

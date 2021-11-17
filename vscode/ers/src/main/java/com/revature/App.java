@@ -1,4 +1,4 @@
-package com.revature.ers;
+package com.revature;
 
 /**
  * Hello world!

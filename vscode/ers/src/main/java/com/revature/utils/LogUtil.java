@@ -1,4 +1,4 @@
-package com.revature.ers.utils;
+package com.revature.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
