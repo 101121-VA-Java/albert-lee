@@ -30,7 +30,7 @@ function register(){
             }
         }
     }
-    xhr.open("POST", "http://localhost:8080/users/register");
+    xhr.open("POST", "http://localhost:8080/users");
     let requestBody = JSON.stringify(newUser);
     xhr.send(requestBody);
 }

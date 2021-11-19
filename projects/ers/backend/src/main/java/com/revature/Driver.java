@@ -23,10 +23,7 @@ public class Driver {
 
 		app.routes(() -> {
 			path("users", ()->{
-				path("register", () -> {
-					post(UserController::registerUser);
-
-				});
+				post(UserController::registerUser);
 				path("{id}", () -> {
 					get(UserController::getUserById);
 				});
