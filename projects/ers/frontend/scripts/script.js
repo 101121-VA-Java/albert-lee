@@ -13,7 +13,7 @@ function getEmployees(){
     xhr.send();
 }
 
-function register(){
+async function register(){
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
     let email = document.getElementById("email").value;
@@ -25,6 +25,7 @@ function register(){
         if( xhr.readyState === 4){
             if(xhr.status === 201){
                 console.log('Employee was successfully added!');
+                login();
             } else{
                 console.log('Employee was not added...');
             }
