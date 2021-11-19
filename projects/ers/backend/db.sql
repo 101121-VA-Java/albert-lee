@@ -1,4 +1,4 @@
--- WARNING:  create users in console after creating tables but before seeding data, because BCrypt generates the stored password
+-- WARNING:  if bcrypt is implemented, create users in console after creating tables but before seeding data, because BCrypt generates the stored password
 
 drop table if exists ers_reimbursement;
 drop table if exists ers_reimbursement_status;
@@ -6,9 +6,12 @@ drop table if exists ers_reimburseent_type;
 drop table if exists ers_users;
 drop table if exists ers_user_roles;
 
+drop type if exists role;
+create type role as enum ('ADMIN', 'BASIC', 'MANAGER');
+
 create table if not exists ers_user_roles (
     ers_user_role_id   serial primary key,
-    user_role          varchar(10)
+    user_role          role
 );
 
 create table if not exists ers_users (
@@ -44,3 +47,25 @@ create table if not exists ers_reimbursement (
     reimb_status_id   integer references ers_reimbursement_status(reimb_status_id),
     reimb_type_id     integer references ers_reimburseent_type(reimb_type_id)
 );
+
+insert into ers_user_roles (user_role) values ('ADMIN');
+insert into ers_user_roles (user_role) values ('MANAGER');
+insert into ers_user_roles (user_role) values ('BASIC');
+
+insert into ers_users 
+(ers_username, ers_password, user_first_name, 
+user_last_name, user_email, user_role_id, ers_manager_id)
+values
+('1', '1', '1', '1', '1@1', 1, null);
+
+insert into ers_users 
+(ers_username, ers_password, user_first_name, 
+user_last_name, user_email, user_role_id, ers_manager_id)
+values
+('2', '2', '2', '2', '2@2', 2, 1);
+
+insert into ers_users 
+(ers_username, ers_password, user_first_name, 
+user_last_name, user_email, user_role_id, ers_manager_id)
+values
+('3', '3', '3', '3', '3@3', 3, 1);
