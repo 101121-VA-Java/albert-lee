@@ -1,4 +1,4 @@
--- WARNING:  if bcrypt is implemented, create users in console after creating tables but before seeding data, because BCrypt generates the stored password
+-- WARNING:  create users in console after creating tables but before seeding data, because BCrypt generates the stored password
 
 drop table if exists ers_reimbursement;
 drop table if exists ers_reimbursement_status;
@@ -25,7 +25,7 @@ create table if not exists ers_users (
     ers_manager_id    integer references ers_users(ers_users_id)
 );
 
-create table if not exists ers_reimburseent_type (
+create table if not exists ers_reimbursement_type (
     reimb_type_id     serial primary key,
     reimb_type        varchar(10)
 );
@@ -45,7 +45,7 @@ create table if not exists ers_reimbursement (
     reimb_author      integer references ers_users(ers_users_id),
     reimb_resolver    integer references ers_users(ers_users_id),
     reimb_status_id   integer references ers_reimbursement_status(reimb_status_id),
-    reimb_type_id     integer references ers_reimburseent_type(reimb_type_id)
+    reimb_type_id     integer references ers_reimbursement_type(reimb_type_id)
 );
 
 insert into ers_user_roles (user_role) values ('ADMIN');
