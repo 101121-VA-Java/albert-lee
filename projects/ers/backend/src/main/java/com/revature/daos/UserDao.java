@@ -2,10 +2,10 @@ package com.revature.daos;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.List;
 
-import com.revature.models.Role;
+// import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.util.ConnectionUtil;
 
