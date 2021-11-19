@@ -13,39 +13,25 @@ function getEmployees(){
     xhr.send();
 }
 
-
 function register(){
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
     let email = document.getElementById("email").value;
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
-
     let newUser = { username, password, email, firstName, lastName };
-
     let xhr = new XMLHttpRequest();
-
     xhr.onreadystatechange = function() {
-        // check that request was successful
         if( xhr.readyState === 4){
             if(xhr.status === 201){
                 console.log('Employee was successfully added!');
             } else{
                 console.log('Employee was not added...');
-                /*
-                    provide user with notification that action was unable to be completed, ie:
-                    document.getElementById("errorDiv").innerHtml = 'invalid info';
-                */
             }
         }
     }
-
-    // Parameterize/Open request object
     xhr.open("POST", "http://localhost:8080/users/register");
-    
-    // Convert JS object to JSON object
     let requestBody = JSON.stringify(newUser);
-    // send
     xhr.send(requestBody);
 }
 
