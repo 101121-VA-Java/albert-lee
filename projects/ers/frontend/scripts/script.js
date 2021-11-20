@@ -1,4 +1,4 @@
-function getUsersExcept(string = "ALL") {
+function getUsersExcept(string = "") {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
@@ -15,13 +15,13 @@ function getUsersExcept(string = "ALL") {
     xhr.send();
 }
 
-let appendUsersToPage = (string = "ALL", arr = []) => {
+let appendUsersToPage = (string = "", arr = []) => {
     let container = document.getElementById("manager-dashboard");
     if(container){
         container.innerHTML = "";
         for (let i = 0; i < arr.length; i++) {
             let el = arr[i];
-            if(el.role !== string){
+            if(el.role !== string && el.role !== "ADMIN"){
                 let employeeObj = document.createElement("div");
                 employeeObj.innerHTML = el.email;
                 container.append(employeeObj);
