@@ -1,4 +1,4 @@
-function getEmployees() {
+function getUsersExcept(string = "ALL") {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
@@ -6,14 +6,31 @@ function getEmployees() {
                 let response = xhr.response;
                 response = JSON.parse(response);
                 console.log(response);
+                appendUsersToPage(string, response);
             }
         }
     }
-    xhr.open("GET", "http://localhost:8080/employees");
+    xhr.open("GET", "http://localhost:8080/users/");
+    xhr.setRequestHeader("Authorization", sessionStorage.token);
     xhr.send();
 }
 
-async function register() {
+let appendUsersToPage = (string = "ALL", arr = []) => {
+    let container = document.getElementById("manager-dashboard");
+    if(container){
+        container.innerHTML = "";
+        for (let i = 0; i < arr.length; i++) {
+            let el = arr[i];
+            if(el.role !== string){
+                let employeeObj = document.createElement("div");
+                employeeObj.innerHTML = el.email;
+                container.append(employeeObj);
+            }
+        }
+    }
+}
+
+function register() {
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
     let email = document.getElementById("email").value;
