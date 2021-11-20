@@ -2,7 +2,9 @@ package com.revature.controllers;
 
 import java.util.List;
 
+import com.revature.models.Role;
 import com.revature.models.User;
+import com.revature.services.AuthService;
 import com.revature.services.UserService;
 
 import io.javalin.http.Context;
@@ -11,14 +13,16 @@ import io.javalin.http.HttpCode;
 public class UserController {
 
 	private static UserService us = new UserService();
+	private static AuthService as = new AuthService();
 
 	public static void getUsers(Context ctx) {
-		System.out.println("user controller getusers");
-
+		String token = ctx.header("Authorization");				
+		if(!as.checkPermission(token, Role.ADMIN, Role.MANAGER)) {
+			ctx.status(HttpCode.UNAUTHORIZED);
+			return;
+		}
 		List<User> users = us.getUsers();
-
 		ctx.json(users);
-		// implicitely Javalin sets the status code to 200
 		ctx.status(HttpCode.OK);
 	}
 
@@ -60,20 +64,12 @@ public class UserController {
 	public static void getByUsername(Context ctx) {
 		String body = ctx.body();
 		User u = us.getByUsername(body);
-	
-		
-		// if (u != null) {
-		// 	System.out.println("log in successful");
-		// 	ctx.json(u);
-		// 	ctx.status(HttpCode.OK);
-		// } else {
-		// 	System.out.println("log in failed");
-		// 	ctx.json("fail");
-		// 	ctx.status(HttpCode.NOT_FOUND);
-		// }
-	}
-
-	public static void getTest(Context ctx) {
-		ctx.result("Test!");
+		if (u != null) {
+			ctx.json(u);
+			ctx.status(HttpCode.OK);
+		} else {
+			ctx.json("fail");
+			ctx.status(HttpCode.NOT_FOUND);
+		}
 	}
 }
