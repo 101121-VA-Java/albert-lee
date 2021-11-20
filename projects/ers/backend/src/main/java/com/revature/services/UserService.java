@@ -34,9 +34,8 @@ public class UserService {
 					e.setPassword(null); 
 					return e;})
 				.collect(Collectors.toList());
-		
 		return users;
-	}
+		}
 	
 	/**
 	 * Service method to retrieve employees by a manager id, sets the employee passwords to null before returning them
