@@ -76,13 +76,11 @@ public class UserDao implements GenericDao<User>{
 
     @Override
     public int update(User t) {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public void delete(int id) {
-        // TODO Auto-generated method stub
         
     }
 

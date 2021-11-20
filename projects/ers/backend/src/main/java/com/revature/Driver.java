@@ -5,6 +5,7 @@ import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
 import com.revature.controllers.AuthController;
+import com.revature.controllers.ReimbursementController;
 import com.revature.controllers.UserController;
 
 import io.javalin.Javalin;
@@ -28,6 +29,10 @@ public class Driver {
 				path("{id}", () -> {
 					get(UserController::getUserById);
 				});
+			});
+
+			path("reimbursements", () -> {
+				post(ReimbursementController::add);
 			});
 
 			path("auth", () -> {
