@@ -1,32 +1,192 @@
-function getUsersExcept(string = "") {
+forceAuth();
+getDashboard();
+
+function get(resources, fn, roleString = "ALL") {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                let response = xhr.response;
-                response = JSON.parse(response);
-                console.log(response);
-                appendUsersToPage(string, response);
-            }
+        if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
+            let response = xhr.response;
+            response = JSON.parse(response);
+            fn(response, roleString);
         }
     }
-    xhr.open("GET", "http://localhost:8080/users/");
+    xhr.open('GET', `http://localhost:8080/${resources}`);
+        xhr.setRequestHeader("Authorization", sessionStorage.token);
+    xhr.send();
+}
+
+function showReimbursementsOfOneEmployee() {
+    let searchId = document.getElementById('authorId').value;
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
+            let response = xhr.response;
+            response = JSON.parse(response);
+            showReimbursements(response);
+        }
+    }
+    xhr.open('GET', `http://localhost:8080/reimbursements?author-id=${searchId}`);
     xhr.setRequestHeader("Authorization", sessionStorage.token);
     xhr.send();
 }
 
-let appendUsersToPage = (string = "", arr = []) => {
-    let container = document.getElementById("manager-dashboard");
+let clearMainContent = () => {
+    let container = document.getElementById("main-content");
+    if(container) container.innerHTML = "";
+}
+
+function getEmployee(resources, id, fn) {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
+            let response = xhr.response;
+            response = JSON.parse(response);
+            fn(response, roleString);
+        }
+    }
+    xhr.open('GET', `http://localhost:8080/${resources}`);
+    xhr.setRequestHeader("Authorization", sessionStorage.token);
+    xhr.send();
+}
+
+let put = (resources, resourceId, data) => {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
+            document.getElementById("error-div").innerHTML = "Update success.";
+        } else {
+            document.getElementById("error-div").innerHTML = "Update failed.";
+        }
+    }
+    xhr.open('PUT', `http://localhost:8080/${resources}/${resourceId}`);
+    xhr.setRequestHeader("Authorization", sessionStorage.token);
+    xhr.send(JSON.stringify(data));
+}
+
+let showUsers = (res = [], str = "ALL") => {
+    let container = document.getElementById("main-content");
     if (container) {
         container.innerHTML = "";
-        for (let i = 0; i < arr.length; i++) {
-            let el = arr[i];
-            if (el.role !== string && el.role !== "ADMIN") {
-                let employeeObj = document.createElement("div");
-                employeeObj.innerHTML = el.email;
-                container.append(employeeObj);
+        for (let i = 0; i < res.length; i++) {
+            let el = res[i];
+            if (el.role === str || (str === "ALL" && el.role !== "ADMIN")) {
+                let newEl = document.createElement("div");
+                newEl.innerHTML = el.email;
+                container.append(newEl);
             }
         }
+    }
+}
+
+let showEmployeeInfo = () => {
+    let container = document.getElementById("main-content")
+    if(!container) return;
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
+            let response = xhr.response;
+            response = JSON.parse(response);
+            let {username, email, firstName, lastName} = response;
+            container.innerHTML = 
+            `<div id="main-content">
+                <form id="register-form" onsubmit="return false">
+                    Update your information
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" aria-describedby="userNameHelp"
+                            placeholder="${username}">
+                        <small id="userNameHelp" class="form-text text-muted">
+                            Username must be 50 characters or less.
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Please enter your password, or enter a new one">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                            placeholder="${email}">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" class="form-control" id="firstName" aria-describedby="firstNameHelp"
+                            placeholder="${firstName}">
+                        <small id="firstNameHelp" class="form-text text-muted">
+                            First name must be 100 characters or less.
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" aria-describedby="lastNameHelp"
+                            placeholder="${lastName}">
+                        <small id="lastNameHelp" class="form-text text-muted">
+                            Last name must be 100 characters or less.
+                        </small>
+                    </div>
+                        <button class="btn btn-primary" onclick={updateEmployeeInfo()}>Update</button>
+                        <button class="btn btn-secondary" onclick={showEmployeeInfo()}>Refresh</button>
+                </form>
+                <div id="error-div"></div>
+            </div>`;
+        } 
+        else if (xhr.readyState === 4) {
+            document.getElementById("error-div").innerHTML = "came back at least.";
+        }
+    }
+    xhr.open('GET', `http://localhost:8080/users?id=${sessionStorage.token.split(":")[0]}`);
+    xhr.setRequestHeader("Authorization", sessionStorage.token);
+    xhr.send();
+}
+
+let updateEmployeeInfo = () => {
+    let arr = sessionStorage.token.split(":");
+    let id = arr[0];
+    let role = arr[1];
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    let email = document.getElementById("email").value;
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let data = { id, role, username, password, email, firstName, lastName };
+    for (const key in data) if (!data[key]) return;
+    put("users", sessionStorage.token.split(":")[0], data);
+}
+
+let showReimbursements = (res = [], str = "ALL") => {
+    let container = document.getElementById("main-content");
+    if (container) {
+        container.innerHTML = "";
+        for (let i = 0; i < res.length; i++) {
+            let el = res[i];
+            if (str === "ALL" || (str === "PENDING" && el.statusId === 0) || (str === "RESOLVED" && el.statusId > 0)) {
+                let newEl = document.createElement("div");
+                newEl.innerHTML = el.description;
+                if(el.statusId === 0 && (sessionStorage.token.split(":")[1]) === 'MANAGER'){
+                    newEl.innerHTML = 
+                        `<div>
+                            ${"Amount: " + el.amount + " Description: " + el.description + " Author: " + el.authorId + " Resolver: " + el.resolverId}
+                            <button onclick="put('reimbursements', ${el.id}, 1)">
+                                Approve
+                            </button>
+                            <button onclick="put('reimbursements', ${el.id}, 2)">
+                                Deny
+                            </button>
+                        </div>`
+                } else if(el.statusId === 1 || el.statusId === 2){
+                    newEl.innerHTML = 
+                        `<div>
+                            ${"Amount: " + el.amount + " Description: " + el.description + " Author: " + el.authorId + " Resolver: " + el.resolverId}
+                        </div>`
+                }
+                container.append(newEl);
+            }
+        }
+        let errorDiv = document.createElement("div");
+        errorDiv.id = "error-div";
+        container.append(errorDiv);
     }
 }
 
@@ -74,19 +234,19 @@ function login() {
     xhr.send(requestBody);
 }
 
-let forceAuth = () => {
+function forceAuth() {
     let token = sessionStorage.getItem("token");
     let ref = window.location.href;
-    let ok = ["login_form", "register_form", "index"];
+    let ok = ["login", "register", "reimbursement", "index", "profile"];
     let safe = ok.some(url => ref.includes(url));
     if (!token && !safe)
         window.location.href = "/frontend/html/index.html";
 }
 
-let getDashboard = () => {
+function getDashboard() {
     let token = sessionStorage.getItem("token");
     let ref = window.location.href;
-    let ok = ["dashboard", "index"];
+    let ok = ["dashboard", "index", "reimbursement", "profile"];
     let safe = ok.some(url => ref.includes(url));
     if (token && !safe) {
         let d = "";
@@ -102,51 +262,7 @@ let getDashboard = () => {
 }
 
 let setUpReimbursementForm = (container = document.getElementById("employee-dash")) => {
-    //amount, description
-
-    //java will add the values below after the http req is sent
-    //submissionTime, 
-
-    //receipt image is optional after mvp
-    if (container) container.innerHTML =
-        `<form id="register-form" onsubmit="return false">
-            New Reimbursement Claim
-            <div class="form-group">
-                <label for="amount">Amount</label>
-                <input type="number" class="form-control" id="reimb-amount" aria-describedby="amountHelp"
-                    placeholder="Amount here as a number">
-            </div>
-            <div class="form-group">
-                <label for="text">Description</label>
-                <input type="text" class="form-control" id="reimb-description" placeholder="Description in 250 characters or less">
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-lodging">
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Lodging
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-travel">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Travel
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-food">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Food
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-other" checked >
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Other
-                </label>
-            </div>
-            <button onclick={addReimbursement()} class="btn btn-primary">Submit</button>
-        </form>
-        <div id="error-div"></div>`;
+    if (container) window.location.href = "reimbursement_form.html";
 }
 
 let addReimbursement = () => {
@@ -160,16 +276,16 @@ let addReimbursement = () => {
     let typeId = checkedElement.id.split("-")[1];
     switch (typeId) {
         case "lodging":
-            typeId = 1;
+            typeId = "1";
             break;
         case "travel":
-            typeId = 2;
+            typeId = "2";
             break;
         case "food":
-            typeId = 3;
+            typeId = "3";
             break;
         case "other":
-            typeId = 4;
+            typeId = "4";
             break;
         default:
             break;
@@ -191,22 +307,7 @@ let addReimbursement = () => {
     xhr.send(requestBody);
 }
 
-let getReimbursements = () => {
-    container = document.getElementById("employee-dash");
-    if (container) {
-        container.innerHTML =
-            `<ul>
-            <div>hardcoded reimbursement 1</div>
-            <div>hardcoded reimbursement 2</div>
-            <div>hardcoded reimbursement 3</div>
-        </ul>`
-    }
-}
-
 let logout = () => {
     sessionStorage.clear();
     window.location.href = "/frontend/html/index.html";
 }
-
-forceAuth();
-getDashboard();

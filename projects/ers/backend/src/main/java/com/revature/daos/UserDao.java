@@ -16,13 +16,10 @@ public class UserDao implements GenericDao<User>{
 	@Override
 	public int add(User u) {
 		int result = -1;
-		
 		try (Connection con = ConnectionUtil.getConnection()){
 			String sql = "insert into ers_users (ers_username, ers_password, user_first_name, user_last_name, user_email, user_role_id, ers_manager_id)" + 
 			"values (?,?,?,?,?,?,?) returning ers_users_id;";
-			
 			PreparedStatement ps = con.prepareStatement(sql);
-			
 			ps.setString(1, u.getUsername());
 			ps.setString(2, u.getPassword());
 			ps.setString(3, u.getFirstName());
@@ -30,16 +27,13 @@ public class UserDao implements GenericDao<User>{
 			ps.setString(5, u.getEmail());
 			ps.setInt(6, u.getRoleId());
 			ps.setInt(7, u.getManager().getId());
-
 			ResultSet rs = ps.executeQuery();
-
 			if(rs.next()) {
 				result = rs.getInt("ers_users_id");
 			}
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 		}
-		
 		return result;
 	}
 
@@ -50,13 +44,10 @@ public class UserDao implements GenericDao<User>{
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
-
 		try (Connection c = ConnectionUtil.getConnection()) {
 			String sql = "select * from ers_users;";
-
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery(sql);
-
 			while (rs.next()) {
 				User u = new User(
 						rs.getInt("ers_users_id"), 
@@ -75,13 +66,29 @@ public class UserDao implements GenericDao<User>{
     }
 
     @Override
-    public int update(User t) {
-        return 0;
+    public int update(User u) {
+        int result = 0;
+		try (Connection con = ConnectionUtil.getConnection()){
+			String sql = "UPDATE ers_users SET ers_username = ?, ers_password = ?, user_email = ?, user_first_name = ?, user_last_name = ?, user_role_id = ?, ers_manager_id = ? WHERE ers_users_id = ?;";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, u.getUsername());
+            ps.setString(2, u.getPassword());
+            ps.setString(3, u.getEmail());
+            ps.setString(4, u.getFirstName());
+            ps.setString(5, u.getLastName());
+            ps.setInt(6, u.getRoleId());
+			ps.setInt(7, u.getManager().getId());
+			ps.setInt(8, u.getId());
+			result = ps.executeUpdate();
+			if (result > 0) return result;
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
+		return result;
     }
 
     @Override
     public void delete(int id) {
-        
     }
 
     public User getUserById(int id){
@@ -215,41 +222,5 @@ public class UserDao implements GenericDao<User>{
 
 		return user;
 	}
-
-	/**
-	 * Dao method to update an employee
-	 * @param employee object
-	 * @return true if an employee was updated successfully, else false
-	 */
-	public boolean updateUser(User u) {
-		String sql = "update users set e_name = ?, e_username = ?, e_password = ?, e_role = ?, m_id = ? "
-				+ "where e_id = ?;";
-
-		int rowsChanged = -1;
-
-		try (Connection con = ConnectionUtil.getConnection()) {
-			PreparedStatement ps = con.prepareStatement(sql);
-
-			ps.setString(1, u.getUsername());
-			ps.setString(2, u.getPassword());
-			ps.setString(3, u.getFirstName());
-			ps.setString(4, u.getLastName());
-			ps.setString(5, u.getRole().toString());
-			ps.setInt(6, u.getManager().getId());
-			ps.setInt(7, u.getId());
-
-			rowsChanged = ps.executeUpdate();
-
-		} catch (SQLException | IOException e1) {
-			e1.printStackTrace();
-		}
-
-		if (rowsChanged > 0) {
-			return true;
-		}
-		
-		return false;
-	}
-
 	
 }

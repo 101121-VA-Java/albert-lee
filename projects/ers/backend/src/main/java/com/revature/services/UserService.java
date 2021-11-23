@@ -97,7 +97,7 @@ public class UserService {
 	 * @param employee object, requires an id and valid field values
 	 * @return true if an employee was updated, else false
 	 */
-	// public boolean updateEmployee(Employee e) {
-	// 	return ed.updateEmployee(e);	
-	// }
+	public int updateUser(User u) {
+		return ud.update(u);	
+	}
 }

@@ -23,7 +23,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/frontend/html/manager_dashboard.html">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/frontend/html/manager_dashboard.html">Home <span
+                                class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -42,9 +43,12 @@
                             Requests
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements)">See all requests</a>
-                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'PENDING')">See pending requests</a>
-                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'RESOLVED')">See resolved requests</a>
+                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'ALL')">See all
+                                requests</a>
+                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'PENDING')">See
+                                pending requests</a>
+                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'RESOLVED')">See
+                                resolved requests</a>
                             <a class="dropdown-item" href="reimbursement_lookup.html">Search</a>
 
                         </div>
@@ -60,53 +64,18 @@
             </div>
         </nav>
 
-        <div id="main-content">
-            Manager Dashboard
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test">A Manager can login</label>
+        <form id="login-form" onsubmit="return false;">
+            Search all reimbursements for one employee by any field; only one field is required.
+            <div class="form-group">
+                <label for="authorId">Employee ID</label>
+                <input type="text" class="form-control" id="authorId" aria-describedby="authorIdHelp"
+                    placeholder="Enter employee id to search for">
             </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test">A Manager can view the Manager Homepage</label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test"> A Manager can logout
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> A Manager can approve/deny pending reimbursement requests
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> A Manager can view all pending requests from all employees
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> A Manager can view images of the receipts from reimbursement requests (extra credit)
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> A Manager can view all resolved requests from all employees and see which manager
-                    resolved it
-                </label>
-            </div>
-            <div class="progress-container">
-                <input checked type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> A Manager can view all Employees
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> A Manager can view reimbursement requests from a single Employee</label>
-                </label>
-            </div>
-        </div>
+            <button onclick="showReimbursementsOfOneEmployee()" class="btn btn-primary">Search</button>
+            <button onclick="clearMainContent()" class="btn btn-secondary">Clear</button>
+        </form>
+        <div id="main-content"></div>
+        <div id="error-div"></div>
 
     </main>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

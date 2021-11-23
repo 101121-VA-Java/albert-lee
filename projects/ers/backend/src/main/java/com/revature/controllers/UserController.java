@@ -17,13 +17,16 @@ public class UserController {
 
 	public static void getUsers(Context ctx) {
 		String token = ctx.header("Authorization");				
-		if(!as.checkPermission(token, Role.ADMIN, Role.MANAGER)) {
+		if(as.checkPermission(token, Role.ADMIN, Role.MANAGER)) {
+			List<User> users = us.getUsers();
+			ctx.json(users);
+			ctx.status(HttpCode.OK);
+		} else if(as.checkPermission(token, Role.BASIC)) {
+			getUserById(ctx);
+		} else {
 			ctx.status(HttpCode.UNAUTHORIZED);
 			return;
 		}
-		List<User> users = us.getUsers();
-		ctx.json(users);
-		ctx.status(HttpCode.OK);
 	}
 
 	public static void registerUser(Context ctx) {
@@ -49,10 +52,8 @@ public class UserController {
 	}
 
 	public static void getUserById(Context ctx) {
-		int id = Integer.parseInt(ctx.pathParam("id"));
-
+		int id = Integer.parseInt(ctx.queryParam("id"));
 		User u = us.getUserById(id);
-
 		if (u != null) {
 			ctx.json(u);
 			ctx.status(HttpCode.OK);
@@ -70,6 +71,18 @@ public class UserController {
 		} else {
 			ctx.json("fail");
 			ctx.status(HttpCode.NOT_FOUND);
+		}
+	}
+
+	public static void updateUser(Context ctx) {
+		User updated = ctx.bodyAsClass(User.class);
+		System.out.println(updated.getId());
+		User stale = us.getUserById(updated.getId());
+		updated.setManager(stale.getManager());
+		if(us.updateUser(updated) <= 0){
+			ctx.status(HttpCode.BAD_REQUEST);
+		} else {
+			ctx.status(HttpCode.OK);
 		}
 	}
 }

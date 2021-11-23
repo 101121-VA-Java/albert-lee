@@ -25,19 +25,17 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/frontend/html/employee_dashboard.html">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" onclick="showEmployeeInfo()">Profile</a>
-                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Requests
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="reimbursement_form.html">Create new request</a>
-                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements)">See all requests</a>
+                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'ALL')">See all requests</a>
                             <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'PENDING')">See pending requests</a>
                             <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'RESOLVED')">See resolved requests</a>
+                            <a class="dropdown-item" href="reimbursement_lookup.html">Search</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -53,53 +51,44 @@
         
 
         <div id="main-content">
-            Employee Dashboard
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test"> An Employee can login
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test"> An Employee can logout
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> An Employee can submit a reimbursement request
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> An Employee can upload an image of his/her receipt as part of the reimbursement request
-                    (extra credit)
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> An Employee can view their pending reimbursement requests
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> An Employee can view their resolved reimbursement requests
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> An Employee can view their information
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> An Employee can update their information
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> An Employee receives an email when one of their reimbursement requests is resolved
-                    (optional)
-                </label>
+            <form id="register-form" onsubmit="return false">
+                New Reimbursement Claim
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" class="form-control" id="reimb-amount" aria-describedby="amountHelp"
+                        placeholder="Amount here as a number">
+                </div>
+                <div class="form-group">
+                    <label for="text">Description</label>
+                    <input type="text" class="form-control" id="reimb-description" placeholder="Description in 250 characters or less">
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-lodging">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Lodging
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-travel">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Travel
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-food">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Food
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-other" checked >
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Other
+                    </label>
+                </div>
+                <button onclick={addReimbursement()} class="btn btn-primary">Submit</button>
+            </form>
+            <div id="error-div"></div>
             </div>
         </div>
 
