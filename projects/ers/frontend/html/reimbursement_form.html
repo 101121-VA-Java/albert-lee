@@ -25,7 +25,9 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/frontend/html/employee_dashboard.html">Home <span class="sr-only">(current)</span></a>
                     </li>
-
+                    <li class="nav-item active">
+                        <a class="nav-link" onclick="showEmployeeInfo()">Profile</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -35,7 +37,6 @@
                             <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'ALL')">See all requests</a>
                             <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'PENDING')">See pending requests</a>
                             <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'RESOLVED')">See resolved requests</a>
-                            <a class="dropdown-item" href="reimbursement_lookup.html">Search</a>
                         </div>
                     </li>
                     <li class="nav-item">
