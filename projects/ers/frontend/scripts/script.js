@@ -11,7 +11,7 @@ function get(resources, fn, roleString = "ALL") {
         }
     }
     xhr.open('GET', `http://localhost:8080/${resources}`);
-        xhr.setRequestHeader("Authorization", sessionStorage.token);
+    xhr.setRequestHeader("Authorization", sessionStorage.token);
     xhr.send();
 }
 
