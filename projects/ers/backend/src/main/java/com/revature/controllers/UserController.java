@@ -30,19 +30,7 @@ public class UserController {
 	}
 
 	public static void registerUser(Context ctx) {
-		/*
-		 * add employee requires an Employee Object with a name, username, password
-		 * 
-		 * HTTP request - version - headers - body - need to have name, username,
-		 * password - url - localhost:8080/employees - http verb/method... - POST
-		 */
-
-		/*
-		 * Object mapper converts JSON object to Java Object mapped to the Employee
-		 * class - fields the the JSON object that match fields in the Employee java
-		 * class will be mapped accordingly
-		 */
-		int userId = us.addUser(ctx.bodyAsClass(User.class)); // should return new employee id																			// successful, or null otherwise
+		int userId = us.addUser(ctx.bodyAsClass(User.class));
 		if (userId == -1) {
 			ctx.status(HttpCode.BAD_REQUEST);
 		} else {
