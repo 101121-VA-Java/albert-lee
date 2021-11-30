@@ -14,16 +14,16 @@
 <body>
     <main>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/frontend/html/index.html">ERS</a>
+            <a class="navbar-brand">ERS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/frontend/html/employee_dashboard.html">Home <span class="sr-only">(current)</span></a>
+<ul id="navbar-unordered-elements" class="navbar-nav mr-auto">                    <li class="nav-item active">
+                        <a class="nav-link" href="/frontend/html/employee_dashboard.html">Home <span
+                                class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" onclick="showEmployeeInfo()">Profile</a>
@@ -34,63 +34,51 @@
                             Requests
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'ALL')">See all requests</a>
-                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'PENDING')">See pending requests</a>
-                            <a class="dropdown-item" onclick="get('reimbursements', showReimbursements, 'RESOLVED')">See resolved requests</a>
+                            <a class="dropdown-item" href="reimbursement_form.html">Create new request</a>
+                            <a class="dropdown-item" onclick="getReimbursements('ALL')">All</a>
+                            <a class="dropdown-item" onclick="getReimbursements('PENDING')">Pending</a>
+                            <a class="dropdown-item" onclick="getReimbursements('RESOLVED')">Resolved</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" onclick="logout()" href="/frontend/html/index.html">Logout</a>
-                    </li>
+
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
             </div>
         </nav>
-        
+
 
         <div id="main-content">
             <form id="register-form" onsubmit="return false">
-                New Reimbursement Claim
+                <h4>New Reimbursement Claim</h4>
                 <div class="form-group">
-                    <label for="amount">Amount</label>
                     <input type="number" class="form-control" id="reimb-amount" aria-describedby="amountHelp"
                         placeholder="Amount here as a number">
                 </div>
                 <div class="form-group">
-                    <label for="text">Description</label>
-                    <input type="text" class="form-control" id="reimb-description" placeholder="Description in 250 characters or less">
+                    <input type="textarea" class="form-control" id="reimb-description"
+                        placeholder="Description in 250 characters or less">
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-lodging">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Lodging
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="flexRadioDefault" id="reimb-lodging" autocomplete="off">Lodging
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="flexRadioDefault" id="reimb-travel" autocomplete="off">Travel
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="flexRadioDefault" id="reimb-food" autocomplete="off">Food
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="flexRadioDefault" id="reimb-other" autocomplete="off">Other
                     </label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-travel">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Travel
-                    </label>
+                <div class="form-group top-padding-fix">
+                    <label for="exampleFormControlFile1">Attach receipt if applicable</label>
+                    <input type="file" accept="image/png, image/jpeg" class="form-control-file" id="formControlFile">
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-food">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Food
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="reimb-other" checked >
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Other
-                    </label>
-                </div>
-                <button onclick={addReimbursement()} class="btn btn-primary">Submit</button>
+                <button style="margin-top: 1rem; display: block;" onclick={addReimbursement()} class="btn btn-primary">Submit</button>
             </form>
             <div id="error-div"></div>
-            </div>
+        </div>
         </div>
 
     </main>

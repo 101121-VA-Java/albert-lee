@@ -14,14 +14,14 @@
 <body>
     <main>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/frontend/html/index.html">ERS</a>
+            <a class="navbar-brand">ERS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul id="navbar-unordered-elements" class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/frontend/html/index.html">Home</a>
                     </li>
@@ -33,25 +33,23 @@
                                 class="sr-only">(current)</span></a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+
             </div>
         </nav>
-        <form id="login-form" onsubmit="return false;">
-            Login!
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" aria-describedby="userNameHelp" placeholder="Enter username">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
-            </div>
-            <button onclick="login()" class="btn btn-primary">Login</button>
-        </form>
-        <div id="error-div"></div>
+        <div id="main-content">
+            <form id="login-form" onsubmit="return false">
+                <h4>Login</h4>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="username" aria-describedby="userNameHelp"
+                        placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <button onclick="login()" class="btn btn-primary">Login</button>
+            </form>
+            <div id="error-div"></div>
+        </div>
 
     </main>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

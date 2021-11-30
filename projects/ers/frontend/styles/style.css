@@ -1,7 +1,35 @@
-#register-form, #login-form {
-    margin: 2rem;
+#register-form, #login-form, .check-box, #main-content, #reimbursement-lookup{
+    margin: .5rem;
+    padding: .2rem;
 }
 
-.check-box {
-    margin: 1rem;
+#main-content, #reimbursement-lookup {
+    -webkit-box-shadow: 5px 5px 21px -5px rgba(0,0,0,0.65);
+    box-shadow: 5px 5px 21px -5px rgba(0,0,0,0.65);
+    border-radius: 1rem;
+    max-width: 900px;
+    margin: 2rem auto;
+}
+
+.card-img-bottom-custom {
+    border-bottom-right-radius: calc(.25rem - 1px);
+    border-bottom-left-radius: calc(.25rem - 1px);
+}
+
+.header-padding-fix {
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+
+.top-padding-fix {
+    padding-top: 1rem;
+}
+
+.btn-red {
+    background-color: red;
+    color: white;
+}
+
+th:empty{
+    display: none;
 }

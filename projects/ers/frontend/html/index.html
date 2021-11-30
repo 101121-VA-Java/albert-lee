@@ -12,33 +12,28 @@
 </head>
 
 <body>
-    <main>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/frontend/html/index.html">ERS</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand">ERS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/frontend/html/index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/frontend/html/register_form.html">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/frontend/html/login_form.html">Login</a>
+                </li>
+            </ul>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/frontend/html/index.html">Home <span
-                                class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/frontend/html/register_form.html">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/frontend/html/login_form.html">Login</a>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-        </nav>
+        </div>
+    </nav>
+    <div id="main-content">
         <div class="progress-container">
             <input type="checkbox" name="test" class="check-box" title="test" checked>
             <label for="test">A Manager can login</label>
@@ -83,7 +78,7 @@
             <label for="test"> A Manager can view reimbursement requests from a single Employee</label>
             </label>
         </div>
-        <br/>
+        <br />
         <div class="progress-container">
             <input type="checkbox" name="test" class="check-box" title="test" checked>
             <label for="test"> An Employee can login
@@ -131,7 +126,7 @@
                 (optional)
             </label>
         </div>
-    </main>
+    </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

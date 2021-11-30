@@ -1,38 +1,28 @@
 forceAuth();
 getDashboard();
+addLogoutButton();
 
-function get(resources, fn, roleString = "ALL") {
-    let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
-            let response = xhr.response;
-            response = JSON.parse(response);
-            fn(response, roleString);
+let customizableFetch = (url, callback, optionalData=null) => {
+    fetch(url, {
+        headers: {
+            Authorization: sessionStorage.token
         }
-    }
-    xhr.open('GET', `http://localhost:8080/${resources}`);
-    xhr.setRequestHeader("Authorization", sessionStorage.token);
-    xhr.send();
+    })
+    .then(res => res.json())
+    .then(res => {
+        callback(res, optionalData);
+    })
+    .catch(err => console.log(err.message))
 }
 
-function showReimbursementsOfOneEmployee() {
+let get = (resources, fn) => {
+    customizableFetch(`http://localhost:8080/${resources}`, fn);
+}
+
+let showReimbursementsOfOneEmployee = () => {
     let searchId = document.getElementById('authorId').value;
-    let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
-            let response = xhr.response;
-            response = JSON.parse(response);
-            showReimbursements(response);
-        }
-    }
-    xhr.open('GET', `http://localhost:8080/reimbursements?author-id=${searchId}`);
-    xhr.setRequestHeader("Authorization", sessionStorage.token);
-    xhr.send();
-}
-
-let clearMainContent = () => {
-    let container = document.getElementById("main-content");
-    if(container) container.innerHTML = "";
+    if(!searchId) return;
+    customizableFetch(`http://localhost:8080/reimbursements?author-id=${searchId}`, showReimbursements)
 }
 
 function getEmployee(resources, id, fn) {
@@ -53,7 +43,12 @@ let put = (resources, resourceId, data) => {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
-            document.getElementById("error-div").innerHTML = "Update success.";
+            let table = document.getElementById(`table`);
+            let outdated = document.getElementById(resourceId);
+            let index = null;
+            if(outdated) index = outdated.rowIndex;
+            if(table && index) table.deleteRow(index);
+            document.getElementById("error-div").innerHTML = `Request #${resourceId} successfully resolved`;
         } else {
             document.getElementById("error-div").innerHTML = "Update failed.";
         }
@@ -78,6 +73,11 @@ let showUsers = (res = [], str = "ALL") => {
     }
 }
 
+let getUsers = (typeOfUserToShow) => {
+    let url = `http://localhost:8080/users`
+    customizableFetch(url, showUsers, typeOfUserToShow);
+}
+
 let showEmployeeInfo = () => {
     let container = document.getElementById("main-content")
     if(!container) return;
@@ -88,16 +88,12 @@ let showEmployeeInfo = () => {
             response = JSON.parse(response);
             let {username, email, firstName, lastName} = response;
             container.innerHTML = 
-            `<div id="main-content">
-                <form id="register-form" onsubmit="return false">
-                    Update your information
+                `<form id="register-form" onsubmit="return false">
+                    <h4>Update your profile</h4>
                     <div class="form-group">
-                        <label for="username">Username</label>
                         <input type="text" class="form-control" id="username" aria-describedby="userNameHelp"
-                            placeholder="${username}">
-                        <small id="userNameHelp" class="form-text text-muted">
+                            value=${username}>
                             Username must be 50 characters or less.
-                        </small>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
@@ -106,14 +102,14 @@ let showEmployeeInfo = () => {
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                            placeholder="${email}">
+                            value=${email}>
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                             else.</small>
                     </div>
                     <div class="form-group">
                         <label for="firstName">First Name</label>
                         <input type="text" class="form-control" id="firstName" aria-describedby="firstNameHelp"
-                            placeholder="${firstName}">
+                            value=${firstName}>
                         <small id="firstNameHelp" class="form-text text-muted">
                             First name must be 100 characters or less.
                         </small>
@@ -121,7 +117,7 @@ let showEmployeeInfo = () => {
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
                         <input type="text" class="form-control" id="lastName" aria-describedby="lastNameHelp"
-                            placeholder="${lastName}">
+                            value=${lastName}>
                         <small id="lastNameHelp" class="form-text text-muted">
                             Last name must be 100 characters or less.
                         </small>
@@ -129,8 +125,7 @@ let showEmployeeInfo = () => {
                         <button class="btn btn-primary" onclick={updateEmployeeInfo()}>Update</button>
                         <button class="btn btn-secondary" onclick={showEmployeeInfo()}>Refresh</button>
                 </form>
-                <div id="error-div"></div>
-            </div>`;
+                <div id="error-div"></div>`;
         } 
         else if (xhr.readyState === 4) {
             document.getElementById("error-div").innerHTML = "came back at least.";
@@ -155,39 +150,121 @@ let updateEmployeeInfo = () => {
     put("users", sessionStorage.token.split(":")[0], data);
 }
 
-let showReimbursements = (res = [], str = "ALL") => {
-    let container = document.getElementById("main-content");
-    if (container) {
-        container.innerHTML = "";
-        for (let i = 0; i < res.length; i++) {
-            let el = res[i];
-            if (str === "ALL" || (str === "PENDING" && el.statusId === 0) || (str === "RESOLVED" && el.statusId > 0)) {
-                let newEl = document.createElement("div");
-                newEl.innerHTML = el.description;
-                if(el.statusId === 0 && (sessionStorage.token.split(":")[1]) === 'MANAGER'){
-                    newEl.innerHTML = 
-                        `<div>
-                            ${"Amount: " + el.amount + " Description: " + el.description + " Author: " + el.authorId + " Resolver: " + el.resolverId}
-                            <button onclick="put('reimbursements', ${el.id}, 1)">
-                                Approve
-                            </button>
-                            <button onclick="put('reimbursements', ${el.id}, 2)">
-                                Deny
-                            </button>
-                        </div>`
-                } else if(el.statusId === 1 || el.statusId === 2){
-                    newEl.innerHTML = 
-                        `<div>
-                            ${"Amount: " + el.amount + " Description: " + el.description + " Author: " + el.authorId + " Resolver: " + el.resolverId}
-                        </div>`
-                }
-                container.append(newEl);
-            }
-        }
-        let errorDiv = document.createElement("div");
-        errorDiv.id = "error-div";
-        container.append(errorDiv);
+let getReimbursements = (typeOfReimbursementToShow) => {
+    let url = `http://localhost:8080/reimbursements`;
+    customizableFetch(url, showReimbursements, typeOfReimbursementToShow)
+}
+
+let showReimbursements = (res = [], stringOfTypeToDisplay) => {
+
+    let container = document.getElementById("main-content")
+    if(!container) return; 
+    else if(container) container.innerHTML = '';
+    if(res.length <= 0) container.innerHTML = `No ${stringOfTypeToDisplay.toLowerCase()} reimbursements found`;
+    let result = '';
+    switch (stringOfTypeToDisplay) {
+        case 'PENDING':
+            result += `<h4 class="header-padding-fix">Pending reimbursements</h4>`
+            break;
+        case 'RESOLVED':
+            result += `<h4 class="header-padding-fix">Resolved reimbursements</h4>`
+            break;
+        default:
+            result += `<h4 class="header-padding-fix">All reimbursements</h4>`
+            break;
     }
+    result +=
+        `<table id="table" class="table table-hover">` +
+            `<thead>` +
+                `<tr>` +
+                    `<th scope="col">ID</th>` +
+                    `<th scope="col">Amount</th>` +
+                    `<th scope="col">Description</th>` +
+                    `<th scope="col">Author ID</th>` +
+                    `<th scope="col">Resolver ID</th>` +
+                    `<th scope="col">Receipt Image</th>` +
+                    `<th scope="col"></th>` +
+                    `<th scope="col"></th>` +
+                `</tr>` +
+            `</thead>` +
+            `<tbody>`;
+
+    let role = sessionStorage.token.split(':')[1];
+    for (let i = 0; i < res.length; i++) {
+        let reimb = res[i];
+        let {statusId} = reimb;
+        if(role === 'BASIC') {
+            if(stringOfTypeToDisplay === "ALL") 
+                result += reimbursementRow(reimb);
+            else if(stringOfTypeToDisplay === "PENDING" && statusId === 0)
+                result += reimbursementRow(reimb);
+            else if(stringOfTypeToDisplay === "RESOLVED" &&  statusId > 0)
+                result += reimbursementRow(reimb);
+        } 
+        else if(role === 'MANAGER') {
+            if(!stringOfTypeToDisplay || stringOfTypeToDisplay === "ALL")
+                result += reimbursementRowWithReceiptImage(reimb);
+            else if(stringOfTypeToDisplay === "PENDING" && statusId === 0) 
+                result += reimbursementRowWithApproveOrDenyButtons(reimb);
+            
+            else if(stringOfTypeToDisplay === "RESOLVED" && statusId > 0) 
+                result += reimbursementRowWithReceiptImage(reimb);
+            
+        }
+    }
+    result += `</tbody></table>`
+    result += `<div id="error-div"></div>`;
+    container.innerHTML = result;
+}
+
+let reimbursementRow = (reimbursement) => {
+    let {amount, description, authorId, resolverId, id, statusId} = reimbursement;
+    let result = '';
+    return result +=
+    `<tr id=${id}>` +
+        `<th scope="row">${id}</th>` +
+        `<th scope="row">${amount}</th>` +
+        `<th scope="row">${description}</th>` +
+        `<th scope="row">${authorId}</th>` +
+        `<th scope="row">${resolverId}</th>` +
+    `</tr>`;
+}
+
+let reimbursementRowWithReceiptImage = (reimbursement) => {
+    let {amount, description, authorId, resolverId, id, statusId} = reimbursement;
+    return (
+        `<tr id=${id}>` +
+            `<th scope="row">${id}</th>` +
+            `<th scope="row">${amount}</th>` +
+            `<th scope="row">${description}</th>` +
+            `<th scope="row">${authorId}</th>` +
+            `<th scope="row">${resolverId}</th>` +
+            `<th scope="row"><img class="card-img-bottom-custom" src="" alt="reimbursement_receipt"/></th>` +
+        `</tr>`);
+}
+
+let reimbursementRowWithApproveOrDenyButtons = (reimbursement) => {
+    let {amount, description, authorId, resolverId, id} = reimbursement;
+    return (
+        `<tr id=${id}>` +
+            `<th scope="row">${id}</th>` +
+            `<th scope="row">${amount}</th>` +
+            `<th scope="row">${description}</th>` +
+            `<th scope="row">${authorId}</th>` +
+            `<th scope="row">${resolverId}</th>` +
+            `<th scope="row"><img class="card-img-bottom-custom" src="" alt="reimbursement_receipt"></th>` +
+            `<th scope="row">
+                <button class="btn btn-primary" onclick="put('reimbursements', ${id}, 1)">
+                    Approve
+                </button>
+            </th>` +
+            `<th scope="row">
+                <button class="btn btn-red" onclick="put('reimbursements', ${id}, 2)">
+                    Deny
+                </button>
+            </th>` +
+        `<tr/>`
+    );
 }
 
 function register() {
@@ -225,7 +302,13 @@ function login() {
             sessionStorage.setItem("token", authToken);
             getDashboard();
         } else if (xhr.readyState === 4) {
-            document.getElementById("error-div").innerHTML = "Unable to login.";
+            document.getElementById("error-div").innerHTML = `
+            <div class="alert alert-danger" role="alert">
+            Wrong username and password combination. Please double check and again.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>`;
         }
     }
 
@@ -237,7 +320,7 @@ function login() {
 function forceAuth() {
     let token = sessionStorage.getItem("token");
     let ref = window.location.href;
-    let ok = ["login", "register", "reimbursement", "index", "profile"];
+    let ok = ["login", "register", "index"];
     let safe = ok.some(url => ref.includes(url));
     if (!token && !safe)
         window.location.href = "/frontend/html/index.html";
@@ -310,4 +393,15 @@ let addReimbursement = () => {
 let logout = () => {
     sessionStorage.clear();
     window.location.href = "/frontend/html/index.html";
+}
+
+function addLogoutButton() {
+    if(!sessionStorage.token) return; 
+    let navList = document.getElementById("navbar-unordered-elements");
+    if(!navList) return;
+    let logoutButton = document.createElement("li");
+    logoutButton.className = "nav-item";
+    logoutButton.innerHTML = `<a class="nav-link" onclick="logout()" href="/frontend/html/index.html">Logout</a>
+    `;
+    navList.appendChild(logoutButton);
 }
