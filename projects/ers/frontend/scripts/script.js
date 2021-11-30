@@ -182,7 +182,7 @@ let showReimbursements = (res = [], stringOfTypeToDisplay) => {
                     `<th scope="col">Description</th>` +
                     `<th scope="col">Author ID</th>` +
                     `<th scope="col">Resolver ID</th>` +
-                    `<th scope="col">Receipt Image</th>` +
+                    `<th scope="col"></th>` +
                     `<th scope="col"></th>` +
                     `<th scope="col"></th>` +
                 `</tr>` +
