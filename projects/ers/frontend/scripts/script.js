@@ -25,7 +25,7 @@ let showReimbursementsOfOneEmployee = () => {
     customizableFetch(`http://localhost:8080/reimbursements?author-id=${searchId}`, showReimbursements)
 }
 
-function getEmployee(resources, id, fn) {
+function getEmployee(resources, fn) {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
@@ -350,7 +350,6 @@ let setUpReimbursementForm = (container = document.getElementById("employee-dash
 
 let addReimbursement = () => {
     if(!sessionStorage.token) return;
-    console.log('reimbursement added');
     let amount = document.getElementById("reimb-amount").value;
     let description = document.getElementById("reimb-description").value;
     let arr = document.getElementsByName("flexRadioDefault");
