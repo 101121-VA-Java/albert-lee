@@ -15,7 +15,14 @@ public class ReimbursementController {
 	private static AuthService as = new AuthService();
 
     public static void add(Context ctx) {
-        int reimbId = rs.add(ctx.bodyAsClass(Reimbursement.class));																	// successful, or null otherwise
+		Reimbursement r = new Reimbursement();
+		ctx.formParamMap();
+		r.setAmount(Integer.parseInt(ctx.formParam("amount")));
+		r.setDescription(ctx.formParam("description"));
+		r.setTypeId(Integer.parseInt(ctx.formParam("typeId")));
+		r.setAuthorId(Integer.parseInt(ctx.formParam("authorId")));
+		ctx.uploadedFiles().forEach(file -> r.setImage(file.getContent()));
+        int reimbId = rs.add(r);
 		if (reimbId == -1) ctx.status(HttpCode.BAD_REQUEST);
 		else ctx.status(HttpCode.CREATED);
     }

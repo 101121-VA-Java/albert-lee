@@ -15,14 +15,15 @@ public class ReimbursementDao implements GenericDao<Reimbursement> {
     	int result = -1;
 		try (Connection con = ConnectionUtil.getConnection()){
 			String sql = "insert into ers_reimbursement" +
-            "(reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_type_id)" + 
-			"values (?,?,?,?,?) returning reimb_id;";
+            "(reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_type_id, reimb_receipt)" + 
+			"values (?,?,?,?,?,?) returning reimb_id;";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, r.getAmount());
 			ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
 			ps.setString(3, r.getDescription());
 			ps.setInt(4, r.getAuthorId());
 			ps.setInt(5, r.getTypeId());
+			ps.setBinaryStream(6, r.getImage());
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt("reimb_id");
@@ -54,6 +55,7 @@ public class ReimbursementDao implements GenericDao<Reimbursement> {
 					rs.getInt("reimb_resolver"),
 					rs.getInt("reimb_status_id"),
 					rs.getInt("reimb_type_id"));
+					// rs.getBinaryStream("reimb_receipt"));
 				rmbs.add(r);
 			}
 		} catch (SQLException | IOException e) {

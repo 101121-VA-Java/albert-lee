@@ -156,7 +156,6 @@ let getReimbursements = (typeOfReimbursementToShow) => {
 }
 
 let showReimbursements = (res = [], stringOfTypeToDisplay) => {
-
     let container = document.getElementById("main-content")
     if(!container) return; 
     else if(container) container.innerHTML = '';
@@ -373,7 +372,13 @@ let addReimbursement = () => {
             break;
     }
     let authorId = sessionStorage.token.split(":")[0];
-    let newReimbursement = { amount, description, authorId, typeId };
+    let input = document.querySelector('input[type="file"]')
+    let formData = new FormData();
+    formData.append('amount', amount);
+    formData.append('description', description);
+    formData.append('authorId', authorId);
+    formData.append('typeId', typeId);
+    formData.append('img', input.files[0]);
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
@@ -385,8 +390,7 @@ let addReimbursement = () => {
         }
     }
     xhr.open("POST", "http://localhost:8080/reimbursements");
-    let requestBody = JSON.stringify(newReimbursement);
-    xhr.send(requestBody);
+    xhr.send(formData);
 }
 
 let logout = () => {

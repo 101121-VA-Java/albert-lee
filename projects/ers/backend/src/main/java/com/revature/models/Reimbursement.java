@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -15,6 +16,7 @@ public class Reimbursement implements Serializable {
     private int amount;
     private Timestamp submitted;
     private Timestamp resolved;
+    private InputStream image;
     private String description;
     private int authorId;
     private int resolverId;
@@ -34,6 +36,20 @@ public class Reimbursement implements Serializable {
         this.setResolverId(resolverId);
         this.setStatusId(statusId);
         this.typeId = typeId;
+    }
+
+    public Reimbursement(int id, int amount, Timestamp submitted, Timestamp resolved, String description, int authorId,
+            int resolverId, int statusId, int typeId, InputStream image) {
+        this.id = id;
+        this.amount = amount;
+        this.setSubmitted(submitted);
+        this.setResolved(resolved);
+        this.description = description;
+        this.authorId = authorId;
+        this.setResolverId(resolverId);
+        this.setStatusId(statusId);
+        this.typeId = typeId;
+        this.image = image;
     }
 
     public int getId() {
@@ -93,4 +109,27 @@ public class Reimbursement implements Serializable {
         this.statusId = statusId;
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
+    }
+
+    public InputStream getImage() {
+        return image;
+    }
+
+    public void setImage(InputStream image) {
+        this.image = image;
+    }
 }

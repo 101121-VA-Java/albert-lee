@@ -21,7 +21,8 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-<ul id="navbar-unordered-elements" class="navbar-nav mr-auto">                    <li class="nav-item active">
+                <ul id="navbar-unordered-elements" class="navbar-nav mr-auto">
+                    <li class="nav-item active">
                         <a class="nav-link" href="/frontend/html/employee_dashboard.html">Home <span
                                 class="sr-only">(current)</span></a>
                     </li>
@@ -47,7 +48,7 @@
 
 
         <div id="main-content">
-            <form id="register-form" onsubmit="return false">
+            <form enctype="multipart/form-data" id="register-form" onsubmit="return false">
                 <h4>New Reimbursement Claim</h4>
                 <div class="form-group">
                     <input type="number" class="form-control" id="reimb-amount" aria-describedby="amountHelp"
@@ -75,7 +76,8 @@
                     <label for="exampleFormControlFile1">Attach receipt if applicable</label>
                     <input type="file" accept="image/png, image/jpeg" class="form-control-file" id="formControlFile">
                 </div>
-                <button style="margin-top: 1rem; display: block;" onclick={addReimbursement()} class="btn btn-primary">Submit</button>
+                <button style="margin-top: 1rem; display: block;" onclick={addReimbursement()}
+                    class="btn btn-primary">Submit</button>
             </form>
             <div id="error-div"></div>
         </div>
