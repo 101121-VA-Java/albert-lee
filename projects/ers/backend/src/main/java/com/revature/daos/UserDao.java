@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.revature.models.User;
 import com.revature.util.ConnectionUtil;
+import com.revature.util.LogUtil;
 
 public class UserDao implements GenericDao<User>{
 	/**
@@ -32,6 +33,7 @@ public class UserDao implements GenericDao<User>{
 				result = rs.getInt("ers_users_id");
 			}
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in UserDao");
 			e.printStackTrace();
 		}
 		return result;
@@ -60,6 +62,7 @@ public class UserDao implements GenericDao<User>{
 				users.add(u);
 			}
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in UserDao");
 			e.printStackTrace();
 		}
 		return users;
@@ -82,6 +85,7 @@ public class UserDao implements GenericDao<User>{
 			result = ps.executeUpdate();
 			if (result > 0) return result;
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in UserDao");
 			e.printStackTrace();
 		}
 		return result;
@@ -109,6 +113,7 @@ public class UserDao implements GenericDao<User>{
 					new User(rs.getInt("ers_manager_id")));
 			}
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in UserDao");
 			e.printStackTrace();
 		}
 		return u;
@@ -133,6 +138,7 @@ public class UserDao implements GenericDao<User>{
 						new User (rs.getInt("ers_manager_id")));
 			}
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in UserDao");
 			e.printStackTrace();
 		}
 		return user;

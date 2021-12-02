@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.revature.models.Reimbursement;
 import com.revature.util.ConnectionUtil;
+import com.revature.util.LogUtil;
 
 public class ReimbursementDao implements GenericDao<Reimbursement> {
 
@@ -30,6 +31,7 @@ public class ReimbursementDao implements GenericDao<Reimbursement> {
 				result = rs.getInt("reimb_id");
 			}
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in ReimbursementDao");
 			e.printStackTrace();
 		}
 		return result;
@@ -75,6 +77,7 @@ public class ReimbursementDao implements GenericDao<Reimbursement> {
 				rmbs.add(r);
 			}
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in ReimbursementDao");
 			e.printStackTrace();
 		}
 		return rmbs;
@@ -93,6 +96,7 @@ public class ReimbursementDao implements GenericDao<Reimbursement> {
 			result = ps.executeUpdate();
 			if (result > 0) return result;
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in ReimbursementDao");
 			e.printStackTrace();
 		}
 		return result;
@@ -124,6 +128,7 @@ public class ReimbursementDao implements GenericDao<Reimbursement> {
 				rmbs.add(r);
 			}
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in ReimbursementDao");
 			e.printStackTrace();
 		}
 		return rmbs;
@@ -149,6 +154,7 @@ public class ReimbursementDao implements GenericDao<Reimbursement> {
 					rs.getInt("reimb_type_id"));
 			}
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in ReimbursementDao");
 			e.printStackTrace();
 		}
 		return r;	

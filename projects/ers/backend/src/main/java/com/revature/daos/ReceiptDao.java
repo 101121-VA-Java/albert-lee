@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.revature.util.ConnectionUtil;
-
+import com.revature.util.LogUtil;
 public class ReceiptDao {
     public InputStream getById(int id){
         InputStream result = null;
@@ -21,6 +21,7 @@ public class ReceiptDao {
 				result = rs.getBinaryStream("reimb_receipt");
 			}
 		} catch (SQLException | IOException e) {
+			LogUtil.descriptiveError("SQL or IO Exception in ReceiptDao");
 			e.printStackTrace();
 		}
         return result;
