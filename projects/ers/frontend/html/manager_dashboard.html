@@ -12,97 +12,112 @@
 </head>
 
 <body>
-    <main>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand">ERS</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand">ERS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul id="navbar-unordered-elements" class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/frontend/html/manager_dashboard.html">Home <span
-                                class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Users
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" onclick="getUsers('ALL')">All</a>
-                            <a class="dropdown-item" onclick="getUsers('BASIC')">Employees</a>
-                            <a class="dropdown-item" onclick="getUsers('MANAGER')">Managers</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Requests
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" onclick="getReimbursements('ALL')">All</a>
-                            <a class="dropdown-item" onclick="getReimbursements('PENDING')">Pending</a>
-                            <a class="dropdown-item" onclick="getReimbursements('RESOLVED')">Resolved</a>
-                            <a class="dropdown-item" href="reimbursement_lookup.html">Search</a>
-                        </div>
-                    </li>
-                </ul>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul id="navbar-unordered-elements" class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/frontend/html/manager_dashboard.html">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Users
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" onclick="getUsers('ALL')">All</a>
+                        <a class="dropdown-item" onclick="getUsers('BASIC')">Employees</a>
+                        <a class="dropdown-item" onclick="getUsers('MANAGER')">Managers</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Requests
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" onclick="getReimbursements('ALL')">All</a>
+                        <a class="dropdown-item" onclick="getReimbursements('PENDING')">Pending</a>
+                        <a class="dropdown-item" onclick="getReimbursements('RESOLVED')">Resolved</a>
+                        <a class="dropdown-item" href="reimbursement_lookup.html">Search</a>
+                    </div>
+                </li>
+            </ul>
 
-            </div>
-        </nav>
+        </div>
+    </nav>
 
-        <div id="main-content">
-            <h4 class="header-padding-fix">Manager Homepage</h4>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test">A Manager can login</label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test">A Manager can view the Manager Homepage</label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test"> A Manager can logout
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test"> A Manager can approve/deny pending reimbursement requests
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test"> A Manager can view all pending requests from all employees
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> A Manager can view images of the receipts from reimbursement requests (extra credit)
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test" checked>
-                <label for="test"> A Manager can view all resolved requests from all employees and see which manager
-                    resolved it
-                </label>
-            </div>
-            <div class="progress-container">
-                <input checked type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> A Manager can view all Employees
-                </label>
-            </div>
-            <div class="progress-container">
-                <input type="checkbox" name="test" class="check-box" title="test">
-                <label for="test"> A Manager can view reimbursement requests from a single Employee</label>
-                </label>
+    <div id="main-content">
+        <h4 class="header-padding-fix">Manager Homepage</h4>
+        <div class="progress-container">
+            <input type="checkbox" name="test" class="check-box" title="test" checked>
+            <label for="test">A Manager can login</label>
+        </div>
+        <div class="progress-container">
+            <input type="checkbox" name="test" class="check-box" title="test" checked>
+            <label for="test">A Manager can view the Manager Homepage</label>
+        </div>
+        <div class="progress-container">
+            <input type="checkbox" name="test" class="check-box" title="test" checked>
+            <label for="test"> A Manager can logout
+            </label>
+        </div>
+        <div class="progress-container">
+            <input type="checkbox" name="test" class="check-box" title="test" checked>
+            <label for="test"> A Manager can approve/deny pending reimbursement requests
+            </label>
+        </div>
+        <div class="progress-container">
+            <input type="checkbox" name="test" class="check-box" title="test" checked>
+            <label for="test"> A Manager can view all pending requests from all employees
+            </label>
+        </div>
+        <div class="progress-container">
+            <input type="checkbox" name="test" class="check-box" title="test">
+            <label for="test"> A Manager can view images of the receipts from reimbursement requests (extra credit)
+            </label>
+        </div>
+        <div class="progress-container">
+            <input type="checkbox" name="test" class="check-box" title="test" checked>
+            <label for="test"> A Manager can view all resolved requests from all employees and see which manager
+                resolved it
+            </label>
+        </div>
+        <div class="progress-container">
+            <input checked type="checkbox" name="test" class="check-box" title="test">
+            <label for="test"> A Manager can view all Employees
+            </label>
+        </div>
+        <div class="progress-container">
+            <input type="checkbox" name="test" class="check-box" title="test">
+            <label for="test"> A Manager can view reimbursement requests from a single Employee</label>
+            </label>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Receipt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="override-with-image"><img src="https://media0.giphy.com/media/21SpqKj54IosgIchnN/giphy.gif?cid=ecf05e477bwpzinhya5nvvh3ykifk4jm3zfci0z7nwidj2l1&rid=giphy.gif&ct=g" alt="" srcset=""></div>
+                </div>
             </div>
         </div>
+    </div>
 
-    </main>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

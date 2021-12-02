@@ -64,7 +64,6 @@ public class UserController {
 
 	public static void updateUser(Context ctx) {
 		User updated = ctx.bodyAsClass(User.class);
-		System.out.println(updated.getId());
 		User stale = us.getUserById(updated.getId());
 		updated.setManager(stale.getManager());
 		if(us.updateUser(updated) <= 0){

@@ -5,6 +5,7 @@ public class DaoFactory {
 	private static DaoFactory df;
 	private UserDao ud;
 	private ReimbursementDao rd;
+	private ReceiptDao rcd;
 
 	private DaoFactory() {
 	}
@@ -28,5 +29,12 @@ public class DaoFactory {
 			rd = new ReimbursementDao();
 		}
 		return rd;
+    }
+
+	public ReceiptDao getReceiptDao() {
+        if(rcd == null) {
+			rcd = new ReceiptDao();
+		}
+		return rcd;
     }
 }

@@ -1,6 +1,7 @@
 package com.revature.daos;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,17 +46,32 @@ public class ReimbursementDao implements GenericDao<Reimbursement> {
 			ResultSet rs = s.executeQuery(sql);
 
 			while (rs.next()) {
-				Reimbursement r = new Reimbursement(
-					rs.getInt("reimb_id"),
-					rs.getInt("reimb_amount"),
-					rs.getTimestamp("reimb_submitted"),
-					rs.getTimestamp("reimb_resolved"),
-					rs.getString("reimb_description"),
-					rs.getInt("reimb_author"),
-					rs.getInt("reimb_resolver"),
-					rs.getInt("reimb_status_id"),
-					rs.getInt("reimb_type_id"));
-					// rs.getBinaryStream("reimb_receipt"));
+				InputStream image = rs.getBinaryStream("reimb_receipt");
+				Reimbursement r = null;
+				if(image == null) {
+					r = new Reimbursement(
+						rs.getInt("reimb_id"),
+						rs.getInt("reimb_amount"),
+						rs.getTimestamp("reimb_submitted"),
+						rs.getTimestamp("reimb_resolved"),
+						rs.getString("reimb_description"),
+						rs.getInt("reimb_author"),
+						rs.getInt("reimb_resolver"),
+						rs.getInt("reimb_status_id"),
+						rs.getInt("reimb_type_id"));
+				} else {
+					r = new Reimbursement(
+						rs.getInt("reimb_id"),
+						rs.getInt("reimb_amount"),
+						rs.getTimestamp("reimb_submitted"),
+						rs.getTimestamp("reimb_resolved"),
+						rs.getString("reimb_description"),
+						rs.getInt("reimb_author"),
+						rs.getInt("reimb_resolver"),
+						rs.getInt("reimb_status_id"),
+						rs.getInt("reimb_type_id"),
+						true);
+				}
 				rmbs.add(r);
 			}
 		} catch (SQLException | IOException e) {

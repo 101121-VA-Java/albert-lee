@@ -22,6 +22,7 @@ public class Reimbursement implements Serializable {
     private int resolverId;
     private int statusId;
     private int typeId;
+    private Boolean hasImage=false;
 
     public Reimbursement() {
     }
@@ -39,7 +40,7 @@ public class Reimbursement implements Serializable {
     }
 
     public Reimbursement(int id, int amount, Timestamp submitted, Timestamp resolved, String description, int authorId,
-            int resolverId, int statusId, int typeId, InputStream image) {
+            int resolverId, int statusId, int typeId, Boolean hasImage) {
         this.id = id;
         this.amount = amount;
         this.setSubmitted(submitted);
@@ -49,7 +50,7 @@ public class Reimbursement implements Serializable {
         this.setResolverId(resolverId);
         this.setStatusId(statusId);
         this.typeId = typeId;
-        this.image = image;
+        this.hasImage = hasImage;
     }
 
     public int getId() {
@@ -131,5 +132,13 @@ public class Reimbursement implements Serializable {
 
     public void setImage(InputStream image) {
         this.image = image;
+    }
+
+    public Boolean getHasImage() {
+        return hasImage;
+    }
+
+    public void setHasImage(Boolean hasImage) {
+        this.hasImage = hasImage;
     }
 }
