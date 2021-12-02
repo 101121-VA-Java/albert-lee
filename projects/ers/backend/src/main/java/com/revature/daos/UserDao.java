@@ -114,97 +114,13 @@ public class UserDao implements GenericDao<User>{
 		return u;
     }
 
-	/**
-	 * Dao method to retrieve employees by a manager id
-	 * @param id of the manager employee
-	 * @return a List of Employees or an empty list if none are found
-	 * @throws SQLException
-	 */
-	// public List<User> getEmployeesByManagerId(int id) throws SQLException {
-		
-	// 	List<User> users = new ArrayList<>();
-
-	// 	try (Connection c = ConnectionUtil.getConnection()) {
-	// 		String sql = "select * from employees where m_id = ?;";
-
-	// 		PreparedStatement ps = c.prepareStatement(sql);
-			
-	// 		ps.setInt(1, id);
-			
-	// 		ResultSet rs = ps.executeQuery();
-
-	// 		while (rs.next()) {
-	// 			// Retrieving employee info, setting manager's value to another Employee dummy object with only its id
-	// 			User e = new User(
-	// 					rs.getInt("e_id"), 
-	// 					rs.getString("e_name"), 
-	// 					rs.getString("e_username"),
-	// 					rs.getString("e_password"), 
-	// 					Role.valueOf(rs.getString("e_role")),
-	// 					new User(rs.getInt("m_id")));
-
-	// 			// Adding user to userss list to be returned
-	// 			users.add(e);
-	// 		}
-	// 	} catch (SQLDataException | IOException e) {
-	// 		e.printStackTrace();
-	// 	}
-
-	// 	return users;
-	// }
-	
-	/**
-	 * Dao method to retrieve an employee by id
-	 * @param id of the employee
-	 * @return an employee or null if none is found
-	 */
-
-	// public User getEmployeeById(int id) {
-
-	// 	User user = null;
-
-	// 	try (Connection c = ConnectionUtil.getConnection()) {
-	// 		String sql = "select * from users where e_id = ?;";
-
-	// 		PreparedStatement ps = c.prepareStatement(sql);
-
-	// 		ps.setInt(1, id);
-
-	// 		ResultSet rs = ps.executeQuery();
-
-	// 		if (rs.next()) {
-	// 			user = new User(
-	// 					rs.getInt("e_id"),
-	// 					rs.getString("e_name"), 
-	// 					rs.getString("e_username"),
-	// 					rs.getString("e_password"), 
-	// 					Role.valueOf(rs.getString("e_role")),
-	// 					new User(rs.getInt("m_id")));
-	// 		}
-	// 	} catch (SQLException | IOException e) {
-	// 		e.printStackTrace();
-	// 	}
-
-	// 	return user;
-	// }
-
-	/**
-	 * Service method to retrieve an employee by its username
-	 * @param username of the user
-	 * @return an employee or null if none is found
-	 */
 	public User getByUsername(String username) {
 		User user = null;
-
 		try (Connection c = ConnectionUtil.getConnection()) {
 			String sql = "select * from ers_users where ers_username = ?;";
-
 			PreparedStatement ps = c.prepareStatement(sql);
-
 			ps.setString(1, username);
-
 			ResultSet rs = ps.executeQuery();
-
 			if (rs.next()) {
 				user = new User(
 						rs.getInt("ers_users_id"),
@@ -219,7 +135,6 @@ public class UserDao implements GenericDao<User>{
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 		}
-
 		return user;
 	}
 	
