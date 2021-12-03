@@ -6,14 +6,19 @@ import com.revature.models.Reimbursement;
 import com.revature.models.Role;
 import com.revature.services.AuthService;
 import com.revature.services.ReimbursementService;
+import com.revature.services.UserService;
+import com.revature.util.LogUtil;
 
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
 
+import org.apache.commons.mail.*;
+
+
 public class ReimbursementController {
     private static ReimbursementService rs = new ReimbursementService();
 	private static AuthService as = new AuthService();
-
+	private static UserService us = new UserService();
     public static void add(Context ctx) {
 		Reimbursement r = new Reimbursement();
 		ctx.formParamMap();
@@ -64,7 +69,31 @@ public class ReimbursementController {
 		String[] info = token.split(":"); 
 		int managerId = Integer.parseInt(info[0]);
 		r.setResolverId(managerId);
-		if (rs.update(r) > 0) ctx.status(HttpCode.OK);
+		if (rs.update(r) > 0) {
+			Email email = new SimpleEmail();
+			email.setHostName("smtp.gmail.com");
+			email.setSmtpPort(465);
+			email.setAuthenticator(new DefaultAuthenticator("p1emailtest124@gmail.com", "Kevinisthebe$t"));
+			email.setSSLOnConnect(true);
+			try {
+				email.setFrom("p1emailtest124@gmail.com");
+				if(statusId == 1) {
+					email.setSubject("Reimbursement approved!");
+					email.setMsg("Congratulations, your reimbursement was approved.");
+				}
+				else if(statusId == 2) {
+					email.setSubject("Reimbursement denied.");
+					email.setMsg("Sorry, your reimbursement was denied.");
+				}
+				email.addTo(us.getUserById(r.getAuthorId()).getEmail());
+				if(statusId < 1 || statusId > 2) return; 
+				email.send();
+			} catch (EmailException e) {
+				LogUtil.descriptiveError("Resolved reimbursement email failed to send.");
+				e.printStackTrace();
+			}
+			ctx.status(HttpCode.OK);
+		}
 		else ctx.status(400);
     }
 }
