@@ -5,6 +5,7 @@ drop table if exists ers_reimbursement_status;
 drop table if exists ers_reimbursement_type;
 drop table if exists ers_users;
 drop table if exists ers_user_roles;
+drop table if exists requirements;
 
 create table if not exists ers_user_roles (
     ers_user_role_id   serial primary key,
@@ -45,6 +46,12 @@ create table if not exists ers_reimbursement (
     reimb_type_id     integer references ers_reimbursement_type(reimb_type_id)
 );
 
+create table if not exists requirements (
+    req_id            serial primary key,
+    req_description   varchar(250),
+    req_status        integer
+);
+
 insert into ers_user_roles (user_role) values ('ADMIN');
 insert into ers_user_roles (user_role) values ('MANAGER');
 insert into ers_user_roles (user_role) values ('BASIC');
@@ -56,6 +63,26 @@ insert into ers_reimbursement_type (reimb_type) values ('LODGING');
 insert into ers_reimbursement_type (reimb_type) values ('TRAVEL');
 insert into ers_reimbursement_type (reimb_type) values ('FOOD');
 insert into ers_reimbursement_type (reimb_type) values ('OTHER');
+
+insert into requirements (req_description) values ('An Employee can login');
+insert into requirements (req_description) values ('An Employee can view the Employee Homepage');
+insert into requirements (req_description) values ('An Employee can logout');
+insert into requirements (req_description) values ('An Employee can submit a reimbursement request');
+insert into requirements (req_description) values ('An Employee can upload an image of his/her receipt as part of the reimbursement request (extra credit)');
+insert into requirements (req_description) values ('An Employee can view their pending reimbursement requests');
+insert into requirements (req_description) values ('An Employee can view their resolved reimbursement requests');
+insert into requirements (req_description) values ('An Employee can view their information');
+insert into requirements (req_description) values ('An Employee can update their information');
+insert into requirements (req_description) values ('An Employee receives an email when one of their reimbursement requests is resolved (optional)');
+insert into requirements (req_description) values ('A Manager can login');
+insert into requirements (req_description) values ('A Manager can view the Manager Homepage');
+insert into requirements (req_description) values ('A Manager can logout');
+insert into requirements (req_description) values ('A Manager can approve/deny pending reimbursement requests');
+insert into requirements (req_description) values ('A Manager can view all pending requests from all employees');
+insert into requirements (req_description) values ('A Manager can view images of the receipts from reimbursement requests (extra credit)');
+insert into requirements (req_description) values ('A Manager can view all resolved requests from all employees and see which manager resolved it');
+insert into requirements (req_description) values ('A Manager can view all Employees');
+insert into requirements (req_description) values ('A Manager can view reimbursement requests from a single Employee');
 
 insert into ers_users 
 (ers_username, ers_password, user_first_name, 
@@ -74,6 +101,19 @@ insert into ers_users
 user_last_name, user_email, user_role_id, ers_manager_id)
 values
 ('3', '3', '3', '3', '3@3', 3, 1);
+
+insert into ers_users 
+(ers_username, ers_password, user_first_name, 
+user_last_name, user_email, user_role_id, ers_manager_id)
+values
+('4', '4', '4', '4', '4@4', 2, 1);
+
+insert into ers_users 
+(ers_username, ers_password, user_first_name, 
+user_last_name, user_email, user_role_id, ers_manager_id)
+values
+('5', '5', '5', '5', '5@5', 3, 1);
+
 
 insert into ers_reimbursement 
 (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_type_id)

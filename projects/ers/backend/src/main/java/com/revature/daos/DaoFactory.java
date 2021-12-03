@@ -6,35 +6,33 @@ public class DaoFactory {
 	private UserDao ud;
 	private ReimbursementDao rd;
 	private ReceiptDao rcd;
+	private RequirementDao rqd;
 
 	private DaoFactory() {
 	}
 
 	public static DaoFactory getDAOFactory() {
-		if (df == null) {
-			df = new DaoFactory();
-		}
+		if (df == null) df = new DaoFactory();
 		return df;
 	}
 	
 	public UserDao getUserDao() {
-		if(ud == null) {
-			ud = new UserDao();
-		}
+		if(ud == null) ud = new UserDao();
 		return ud;
 	}
 
     public ReimbursementDao getReimbursementDao() {
-        if(rd == null) {
-			rd = new ReimbursementDao();
-		}
+        if(rd == null) rd = new ReimbursementDao();
 		return rd;
     }
 
 	public ReceiptDao getReceiptDao() {
-        if(rcd == null) {
-			rcd = new ReceiptDao();
-		}
+        if(rcd == null) rcd = new ReceiptDao();
 		return rcd;
+    }
+
+    public RequirementDao getRequirementDao() {
+        if(rqd == null) rqd = new RequirementDao();
+		return rqd;
     }
 }

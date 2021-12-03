@@ -8,6 +8,7 @@ import static io.javalin.apibuilder.ApiBuilder.put;
 import com.revature.controllers.AuthController;
 import com.revature.controllers.ReceiptController;
 import com.revature.controllers.ReimbursementController;
+import com.revature.controllers.RequirementController;
 import com.revature.controllers.UserController;
 
 import io.javalin.Javalin;
@@ -48,6 +49,12 @@ public class Driver {
 			path("receipts", () -> {
 				path("{id}", () -> {
 					get(ReceiptController::get);
+				});;
+			});
+
+			path("requirements", () -> {
+				path("{id}", () -> {
+					put(RequirementController::update);
 				});;
 			});
 		});
