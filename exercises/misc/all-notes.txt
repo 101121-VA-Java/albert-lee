@@ -1193,6 +1193,1030 @@ Log4j
 2.	What is log4j?
 3.	What are the logging levels of log4j?
 
+Monday plan:
+	
+	- Survey (check your emails)
+	- RevPro exam
+	- Hackerrank (Optional, practice)	
+		- https://www.hackerrank.com/1011javakevinweek4
+	- 1-o-1s
+	- QC assessment? 
+
+
+1-o-1s
+	- Albert, Peter, Malolan
+	- Sam, Bezza, Andrew
+	- Andre, Tricia, David
+	- Kendrick, Jeremy, Alex
+	- Dean, Gerardo, Patience
+	- Hannah, Davey, Bruno
+	- Kim, Tevon, Brayden
+
+Content, depending on time available. 
+	- Have PostgreSQL and DBeaver ready
+Database
+	- Collection of related data
+	- allows for the preservation of data past the lifetime of an application
+
+DBMS
+	- Database management systems
+		- collection of programs used to create and maintain databases
+			- store data in a structured format
+			- allows for concurrent use of data
+			- control who has access to the data
+			- maintain data integrity (consistency and accuracy of the data)
+			- data back up and recovery
+	- RDBMS
+		- Relational Database Management Systems
+			- consists of a collection of tables where tables are connected and reference each other
+				- Table
+					- Columns: Category of data - fields
+					- Rows: Particular instance of data category - records (data entities)
+
+SQL
+	- Structured Query Language
+		- provides a way to interact with data entities
+	- SQL implementations
+		- different "flavors" of SQL, arising from different vendors and platforms available
+			- ie: OracleSQL, MySQL, NoSQL
+			- syntax may vary based on the implementation
+				- we'll be using PostgreSQL
+
+Important distinction
+	- PostgreSQL is RDBMS
+	- DBeaver is a tool to easily visualize and interact with database entities
+
+Database schema
+	- collection of data objects including tables, views, triggers, functions
+	- always belongs to one database
+		- a database may have multiple schema
+
+PostgreSQL
+	- free and open source
+	- Datatypes - https://www.postgresql.org/docs/10/datatype.html
+		- Character types
+			- CHAR
+				- fixed-length, blank padded
+			- VARCHAR
+				- variable-length, with a limit
+			- TEXT
+				- variable-length with no limit
+		- Numeric types
+			- INTEGER
+			- DECIMAL
+				- for floating point, user specified
+		- Temporal types
+			- DATE
+				- just date, no time
+			- TIME
+				- just time, no date
+			- TIMESTAMP
+				- date and time
+		- Autoincrementing integer
+			- SERIAL
+
+SQL Sublanguages
+	- refer to the different types of operations to be performed on database entities
+	- for the sake of this training, there will be 5 SQL sublanguages
+		- DDL, DCL, DML, DQL, TCL
+			- DCL - Data Control Language
+				- Manage user permissions within a database
+					- define power/access to tables/schema to users
+				- GRANT and REVOKE
+			- DDL - Data Definition Language
+				- Statements that are used to construct/modify/delete  database/scheme/user/tables/properties (Database entities)
+					- CREATE
+					- ALTER
+					- DROP
+					- TRUNCATE
+						- unlike DROP, just removes records from a database
+Constraints
+	- limit the type of data entered in tables to ensure accuracy and reliability of the data
+		- primary key, combination of not null and unique
+		- not null, column cannot have a null value
+		- unique, column's value needs to be unique
+		- check(condition)
+			- ensures that a condition is met
+		- references
+			- foreign key relationship
+				 -identifies another record/row potentially in a different table
+
+Keys
+	- primary keys
+		- column or a combination of columns which acts as a unique identifier to a record in a table
+			- composite keys
+				- combinations of columns which act as the primary key
+	- foreign keys
+		- used to illustrate relations between records
+	- candidate keys
+		- any columns that can be used to uniquely identify a record in a table
+
+Multiplicity
+	- refers to relationships between tables
+		- one-to-one
+			- exactly one row references another row
+			- ie: one SNN per individual
+		- one-to-many/many-to-one
+			- exactly one row in a table is referenced by potentially many rows in another table
+			- ie: one employee has many task but each task can have only one employee
+		- many-to-many
+			- several rows in one table can reference several rows in another table
+			- ie: a task may have many employees and an employee may have many tasks
+			- junction table
+				- used to work with many-to-many relationships
+
+Domain integrity
+	- values must fall within the constraints placed on the columns
+	- make sure that the values are "correct"
+
+Referential integrity
+	- want the database to be working properly within the constraints of a foreign key relationship
+	- don't want records to record to reference another record that does not exist
+		- orphaned records
+	- delete on cascade to remove references as well
+
+DML
+	- Data Manipulation Language
+	- statements to perform record level operations
+		- to interact with the records stored in tables
+	- CRUD 
+		- Create/Read/Update/Delete
+	- INSERT
+		- create operation
+		- insert into [table_name]([col1_name], [col2_name]...) values ([col1_value], [col2_value]...); 
+			- mockaroo to generate mock-data
+				- https://www.mockaroo.com/
+	- UPDATE
+		- update [table_name] set [col1_name] = [col1_value] where [condition]; 
+			- if no where clause is specified, it will update every record in the table
+	
+	- DELETE
+		- delete from [table_name] here [condition]; 
+			- if no where clause is specified, it will delete every record in the table
+
+DQL
+	- Data Query Language
+		- "sub-sub" language/ part of DML
+	- Statements used to retrieve information from tables
+	- SELECT
+		- main operation when querying data that can be filtered using additional clauses
+		- Result set can be filtered using: (order matters)
+			- where
+			- group by
+			- having 
+			- order by
+			- limit
+JDBC
+	- Java Database Connectivity
+		- establish a connection between a Java application and a database
+			- dependency is database specific
+	- Important JDBC classes/interfaces
+		- DriverManager (C)
+			- manage the JDBC driver
+			- .getConnection()
+				- provide a connection to the db
+					- hardcoded (bad practice)
+					- property file (prevent from pushing to GitHub using .gitignore)
+					- environment variables
+		- Connection (I)
+			- represents the connection to the database
+			- .setAutoCommit(boolean)
+			- createStatement()/PreparedStatement()
+			- commit()/rollback()
+			- close()
+		- Statement (I)
+			- represents a SQL statement
+			- .executeQuery(sql)
+			- vulnerable to SQL injection
+				- best used when no user input is required
+		- PreparedStatement (I)
+			- represents a SQL statement
+				- that has been pre-processed and therefore prevents SQL injections
+			- have to setFields for user inputs
+		- ResultSet
+			- result of a Query
+	- SQL Injection
+		- placing malicious code into a sql statement
+			- ie: "select * from employees where = [userInput];
+				- input could be "0; drop table employees;"
+			
+
+Joins
+	- way to combine rows from different tables based on some logical relationship (columns)
+		- inner join/join: return all the records that have matching values in both tables
+		- left (outer) join: return all records from the left table and matched records from the right table
+		- right (outer) join: return all records from the right table and matched records from the left table
+		- full (outer) join: return all records when there is a match in either left or right table
+		- self join: join a table with itself to combine related data from the same table
+
+	- ie: https://www.postgresql.org/docs/10/tutorial-join.html
+
+Scalar and aggregate functions
+	- scalar functions
+		- used on a single input to retrieve a single output
+		- length, upper, lower, round...
+	- aggregate functions
+		- used on a group of inputs to retrieve a single output
+		- count, avg, sum, max, min
+		- GROUP BY
+			- used with aggregate functions
+			- select [col1], [aggregateFunction]([col2]) from [table_name] group by [col1];
+		- HAVING
+			- used with aggregate function for more specificity
+			- select [col1], [aggregateFunction]([col2]) from [table_name] group by [col1]
+				having [col2] > [x];
+
+Normalization
+	- refers to a database design technique that reduces redundancy and ensures that data is stored logically
+	- consists in dividing larger tables into smaller tables and linking them using relationships
+		- we're focus on the first 3 NFs (normal forms)
+			- most databases are considered to be sufficiently normalized after 3 NFs
+		- 1 NF
+			- each table needs to have a primary key
+			- tables need to be comprised of atomic values
+				- values that cannot be broken down into smaller pieces
+			- no repeated columns (or columns for the same purpose)
+				- ie: color 1, color 2, ...
+		- 2 NF
+			- must have 1 NF
+			- no partial dependencies
+				- removing values that only depends on one part of the composite key
+		- 3 NF 
+			- must have 2 NF
+			- no transitive dependency
+				- field/column that can be derived based on other fields
+
+						
+					SaleStaff
+EmployeeId | SalePersonName | SalesOffice (street, city, state, zip) | Age | DOB | Customer1 | Customer2 | Customer3
+
+TCL
+	- Transaction Control Language
+		- Transaction
+			- consists in combining multiple database operations into one unit of work
+			- PostgreSQL treats every SQL statement as being executed within a transaction unless specified otherwise
+		- Relevant statements
+			- begin
+				- can indicate the start of a transaction
+					- if begin is not used, one can be implicitely provided
+				- start of transaction block
+					- statement(s) to be executed as a unit of work
+					- between begin and commit
+			- savepoint
+				- saves the state of the database at that point within the transaction
+			- rollback [savepoint]
+				- reverts the state of a database to a previous commit or savepoint
+			- commit
+				- saves/persists the changes to a database
+
+	- https://www.postgresql.org/docs/10/tutorial-transactions.html
+
+	- Properties of a transaction - ACID
+		- Atomicity
+			- one unit, transaction should be completed as a whole or not at all
+		- Consistency
+			- database should be in a valid state before/after the transaction
+				- valid in regards to db constraint
+				- valid in regards to business logic
+		- Isolation
+			- one transaction should not interfere with another transaction
+			- results of transactions executing concurrently should be the be the same as if they occured in sequence
+		- Durability
+			- Commits are final, changes should be persisted to the database
+	
+	- Transaction Isolation Levels
+		- Read uncommited
+			- able to read/interact with uncommited data
+		- Read commited
+			- only able to interact with commited data
+		- Repeatable read
+			- only see data commited before the transaction began
+		- Serializable
+			- strictest level of isolation
+			- transactions have to occur sequentially
+	- Read phenomema
+		- Dirty read (can arise from read uncommited isolation level)
+			- transaction is able to read data written in a concurrent uncommited transaction
+		- Non repeatable read
+			- a transaction re-reads data it has previously read and finds that the data has been modified by another transaction
+		- Phantom read
+			- transaction re-execute a query and returns a set of row to find out that the set has been modified by another transaction
+
+Design Pattern
+	- Best practice to address a certain programming problem
+	
+
+Singleton DP
+	- used to ensure that there is only one instance of a class
+		- ie: used for heavy resources
+	- enforced using several conditions
+		- private constructor: prevent classes from creating an instance
+		- private static instance of the singleton class: static, to enforce that there is only one since it's associated with the class
+		- public static synchronized accessor method: used retrieve the singleton instance
+
+Factory DP
+	- used to create/return implementations of classes/interfaces
+	- useful when the specific implementation does not matter
+	- enforces abstraction
+
+Set operations(union)
+	- operations used to combine queries together
+		- NOTE: different from joins which combine tables together
+		- combine the rows of different result sets
+	- union
+		- combining select query results with no duplicates
+	- union all
+		- combining select query results with duplicates
+			- faster because duplicates are not filtered out
+	- intersect
+		- returns only the common records from both data sets
+	- except
+		- returns a dataset where the second results are removed from the first
+
+Index
+	- providing a more efficient way to retrieve records in a database 
+		- an index is generated on fields set as primary key
+		- BTree
+			- leverages binary tree
+			- better for comparison operations
+		- Hash
+			- leverages hashing
+			- better for equality
+	- makes update/insert/delete operation may take longer due to updating the index
+
+Views
+	- views are unmaterialized "view" of a query
+		- views are not "stored" in the db
+	- helpful to keep nested queries neat and promoring reusability.
+
+Monday plan
+	- QC surveys
+	- RevPro assessment
+	- Hackerrank Challenge
+		- www.hackerrank.com/1011javakevinweek5
+			- SQL based, you will be asked to write SQL queries
+				- Syntax should be fairly similar, feel free to look at documentation as needed
+	- 1-o-1s
+		Albert
+		Tricia
+		Alex
+
+		Davey
+		David
+		Dean
+
+		Jeremy
+		Peter
+		Sam
+
+		Kendrick
+		Gerardo
+		Bruno
+
+		Andre
+		Brayden
+		Bezza
+
+		Andrew
+		Patience
+		Malolan
+
+		Kim
+		Tevon
+		Hannah
+
+	- P0 presentations:
+		- Wednesday 4-6pm ET
+			- 5 minutes each
+		- Final push Wednesday morning 10am
+
+
+Resources:
+	- https://www.w3schools.com/
+	- https://developer.mozilla.org/en-US/docs/Web/HTML
+	- RevPro
+
+Optional VsCode add-on:
+	- Live Server
+		- allows for automatic refresh of HTML page in browser
+
+HTML
+	- Hypertext Mark-up Language
+		- not a programming language
+		- Mark-up language
+	- Define the structure of a webpage using HTML tags
+		- tags following a nested structure
+		- structure of an HTML document
+			- Doctype Declaration (optional as of html5)
+				- tag that indicates the file is an HTML doc
+			- html
+				- head
+					- metadata (information about the webpage)
+				- body
+					- information displayed on the webpage
+	- Elements in HTML have attributes
+		- these are used to provide more information regarding the tag
+			- global attributes
+				- present in all html tags
+					- class, id, style
+			- local attributes
+				- present in certain tags
+					- src, href
+		- ie:
+			<div id="div1">Hello World! By Kevin x2.</div>
+			- div element with an attribute of id
+	- Semantic elements
+		- concept introduced in html5
+		- provides more meanings to tags
+			- helps with accessbility
+		- names such as 
+			- nav, main, section, footer, header.... instead of divs everywhere
+	- Headers
+		- h1 -> h6
+			- biggest to smallest
+	- Forms
+		- tags that can be used to take user input and submit information
+			- can submit information without js, just using attribute
+				- method: specify the HTTP method
+				- action: specify the url
+	- self-closing tags
+		- elements that do not require a closing tag
+	- List
+		- Ordered and unordered list
+			- ol
+				- ordered list
+			- ul
+				- unordered list
+			- li
+				- list items
+	- Tables
+		- nested in the table tag
+			- tr to define a row
+			- th/td to define a cell
+
+CSS
+	- Cascading style sheets
+		- style is loaded from top to bottom
+	- adds looks/style to HTML
+		- HTML is the structure of a webpage, CSS is the styling
+	- add CSS
+		- inline
+			- in the HTML tag via attribute
+				- <div id="div1" style="color: cornflowerblue;"></div>
+		- internally
+			- in the HTML document, in the head tag
+				- <style>
+					selector {
+						property: value;
+					}
+				  </style>
+		- externally
+			- from external stylesheets
+				- best practice because can be reusable
+			- <link rel="stylesheet" href="main.css">
+
+	- Selectors
+		- target specific elements to be styled
+			- tag
+			- class (.className)
+			- id (#idName)
+			- target elements more specifically: 
+				- ie: nested elements...
+				- https://www.w3schools.com/cssref/css_selectors.asp
+		- styles apply based on specificity, most specific element will overrule
+			- most to least: id > class > tag
+	- CSS Box Model (common interview question)
+		- Margin, Border, Padding, Content
+
+BootStrap
+	- Library of classes that can be leveraged as premade templates
+		- import bootstrap into HTML page
+		- leverage classes to style elements
+	- Responsive Web Design
+		- websites and webpages that automatically adapt to different screen size/types
+		- uses grid system to enable behavior
+
+Mockito
+	- Java Framework used alongside unit testing frameworks such as JUnit
+	- Allows for mocking behavior
+		- mocks objects to be used with Unit tests
+			- ie: mocking dao layer so that database is not actually changed with every tests
+	- @Mock
+		- indicating to Mockito that a mock implementation is needed
+	- @InjectMocks
+		- specify an object that needs to have the mock implementation injected into it
+			- replaces the actual implementation, ie: (EmployeePostgres)
+	- when(mockObject.methodName(params)).thenReturn(returnValue);
+	- @ExtendWith(MockitoExtension.class)
+		- allows us to specify that we are running our unit tests with mockito
+
+JavaScript
+	- a scripting language that can be used for client-side web applications
+		- can also be used server side
+	- interpreted language
+		- not a compiled language, no compilation step, interpreted by the browser
+		- nowadays more modern browsers include JIT (just in time compilation)
+	- supported by all modern web browsers
+	- ECMA, manages the standard specification of JS
+		- ECMAScript - standards
+			- ES6, ES7... 
+	- multi-paradigmed
+		- mainly supports functional programming but can also mimick OOP
+	- dynamically/weakly typed language
+		- variables do not have to be declared with a specific type and can be changed dynamically
+			- type coersion: 8 == '8' --> compares the value itself, return true
+				- === to compare type and value
+	- semi-colon injections
+		- puts a semi-colon where it feels like it's appropriate implicitely.
+			- can lead to issues
+	- ways to include JS to an html page
+		- internally, include between <script></script>
+		- externally, <script src="path/to/file.js"></script>
+			- best practice
+	- Datatypes in JS
+		- "primitives"
+			- boolean
+			- number
+			- null
+			- undefined
+			- symbol -- we're not going to talk about symbol
+			- string
+		- "objects"
+			- objects
+				- stored as key-value pairs
+				- similar to JSON
+			- arrays
+				- unlike Java, arrays are dynamically sized and can contain multiple datatypes
+				- QC likes to ask about array methods
+					- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+		- Truthy vs Falsy
+			- any type in JS will valuate to either true or false
+			- falsy values
+				- null
+				- underfined
+				- 0
+				- ''
+				- false (the boolean)
+				- NaN (not a number)
+		- Functions
+			- defined using the function keyword
+				- function funcName(param1, param2){}
+				- return a value, using the return keyword
+			- additional types of functions
+				- Function Expression/Anonymous Function
+					- function declared without an explicit name, assigned to a variable instead
+						- var someName = function (param1, param2){ return ...;}
+				- Arrow function/notation
+					- short hand syntax for writing functions
+					- declaration, parameters, statements
+						- var someName = param1, param2 => statements;
+				- SelfInvoking Function(IIFE, immediately invoked function expression)
+					- function invoked immediately after definition
+						- (function() {//code})();
+				- Callback function
+					- functions passed in as an argument
+					- help with asynchronous programming
+					- 
+					function funcOne(x) {//something with x}
+					function funcThree(x) {//something else with x}
+
+					function funcTwo(y, callback){
+						callback(y);
+					}
+					
+					funcTwo(6, funcOne);
+					funcTwo(6, funcThree);
+		- JavaScript scopes
+			- where a declared variable is accessible
+			- global
+				- variable declared outside of the function scope
+				- accessible anywhere within the script
+			- function
+				- variables declared within a function block
+			- block
+				- variables declared with a {} block
+				- new to ES6
+					- introced let and const to declare variables
+						- let can be reassigned but not redeclared
+						- const cannot be reassigned nor redeclared
+		- Hoisting
+			- variables declared var will be hoisted to the top of their scope
+				- top of global/function scope
+				- functions get hoisted
+			- used before they are declared
+
+		- 'use strict'
+			- defined that the code should be executed in strict mode
+				- can't use undeclared variables
+
+DOM
+	- Document Object Model
+		- tree like representation of an HTML page using JS objects
+			- each node of the tree represents a nested HTML element
+	- Can traverse/navigate/retrieve elements from the DOM using js methods
+		- document.getElementById
+		- document.getElementsByClassName
+		- document.getElementsByTagName
+		- // can retrieve siblings, childs....
+	- Can programmatically manipulate these elements using their properties
+		- attributes
+		- setAttributes
+		- innerHTML
+	- Can also create and append elements from JS
+		- createElement("div") - creates an HTML element
+		- appendElement("") - attach that element to the appropriate location in the DOM 
+
+Template literal
+	- declared between backticks: `` 
+	- preservers new line
+	- easier than concatenation
+		- using concatenation: 'some string' + somevalue + '.'
+		- using template literal: `some string ${somevalue}.`
+			- to inject a value ${varName}
+
+Event listeners
+	- listeners that wait for certain events to happen to execute some functionality
+		- onclick
+		- onmousehover
+		- onkeydown
+		- ...
+	- 1st step, retrieve element
+	- assigning functionality
+		- element.onclick = callback
+		- element.addEventListener(event, callbackFunction, boolean)
+
+Event propagation
+	- how event listeners handle events for elements that have a parent/children with event listeners as well
+	- 2 types
+		- bubbling: default behavior - event bubbles up from the innermost child to the outermost parent
+		- capturing: event starts from the outermost parent and moves down to the innermost child element
+	- to specify behavior:
+		- element.addEventListener(event, callbackFunction, boolean)
+			- where boolean => true -> capturing
+			- where boolean => false (or no argument) -> bubbling
+	- to stop even propagation
+		- event.stopProgation();
+
+HTTP
+	- HyperText Transfer Protocol
+		- transfer protocol to exchange information over the web
+	- Consists of requests and responses exchanged between a client and a server
+	- information can be sent in many forms, plaintext, HTML, 
+	- JSON (JavaScript Object Notation)
+		- standard format for data transfer
+		- allows information exchange between different applications(ie: different languages, frameworks...)
+		
+	- HTTP request
+		- HTTP version: 1/1.1
+		- Verb
+			- HTTP methods: describes the operation requested by the HTTP request
+			- 4 main ones
+				- GET - retrieval operation (like select)
+				- POST	- create operation (like insert)
+				- PUT - update operation
+				- DELETE - delete operation
+		- URL
+			- where the request is sent to/ resource location
+		- Header
+			- metadata about the request
+		- Body
+			- can be empty
+			- can be used to include information
+				- ie: information about a user to be created...
+	- HTTP response
+		- HTTP version
+		- Header
+		- Body
+			- can be empty
+			- can be used to return the information requested
+		- Status code
+			- information about the status of the request (100 - 500s)
+				- 100 level: informational
+				- 200 level: success
+				- 300 level: redirect
+				- 400 level: client error
+				- 500 level: server error
+
+AJAX
+	- Asynchronous JS And XML
+	- library that allows us to send HTTP requests and receive HTTP responses
+		- allows for partial page reload
+			- making async calls, code is still running while we wait for the HTTP response
+	- 4 main Steps
+		- create XMLHttpRequest object
+		- setting a callback function to the ready state change of that object
+		- parameterize / open the request object (set request information)
+		- send the request
+	- 5 ready states
+		- 0: unsent - xhr object has beent created
+		- 1: opened - .open() has been called
+		- 2: headers received -- request has been sent, response headers have been received
+		- 3: loading - body of the response is loading
+		- 4: done - full response has been received and is ready for manipulation
+	- onreadystate change callback function
+		- checks that the ready state is 4 to make sure the the response was fully received
+		- checks that the status code is 200 for success
+		- define handling behavior for the response
+
+Fetch API
+	- an API in JS that allows us to send HTTP requests and receive HTTP responses
+		- introduced in ES6
+	- fetch(URL) - get
+	- fetch(URL, {method: 'POST', body: JSON.stringify(JSObject)});
+	- Can be used alongside async and await
+		- introduced in ES7
+		- async
+			- used to specify a function that returns a promise or is making an asynchronous call
+		- await
+			- used in an async function to make an asynchronous call
+
+S3 (AWS)
+	- Simple Storage Service
+		- Highly scalable
+		- Highly durable and available
+	- can programmatically access an s3 using the Amazon SDK
+	- can host static webpages on S3
+		- https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html
+
+
+POJO/ Java Beans
+	- POJO: Plain Old Java Object
+		- Any java object, not bound to any specific restriction
+		- used to define an entity
+	- Java Beans
+		- Special type of POJOs
+			- All java beans are POJOs but not POJOs are Java beans
+		- should implement the Serializable interface
+			- marker interface that provides information to the compiler that a class can be serialized
+				- serialization: process of converting an object into a stream of byte to store that object(file, db)...
+		- no-args constructor defined
+		- all fields to be encapsulated
+			- private
+			- setters/getters
+		- override Object class methods
+			- toString()
+			- hashcode()
+			- equals()
+
+CRUD operations
+	- Create | Read | Update | Delete
+	- POST | GET | PUT | DELETE
+
+
+Javalin
+	- lightweight framework for Java (and Kotlin) to handle HTTP requests and response
+	- runs on an embedded webserver(Jetty)
+		- Jetty: an open source web server and servlet container which allows a servlet application to run 
+	- Built on top of Servlets
+	- Set up
+		- dependencies
+			- Javalin
+			- slf4j
+			- (Object mapper, optional)
+		- main method
+		- Javalin app = Javalin.create()
+			      = Javalin.create( config -> {})
+		- app.start(portNum)
+			- by default 8080
+		- HTTP handlers
+			- a functional interface that takes in a Context Object as a parameter, used to specify a behavior to handle a request at a particular endpoint
+				- Context object is an abstraction of HttpServletRequest and HttpServletResponse
+					- used to retrieve information from the request
+						- url
+						- headers
+						- body
+					- used to add information to the response
+						- headers
+						- body
+						- status code
+				- https://javalin.io/documentation#context
+			- app.get("path/endpoint", Executable<Handler>)
+			- app.get("path/endpoint", lambda)
+			- app.get("path/endpoint", (ctx) -> { // handle request})
+			- app.post("path/endpoint"...)
+
+			.../employees 
+				- Get
+					- retrieve all employees
+				- Post
+					- add a new employee
+					- include employee information in the request body
+
+JSON
+	- JavaScript Object notation
+		- JavaScript Like
+		- string format used to represent objects to be exchanged over the web
+			- syntax: {"key1":"value1", "key2":"value2"}
+				- {} represent an object
+				- key represent a field
+				- value represent the field's value
+
+JSON Marshalling/Object mapping
+	- Converting Java Objects to JSON
+		- mapping for data exchange
+	- Jackson-databind
+		- provides us with an object mapper to convert Java to JSON and vice versa
+		- Jackson integrates very well with javalin
+Handler groups
+	- Grouping HTTP handlers/setting up path to handle different resources (ie: Pokemons)
+		- app.routes()
+			- can then set up paths (nested paths as well) for the different resources
+				- path("resourceName", () -> {
+						get(//Handling behavior);
+						post(...);
+						path("...")...
+					});
+	- handler methods in Controllers should take Context object as param to interact the Http request and response
+
+URL - Uniform Resource Locator
+	- Location for where a resource (on a server) is located
+	- URL => protocol + domain name (host + port) + URI + parameters
+ 
+	
+	- URL: https://www.google.com/search?q=java+documentation&rlz=1C1GCEU_enUS924US924&oq=java+documen&aqs=chrome.0.0i433i512j69i57j0i512l5j69i60.4432j0j7&sourceid=chrome&ie=UTF-8
+	
+	- protocol - https://
+	- domain name - www.google.com
+	- URI - search
+		- Uniform Resource Identifier
+			- specifically determines a resource/service requested
+	- parameters (query params)
+		- ?param1=value1&param2=value2...
+		- q=java+documentation
+		- &rlz=1C1GCEU_enUS924US924
+		- &oq=java+documen
+		- &aqs=chrome.0.0i433i512j69i57j0i512l5j69i60.4432j0j7
+		- &sourceid=chrome
+		- &ie=UTF-8
+
+Path param
+	- parameter embedded in the url
+		- resources/{path-param}/{something}
+		- employees/{id}/reimbursements?param1=value1
+
+
+REST
+REST, or REpresentational State Transfer, is an architectural style for providing standards between computer systems on the web, making it easier for systems to communicate with each other. REST-compliant systems, often called RESTful systems, are characterized by how they are stateless and separate the concerns of client and server.
+
+REST defines 6 architectural constraints which make a web service truly RESTful:
+
+Uniform interface
+Client–server
+Stateless
+Cacheable
+Layered system
+Code on demand (optional)
+Resource: https://www.codecademy.com/articles/what-is-rest / https://restfulapi.net/resource-naming/
+
+Characteristics of RESTful APIs
+All RESTful APIs have few characteristics in common that distinguish them from other types of web services. Such characteristics include:
+
+The explicit use of HTTP to facilitate client-server communication
+The use of HTTP status codes to indicate the success or failure of request processing
+The uniform naming convention used to define the application's endpoints
+The server that processes requests does so in a stateless manner
+The use of any one of a variety of data interchange formats (JSON, XML, etc.)
+REST Architecture
+Representational State Transfer is a software architectural style that defines a set of constraints to be used for creating web services.
+
+Architectural Constraints
+In order to be considered a "true" RESTful API, our API must correctly implement the follow architectural constraints:
+
+Uniform Interface
+This constraint requires that we be consistent in the naming of our API's endpoints. Our resources should only one logical URI and they should provide recipients a way to obtain other related resources that it may encapsulate. This constraint also includes the consistent use of some language-agnostic format as response payload (JSON, XML, BSON, etc.). Additionally, this constraint requires that we leverage HTTP as the protocol for interacting with our API. The HTTP verbs (GET, POST, PUT, etc.) combined with the consistent and intuitive naming of resource endpoints helps our API to achieve a uniform interface.
+
+Client-server
+This constraint emphasizes that our server application (the API) and the client application (the consumer of the API) must be able to evolve separately from one another. The client application only needs to know the URIs to resources exposed by the API.
+
+Stateless
+This constraint requires that the interaction between our client and our server is a stateless one. The server will not store anything about the client's request, and every request is a new request from the perspective of the API. The client is responsible for maintaining the state of the application.
+
+Cacheable
+Resources which will not change often should always be cached (either by the client or the server). This is done in order to decrease latency for the retrieval of frequently accessed, often immutable (or rarely changed) resources.
+
+Layered System
+As the name implies, this constraints requires that our system architecture is layered. This means that the different domains of our application are physically and logically separate from one another.
+
+Resource: https://restfulapi.net/rest-architectural-constraints
+
+Richardson Maturity Model
+Resource: https://restfulapi.net/richardson-maturity-model/
+
+ORM
+	- Object-Relational mapping
+		- converting between incompatible types of objects (Java) and database tables
+
+JPA
+	- Java Persitence API
+		- interfaces meant for the mapping/managing of relational data with Java Objects
+		- "concept" rather than an actual tool
+			- describes which objects should be persisted and how
+			- tools like Hibernate IMPLEMENT JPA
+				- JPA != Hibernate
+
+Hibernate
+	- ORM framework for Java
+		- leverage annotations or xml files to sync java objects with a database
+	- Benefits
+		- Abstraction of JDBC
+			- uses JDBC under the hood
+			- abstracts away SQL queries
+				- abstracts sql dialects(ie: PostgreSQL, OracleSQL, MySQL...)
+					- can reuse the same methods for different dialects
+			- reduces boiler plate code 
+		- Caching
+			- can store query information in the server if reused
+				- can reduce the number of calls to the database
+		- leverages HQL
+			- Hibernate Query Language
+				- dialect specific to hibernate
+			- if desired, native SQL can still be used (bad practice)
+
+Class/Interfaces in Hibernate:
+
+	- Configuration (C)
+		- allowing to define information regarding your connection to your database/hibernate configuration to configure a session factory
+
+		- hibernate.cfg.xml
+			- config file for hibernate
+				- root tag: hibernate-configuration
+			- session factory tag
+				- provide configuration for session factory
+					- db info:
+						- username/password
+						- dialect - PostgreSQL
+						- url
+						- dialect...
+					- hbm2ddl.auto
+						- CREATE
+							- drop all existing tables and objects with names provided in your application and recreate the schema
+						- UPDATE
+							- doesn't drop anything, but adds to the schema if needed
+						- VALIDATE
+							- makes sure that the schema is expected as defined in your application
+						- NONE
+							- hibernate doesn't do ddl
+						- etc... 
+		- Object mapping in Hibernate (xml or annotation based)
+			- xml
+				- create a file: EntityName.hbm.xml
+					<hibernate-mapping>
+						<class name="com.revature.models.ClassName" table="entities">
+							<id name="entityId" column="entity_id"><generator class="increment"/></id>
+							<property name="entityProperty" column="entity_property"></property>
+						</class>
+					</hibernate-mapping>	
+				- in hibernate.cfg.xml
+					- <mapping resource="EntityName.hbm.xml"></mapping>
+			- annotation
+				- <mapping class="com.revature.models.ClassName"></mapping>	
+				- in the class, use JPA imported annotations to map a class
+					- @Entity: must go at the top of the class to be mapped to a table
+					- @Table: allows us to name a table to a different name than the class if desired
+						- @Table(name="entities")		
+	- SessionFactory (I)
+		- Heavy resource
+		- Singleton in charge of creating session object using a factory design pattern
+	- Session (I)
+		- represents database connection
+	- Transaction (I)
+		- manages ACID compliant transactions
+		- retrieved from Session object
+			- .beginTransaction()
+				- commit();
+				- rollback();
+	- Query (I)
+		- used to write more complex CRUD operations using HQL
+	- Criteria(I)
+		- used to programmatically write complicated SELECT statements
+
+Lazy loading vs Eager fetching
+	- when fetched eagerly, the entire object is retrieved as soon as the "parent" object is retrieved
+		- ie: if a reimbursement is retrieved, the Employee associated with that reimbursement is also loaded into our application
+	- when fetched lazily, a proxy is retrieved until that object is used in the session
+		- ie: if a reimbursement is retrieved, the employee associated with that reimbursement is loaded as a proxy until used explicitely in the session
+			- proxy: a dummy object/empty object aside from its unique identifier	
+
+DAO/CRUD methods (These are common interview questions, for more info checkout the documentation)
+	- .get() vs .load()
+		- used to retrieve records from the database
+		- get:
+			- eager fetching
+			- return null when getting an id not in the db
+		- load
+			- lazily fetches an object
+			- throw an exception if it doesn't exist in the database
+	- .update() vs merge()
+		- update:
+			- void return
+			- if trying to updat an object with no id in db, throws an exception
+			- if a persistent object in the same session has the same id, throws an exception
+		- merge:
+			- returns the merged object
+			- if a persistent object in the same session has the same id, merges with the persistent object
+
+
+
 
 
 
