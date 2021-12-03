@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.revature.daos.DaoFactory;
 import com.revature.daos.UserDao;
 import com.revature.models.User;
+import com.revature.util.PasswordUtil;
 import com.revature.models.Role;
 
 public class AuthService {
@@ -23,7 +24,7 @@ public class AuthService {
 	public String login(String username, String password) {
 		String token = null;
 		User principal = ud.getByUsername(username);
-		if (principal != null && principal.getPassword().equals(password)) {
+		if (principal != null && PasswordUtil.isCorrectPassword(password, principal.getPassword())) {
 			/*
 			 *  poor token implementation, for example's sake
 			 *  	- based on this token, a user can be authenticated when making a request

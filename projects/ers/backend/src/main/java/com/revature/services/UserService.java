@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.revature.daos.DaoFactory;
 import com.revature.daos.UserDao;
 import com.revature.models.User;
+import com.revature.util.PasswordUtil;
 import com.revature.models.Role;
 
 public class UserService {
@@ -45,6 +46,7 @@ public class UserService {
 	public int addUser(User u) {
 		u.setManager(new User(1));
 		u.setRole(Role.BASIC);
+		u.setPassword(PasswordUtil.hashPassword(u.getPassword()));
 		return ud.add(u);
 	}
 	

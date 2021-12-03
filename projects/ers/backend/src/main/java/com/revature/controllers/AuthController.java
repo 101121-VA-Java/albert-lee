@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 import com.revature.services.AuthService;
+
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
 
