@@ -1,5 +1,3 @@
--- WARNING:  create users in console after creating tables but before seeding data, because BCrypt generates the stored password
-
 drop table if exists ers_reimbursement;
 drop table if exists ers_reimbursement_status;
 drop table if exists ers_reimbursement_type;
@@ -94,32 +92,53 @@ insert into ers_users
 (ers_username, ers_password, user_first_name, 
 user_last_name, user_email, user_role_id, ers_manager_id)
 values
-('2', '2', '2', '2', '2@2', 2, 1);
+('2', '$2a$12$BDowLWZhZYoheNSxxaOwQuUCVHKZZ6cphGgjFgt2Fgc8ewvLSPMJq', 'manager2', '2', '2@2', 2, 1);
 
 insert into ers_users 
 (ers_username, ers_password, user_first_name, 
 user_last_name, user_email, user_role_id, ers_manager_id)
 values
-('3', '3', '3', '3', '3@3', 3, 1);
+('3', '$2a$12$zScPAbgeor0L8PgmLX.KvuK8iZDK/BRIuBRPEVWrN4iAFTug9dFjC', 'emp3', '3', '3@3', 3, 1);
 
 insert into ers_users 
 (ers_username, ers_password, user_first_name, 
 user_last_name, user_email, user_role_id, ers_manager_id)
 values
-('4', '4', '4', '4', '4@4', 2, 1);
+('4', '$2a$12$TmINrpON.yyGE9W4YOe43OOiQSbKtuv4QKtGGT05c4QQDErNF3uf.', 'manager4', '4', '4@4', 2, 1);
 
 insert into ers_users 
 (ers_username, ers_password, user_first_name, 
 user_last_name, user_email, user_role_id, ers_manager_id)
 values
-('5', '5', '5', '5', '5@5', 3, 1);
+('5', '$2a$12$FgvzbkeHMd9PmzhcSvhUxecuOJ1A5MCtxkOkPCMlCyEtuwIFK8rBS', 'emp5', '5', '5@5', 3, 1);
 
 
 insert into ers_reimbursement 
 (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_type_id)
 values
 (100, current_timestamp, 'lol', 3, 3);
+
 insert into ers_reimbursement 
 (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_type_id)
 values
-(100, current_timestamp, 'lol', 3, 3);
+(100, current_timestamp, 'yes', 3, 3);
+
+insert into ers_reimbursement 
+(reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_type_id)
+values
+(100, current_timestamp, 'no', 4, 3);
+
+insert into ers_reimbursement 
+(reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_type_id)
+values
+(100, current_timestamp, 'bananas', 4, 3);
+
+insert into ers_reimbursement 
+(reimb_status_id, reimb_resolver, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_author, reimb_type_id)
+values
+(2, 2, 700000, current_timestamp, current_timestamp, 'exotic truffles', 4, 3);
+
+insert into ers_reimbursement 
+(reimb_status_id, reimb_resolver, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_author, reimb_type_id)
+values
+(1, 2, 1000, current_timestamp, current_timestamp, 'office paper', 4, 4);
