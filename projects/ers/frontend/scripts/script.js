@@ -156,7 +156,6 @@ let getReimbursements = (typeOfReimbursementToShow) => {
 }
 
 let showReimbursements = (res = [], stringOfTypeToDisplay) => {
-    console.log(res);
     let container = document.getElementById("main-content")
     if (!container) return;
     else if (container) container.innerHTML = '';
@@ -284,7 +283,6 @@ let getImage = (reimbId) => {
 }
 
 let showReceiptModal = (response) => {
-    console.log(response);
     let imageDiv = document.getElementById("override-with-image");
 }
 
@@ -299,7 +297,6 @@ function register() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 201) {
-                console.log('Employee was successfully added!');
                 login();
             } else {
                 console.log('Employee was not added...');
