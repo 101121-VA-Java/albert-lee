@@ -42,16 +42,21 @@ function getEmployee(resources, fn) {
 let put = (resources, resourceId, data) => {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
+        let errorDiv = document.getElementById("error-div");
         if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
             let table = document.getElementById(`table`);
             let outdated = document.getElementById(resourceId);
             let index = null;
             if (outdated) index = outdated.rowIndex;
             if (table && index) table.deleteRow(index);
-            document.getElementById("error-div").innerHTML = `Request #${resourceId} successfully resolved`;
-        } else {
-            document.getElementById("error-div").innerHTML = "Update failed.";
-        }
+            if (table && errorDiv) errorDiv.innerHTML = 
+                `<div class="alert alert-success" role="alert">
+                Request #${resourceId} successfully resolved
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>`;
+            }
     }
     xhr.open('PUT', `http://localhost:8080/${resources}/${resourceId}`);
     xhr.setRequestHeader("Authorization", sessionStorage.token);
@@ -62,14 +67,27 @@ let showUsers = (res = [], str = "ALL") => {
     let container = document.getElementById("main-content");
     if (container) {
         container.innerHTML = "";
+        let result = 
+        `<table id="table" class="table table-hover">` +
+            `<thead>` +
+            `<tr>` +
+                `<th scope="col">ID</th>` +
+                `<th scope="col">Email</th>` +
+                `<th scope="col">First Name</th>` +
+                `<th scope="col">Last Name</th>` +
+            `</tr>` +
+            `</thead>` +
+            `<tbody>`;
+        let id = Number.parseInt(sessionStorage.token.split(":")[0]);
         for (let i = 0; i < res.length; i++) {
-            let el = res[i];
-            if (el.role === str || (str === "ALL" && el.role !== "ADMIN")) {
-                let newEl = document.createElement("div");
-                newEl.innerHTML = el.email;
-                container.append(newEl);
+            let user = res[i];
+            if (user.role === str || (str === "ALL" && user.role !== "ADMIN")) {
+                if(id !== user.id) result += userRow(user);
             }
         }
+        result += `</tbody></table>`
+        result += `<div id="error-div"></div>`;
+        container.innerHTML = result;
     }
 }
 
@@ -159,7 +177,7 @@ let showReimbursements = (res = [], stringOfTypeToDisplay) => {
     let container = document.getElementById("main-content")
     if (!container) return;
     else if (container) container.innerHTML = '';
-    if (res.length <= 0) container.innerHTML = `No ${stringOfTypeToDisplay.toLowerCase()} reimbursements found`;
+    if (res.length <= 0) container.innerHTML = `No reimbursements found`;
     let result = '';
     switch (stringOfTypeToDisplay) {
         case 'PENDING':
@@ -205,7 +223,6 @@ let showReimbursements = (res = [], stringOfTypeToDisplay) => {
                 result += reimbursementRowWithReceiptImage(reimb);
             else if (stringOfTypeToDisplay === "PENDING" && statusId === 0)
                 result += reimbursementRowWithApproveOrDenyButtons(reimb);
-
             else if (stringOfTypeToDisplay === "RESOLVED" && statusId > 0)
                 result += reimbursementRowWithReceiptImage(reimb);
 
@@ -214,6 +231,34 @@ let showReimbursements = (res = [], stringOfTypeToDisplay) => {
     result += `</tbody></table>`
     result += `<div id="error-div"></div>`;
     container.innerHTML = result;
+}
+
+let getRequirements = (role) => {
+    return role === "MANAGER" ? (`<div>manager roles</div>`) : (`<div>employee roles</div>`);
+}
+
+let toggleRequirement = (id) => {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
+            let reqCheckBox = document.getElementById(`req-${id}`);
+            if (reqCheckBox) reqCheckBox.checked = !reqCheckBox.checked;
+        }
+    }
+    xhr.open('PUT', `http://localhost:8080/requirements/${resourceId}`);
+    // xhr.send(JSON.stringify(data));
+}
+
+let userRow = (user) => {
+    let { id, email, firstName, lastName } = user;
+    let result = '';
+    return result +=
+        `<tr id=${id}>` +
+            `<th scope="row">${id}</th>` +
+            `<th scope="row">${email}</th>` +
+            `<th scope="row">${firstName}</th>` +
+            `<th scope="row">${lastName}</th>` +
+        `</tr>`;
 }
 
 let reimbursementRow = (reimbursement) => {
@@ -233,12 +278,12 @@ let reimbursementRowWithReceiptImage = (reimbursement) => {
     let { amount, description, authorId, resolverId, id, hasImage } = reimbursement;
     return hasImage ? (
         `<tr id=${id}>` +
-        `<th scope="row">${id}</th>` +
-        `<th scope="row">${amount}</th>` +
-        `<th scope="row">${description}</th>` +
-        `<th scope="row">${authorId}</th>` +
-        `<th scope="row">${resolverId}</th>` +
-        `<th scope="row" data-toggle="modal" data-target="#exampleModalCenter" onclick="getImage(${id})">
+            `<th scope="row">${id}</th>` +
+            `<th scope="row">${amount}</th>` +
+            `<th scope="row">${description}</th>` +
+            `<th scope="row">${authorId}</th>` +
+            `<th scope="row">${resolverId}</th>` +
+            `<th scope="row" data-toggle="modal" data-target="#exampleModalCenter" onclick="getImage(${id})">
         📄</th>` +
         `</tr>`
     ) :
@@ -254,15 +299,35 @@ let reimbursementRowWithReceiptImage = (reimbursement) => {
 }
 
 let reimbursementRowWithApproveOrDenyButtons = (reimbursement) => {
-    let { amount, description, authorId, resolverId, id } = reimbursement;
-    return (
+    let { amount, description, authorId, resolverId, id, hasImage } = reimbursement;
+    return hasImage ? (
+        `<tr id=${id}>` +
+            `<th scope="row">${id}</th>` +
+            `<th scope="row">${amount}</th>` +
+            `<th scope="row">${description}</th>` +
+            `<th scope="row">${authorId}</th>` +
+            `<th scope="row">${resolverId}</th>` +
+            `<th scope="row">
+                <button class="btn btn-primary" onclick="put('reimbursements', ${id}, 1)">
+                    Approve
+                </button>
+            </th>` +
+            `<th scope="row">
+                <button class="btn btn-red" onclick="put('reimbursements', ${id}, 2)">
+                    Deny
+                </button>
+            </th>` +
+            `<th scope="row" data-toggle="modal" data-target="#exampleModalCenter" onclick="getImage(${id})">📄</th>` +        
+        `<tr/>`
+    ) : 
+    (
         `<tr id=${id}>` +
         `<th scope="row">${id}</th>` +
         `<th scope="row">${amount}</th>` +
         `<th scope="row">${description}</th>` +
         `<th scope="row">${authorId}</th>` +
         `<th scope="row">${resolverId}</th>` +
-        `<th scope="row"><img class="card-img-bottom-custom" src="" alt="reimbursement_receipt"></th>` +
+        `<th scope="row"></th>` + 
         `<th scope="row">
                 <button class="btn btn-primary" onclick="put('reimbursements', ${id}, 1)">
                     Approve
@@ -402,7 +467,14 @@ let addReimbursement = () => {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 201) {
-                console.log('Reimbursement was successfully added!');
+                let alertBox = document.getElementById("error-div");
+                if(alertBox) alertBox.innerHTML = `
+            <div class="alert alert-success" role="alert">
+            Reimbursement was successfully added!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>`;
             } else {
                 console.log('Reimbursement was not added...');
             }
