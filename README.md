@@ -207,10 +207,19 @@
 <details>
 	<summary>Inheritance</summary>
 	
-	- refers to the ability for an object to protect its states and its behaviors
-	- can be achieved by defining accessibility of classmembers using access modifiers
-		- setting variables to private
-	- using setters and getters to retrieve/change the states of an object
+	- subclasses/children classes adopting states and behaviors from a parent/super class
+	- deriving classes allows for code reusability and more efficient development
+		- DRY - Do not repeat yourself - principle
+	- keyword "extends"
+		- by default/implicitely every class extends the Object class
+	- by default the first line of every constructor is a call the the parent's constructor (super())
+		- super is a keyword that refers to the parent class
+			- can access states and behaviors from the parent class dependending on the access modifer
+		- this vs super
+		- this - refers to the current instance
+		- super - refers to the parent
+	- Java does not support multiple inheritance
+		- diamond problem
 </details>
 
 <details>
