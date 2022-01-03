@@ -86,7 +86,7 @@ insert into ers_users
 (ers_username, ers_password, user_first_name, 
 user_last_name, user_email, user_role_id, ers_manager_id)
 values
-('1', '1', '1', '1', '1@1', 1, null);
+('1', '$2a$12$XgiuM.ber2ydyt.5aiNjtunh66hFiETLFe8J./eQK52seZ4D2daZG', '1', '1', '1@1', 1, null);
 
 insert into ers_users 
 (ers_username, ers_password, user_first_name, 
