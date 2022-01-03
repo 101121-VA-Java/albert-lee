@@ -1,5 +1,4 @@
 ## Review notes (skipped a lot)
-<hr>
 
 ### WEEK 1
 <details>
